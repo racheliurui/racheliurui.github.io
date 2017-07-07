@@ -11,6 +11,8 @@ install:
 
 script:
   - git clone --branch=master https://github.com/racheliurui/markdown.git
+  - rm -rf ./source/_posts/*
+  - cp -R ./markdown ./source/_posts
   - hexo cl 
   - hexo g -d
 
