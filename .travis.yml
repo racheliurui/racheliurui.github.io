@@ -10,6 +10,7 @@ install:
  # - npm install -g gulp
 
 script:
+  - git clone --branch=master https://github.com/racheliurui/markdown.git
   - hexo cl 
   - hexo g -d
 
