@@ -9,6 +9,8 @@ install:
 before_script:
   - npm install hexo-math --save
   - hexo math install
+  - npm uninstall hexo-renderer-marked --save
+  - npm install hexo-renderer-markdown-it-plus --save
 
 script:
   - git clone --branch=master https://github.com/racheliurui/markdown.git
