@@ -90,7 +90,9 @@ scheme: Pisces
 # Social Links
 # Key is the link label showing to end users.
 # Value is the target link (E.g. GitHub: https://github.com/iissnan)
-#social:
+social:
+  GitHub: https://github.com/racheliurui
+  Linkedin: https://www.linkedin.com/in/rachel-rui-liu-a474a7a
   #LinkLabel: Link
 
 # Social Links Icons
@@ -115,6 +117,7 @@ social_icons:
   Instagram: instagram
   StackOverflow: stack-overflow
   Weibo: weibo
+  Linkedin: linkedin  
 
 # Blog rolls
 #links_title: Links
