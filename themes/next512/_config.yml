@@ -326,7 +326,7 @@ han: false
 # Disqus
 disqus:
   enable: true 
-  shortname: disqus_G3vIurWvmN
+  shortname: racheliurui-github-io 
   count: true
 
 # Hypercomments
