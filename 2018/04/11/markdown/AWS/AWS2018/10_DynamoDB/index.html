@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="AWS,DynamoDB,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hey Hey Hey" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="DynamoDB Deepdive  RDB optimized for storage; nonsql optimized for compute DynamoDB supports both Key-value and document data models   Terminology Keys:   Partition Key; Hash Key;   Sort Key;   Range">
+<meta name="keywords" content="AWS,DynamoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS - DynamoDB">
+<meta property="og:url" content="https://racheliurui.github.io/2018/04/11/markdown/AWS/AWS2018/10_DynamoDB/index.html">
+<meta property="og:site_name" content="Hey Hey Hey">
+<meta property="og:description" content="DynamoDB Deepdive  RDB optimized for storage; nonsql optimized for compute DynamoDB supports both Key-value and document data models   Terminology Keys:   Partition Key; Hash Key;   Sort Key;   Range">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-06-15T03:43:00.421Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AWS - DynamoDB">
+<meta name="twitter:description" content="DynamoDB Deepdive  RDB optimized for storage; nonsql optimized for compute DynamoDB supports both Key-value and document data models   Terminology Keys:   Partition Key; Hash Key;   Sort Key;   Range">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://racheliurui.github.io/2018/04/11/markdown/AWS/AWS2018/10_DynamoDB/">
+
+
+
+
+
+  <title>AWS - DynamoDB | Hey Hey Hey</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey Hey Hey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://racheliurui.github.io/2018/04/11/markdown/AWS/AWS2018/10_DynamoDB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rachel Rui Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey Hey Hey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AWS - DynamoDB</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-11T11:37:23+00:00">
+                2018-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/11/markdown/AWS/AWS2018/10_DynamoDB/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/11/markdown/AWS/AWS2018/10_DynamoDB/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="dynamodb-deepdive"><a class="markdownIt-Anchor" href="#dynamodb-deepdive"></a> DynamoDB Deepdive</h1>
+<ul>
+<li>RDB optimized for storage; nonsql optimized for compute</li>
+<li>DynamoDB supports both Key-value and document data models</li>
+</ul>
+<h2 id="terminology"><a class="markdownIt-Anchor" href="#terminology"></a> Terminology</h2>
+<p>Keys:</p>
+<ul>
+<li>
+<p><strong>Partition Key</strong>; <strong>Hash Key</strong>;</p>
+</li>
+<li>
+<p><strong>Sort Key</strong>;</p>
+</li>
+<li>
+<p><strong>Range Key</strong> ;</p>
+<ul>
+<li><strong>Local secondary index (LSI)</strong></li>
+<li><strong>Global secondary index (GSI)</strong> (max 5 GSI per table)</li>
+<li>If data size &gt;10G use GSI</li>
+<li><strong>Primary Key</strong> = Partition key + Sort Key</li>
+</ul>
+</li>
+<li>
+<p>Attribute;</p>
+</li>
+<li>
+<p><strong>composite attributes</strong> ; <strong>composite key</strong> : a way of construct partition key</p>
+</li>
+<li>
+<p><strong>Partition Key</strong> used to decide which partition it belongs to (uidling unordered hash index)</p>
+</li>
+<li>
+<p>A Partition has 10G limit, if total storage with same partition key exceeded the limit, then <strong>sort key</strong> is used.</p>
+</li>
+<li>
+<p>Table --&gt; Items --&gt; Attributes --&gt; Partition Keys (Mandatory attribute); Sort Key (Optional)</p>
+</li>
+<li>
+<p>DynamoDB each partition will have totally 3 copies (including itself); when write, you will get success response when 2 writes succeed.</p>
+</li>
+<li>
+<p><strong>Hash Range Table</strong> : a table where Hashkey+RangeKey to identify an item.</p>
+</li>
+</ul>
+<h2 id="scaling"><a class="markdownIt-Anchor" href="#scaling"></a> Scaling</h2>
+<ul>
+<li>Scaling on <strong>throughput</strong> : WCU and RCU (CU is Capacity Unit)
+<ul>
+<li>Partition needed = Roundup((total RCU/3k)+(total WCU/1k))</li>
+</ul>
+</li>
+<li>Scaling on size (maxsizeperitem=400kb, maxsizeperpartition=10G)</li>
+<li>Final partition = ceiling( ScalingByThrougput, ScalingBySize)</li>
+<li>heat map – showing by time and partition dimention about which data being requested. If all data access is focused from a specific partition, then we got <strong>Hot Keys</strong> which we should avoid by re-design the paritition key.</li>
+<li>DynamoDB <strong>Burst capacity</strong> is built in</li>
+</ul>
+<h1 id="data-modeling"><a class="markdownIt-Anchor" href="#data-modeling"></a> Data Modeling</h1>
+<p>Store the data how you will access it.</p>
+<ul>
+<li>New feature since 2015: Support documents (JSON)</li>
+</ul>
+<h1 id="patterns"><a class="markdownIt-Anchor" href="#patterns"></a> Patterns</h1>
+<ul>
+<li>
+<p>Use Lambda as DynamoDB Stored Procedure</p>
+</li>
+<li>
+<p>Real Time Voting</p>
+<ul>
+<li>Write Sharding (Add random key to make sure data is spread into multi partition)</li>
+</ul>
+</li>
+<li>
+<p>Event logging – Don’t mix hot data and cold data</p>
+<ul>
+<li>Time series table (static ttl time stamps)
+<ul>
+<li>Archive cold data to S3</li>
+<li>precreate daily,weekly monthly tables and provision accordingly to current table</li>
+</ul>
+</li>
+<li>Time series table (Dynamic ttl time stamps) – data being updated
+<ul>
+<li>have a GSIKey to label recent updated data (??? 36min:36s)</li>
+<li>Put GSI key as partion key and update timestamp as sort key</li>
+<li>using lambda to filter out expired data and rotate into data lake</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Product Catelog - Black Friday</p>
+<ul>
+<li>Use cache, and logic of updating cache can be implemented lambda</li>
+</ul>
+</li>
+<li>
+<p>Common Pattern - Online Gaming (filter)</p>
+<ul>
+<li>Problem: filter against non sort key. The engine will read all qualified records
+<ul>
+<li>Solution 1: create composite key (in mongodb it’s called combind index)</li>
+<li>Solution 2: <strong>Sparse indexes</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Messaging App - Mixed small and large attributes — Wrong</p>
+<ul>
+<li>large attribute will consume more RCU</li>
+<li>Solution : split the table. Separate metadata and message body into different table. Provision RCU accordingly.</li>
+</ul>
+</li>
+<li>
+<p>Sparse Index – index created on optional attribute</p>
+<ul>
+<li>for example game-score-table has a column called award. When we want to filter by award, we want a Award GSI being created althrough this field has high chance to be null.</li>
+</ul>
+</li>
+</ul>
+<h2 id="mvcc-transaction-model-in-nonsql-db"><a class="markdownIt-Anchor" href="#mvcc-transaction-model-in-nonsql-db"></a> MVCC – Transaction model in nonsql db</h2>
+<ul>
+<li>MultiVersion Concurrency
+<ul>
+<li>For example, creating partition locks.
+<ul>
+<li>Manage versioning across items with metadata</li>
+<li>Tag attributes to maintain multipe versions</li>
+<li>Code your app to recognize when updates in progress</li>
+<li>App layer error handling and recovery logic</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="new-feature-dynamodb-streams"><a class="markdownIt-Anchor" href="#new-feature-dynamodb-streams"></a> New Feature: DynamoDB Streams</h1>
+<ul>
+<li>Stream of updates to a table (Asynchronous)</li>
+<li>Exact once ; Strictly ordered (per item)</li>
+<li>24 hour life time</li>
+<li>Cross-region replication is using this feature</li>
+<li>Even multi-master scenario</li>
+<li>Pattern :use lambda to read the stream and update</li>
+<li>Pattern: use Kinesis to interact with stream and aggregate into multi-target</li>
+<li>Use DynamoDB Stream to update Elastic Cache content</li>
+<li>ListStreams / DescribeStream / GetShradIterator…</li>
+</ul>
+<h1 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h1>
+<blockquote>
+<p>Deepdive DynamoDB — Very good<br>
+<a href="https://youtu.be/bCW3lhsJKfw" target="_blank" rel="noopener">https://youtu.be/bCW3lhsJKfw</a></p>
+</blockquote>
+<blockquote>
+<p>Deepdive DynamoDB<br>
+<a href="https://youtu.be/VuKu23oZp9Q" target="_blank" rel="noopener">https://youtu.be/VuKu23oZp9Q</a></p>
+</blockquote>
+<blockquote>
+<p>How to choose the right key<br>
+<a href="https://aws.amazon.com/blogs/database/choosing-the-right-dynamodb-partition-key/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/database/choosing-the-right-dynamodb-partition-key/</a></p>
+</blockquote>
+<h1 id="038mp4-039mp4-dynamodb-overview"><a class="markdownIt-Anchor" href="#038mp4-039mp4-dynamodb-overview"></a> 038.mp4 039.mp4 – DynamoDB Overview</h1>
+<h2 id="no-sql-db"><a class="markdownIt-Anchor" href="#no-sql-db"></a> No SQL DB</h2>
+<ul>
+<li>Secondary indexes</li>
+<li>Atomic Counters</li>
+</ul>
+<p>Terminology,</p>
+<ul>
+<li>Per table you can have max 5 global secondary index and max 5 local secondary index
+<ul>
+<li>Global means accross partition</li>
+</ul>
+</li>
+<li>Query and Scan
+<ul>
+<li>Query is recommended , query has to use the Primary Key;</li>
+<li>Scan will be used to scan the whole table (because no primary key no partition filter)</li>
+<li>Both by default is eventually consistent. Can request a strong consistent query/scan</li>
+</ul>
+</li>
+<li>Atomic Counters and Conditional Writes
+<ul>
+<li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html#WorkingWithItems.AtomicCounters" target="_blank" rel="noopener">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html#WorkingWithItems.AtomicCounters</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="040mp4-dynamodb-handson"><a class="markdownIt-Anchor" href="#040mp4-dynamodb-handson"></a> 040.mp4 – DynamoDB Handson</h1>
+<ul>
+<li>
+<p>Create a Table</p>
+</li>
+<li>
+<p>Select Primary Key &amp; Sort Key ; Index Key &amp; Sort Key</p>
+</li>
+<li>
+<p>Add item from Console</p>
+</li>
+<li>
+<p>Prepare a JSON file to bulk upload data</p>
+</li>
+<li>
+<p>using command line to batch upload data</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws dynamodb batch-write-item --request-items path/to/prepared.json</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>using command line to query the table</p>
+</li>
+</ul>
+<p>Supported Data types<br>
+<a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBMapper.DataTypes.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBMapper.DataTypes.html</a></p>
+<p>Table name rule<br>
+<a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html#HowItWorks.NamingRules" target="_blank" rel="noopener">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html#HowItWorks.NamingRules</a><br>
+charactor, number, underscore, dash, dot</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Reward Makes Perfect</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Rachel Rui Liu Bitcoin">
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Rachel Rui Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://racheliurui.github.io/2018/04/11/markdown/AWS/AWS2018/10_DynamoDB/" title="AWS - DynamoDB">https://racheliurui.github.io/2018/04/11/markdown/AWS/AWS2018/10_DynamoDB/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AWS/" rel="tag"># AWS</a>
+          
+            <a href="/tags/DynamoDB/" rel="tag"># DynamoDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/11/markdown/AWS/AWS2018/12_VPC/" rel="next" title="AWS - VPC">
+                <i class="fa fa-chevron-left"></i> AWS - VPC
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/12/markdown/AWS/AWS2018/13_EFS/" rel="prev" title="AWS - EFS">
+                AWS - EFS <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg" alt="Rachel Rui Liu">
+          <p class="site-author-name" itemprop="name">Rachel Rui Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">178</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">193</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/racheliurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/rachel-rui-liu-a474a7a" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                    
+                      Linkedin
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dynamodb-deepdive"><span class="nav-number">1.</span> <span class="nav-text"> DynamoDB Deepdive</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#terminology"><span class="nav-number">1.1.</span> <span class="nav-text"> Terminology</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scaling"><span class="nav-number">1.2.</span> <span class="nav-text"> Scaling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#data-modeling"><span class="nav-number">2.</span> <span class="nav-text"> Data Modeling</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#patterns"><span class="nav-number">3.</span> <span class="nav-text"> Patterns</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mvcc-transaction-model-in-nonsql-db"><span class="nav-number">3.1.</span> <span class="nav-text"> MVCC – Transaction model in nonsql db</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#new-feature-dynamodb-streams"><span class="nav-number">4.</span> <span class="nav-text"> New Feature: DynamoDB Streams</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text"> Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#038mp4-039mp4-dynamodb-overview"><span class="nav-number">6.</span> <span class="nav-text"> 038.mp4 039.mp4 – DynamoDB Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#no-sql-db"><span class="nav-number">6.1.</span> <span class="nav-text"> No SQL DB</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#040mp4-dynamodb-handson"><span class="nav-number">7.</span> <span class="nav-text"> 040.mp4 – DynamoDB Handson</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rachel Rui Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://racheliurui-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://racheliurui.github.io/2018/04/11/markdown/AWS/AWS2018/10_DynamoDB/';
+          this.page.identifier = '2018/04/11/markdown/AWS/AWS2018/10_DynamoDB/';
+          this.page.title = 'AWS - DynamoDB';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://racheliurui-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

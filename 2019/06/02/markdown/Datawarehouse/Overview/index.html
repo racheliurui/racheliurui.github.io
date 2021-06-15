@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Datawarehouse,BI,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hey Hey Hey" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Key difference between operational system and Data warehouse  一个往里面送数据，一个往外查数据 一个要求transaction并且保持当前状态准确，业务逻辑严格按照流程来；一个要求大量查询和比对，查询需求不停变化   Goals of Data Warehousing and Business Intelligence  收集的数据不">
+<meta name="keywords" content="Datawarehouse,BI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Data Wharehousing, Business Intelligence, and Dimensional Modeling Primer">
+<meta property="og:url" content="https://racheliurui.github.io/2019/06/02/markdown/Datawarehouse/Overview/index.html">
+<meta property="og:site_name" content="Hey Hey Hey">
+<meta property="og:description" content="Key difference between operational system and Data warehouse  一个往里面送数据，一个往外查数据 一个要求transaction并且保持当前状态准确，业务逻辑严格按照流程来；一个要求大量查询和比对，查询需求不停变化   Goals of Data Warehousing and Business Intelligence  收集的数据不">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-06-15T03:43:00.429Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Data Wharehousing, Business Intelligence, and Dimensional Modeling Primer">
+<meta name="twitter:description" content="Key difference between operational system and Data warehouse  一个往里面送数据，一个往外查数据 一个要求transaction并且保持当前状态准确，业务逻辑严格按照流程来；一个要求大量查询和比对，查询需求不停变化   Goals of Data Warehousing and Business Intelligence  收集的数据不">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://racheliurui.github.io/2019/06/02/markdown/Datawarehouse/Overview/">
+
+
+
+
+
+  <title>Data Wharehousing, Business Intelligence, and Dimensional Modeling Primer | Hey Hey Hey</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey Hey Hey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://racheliurui.github.io/2019/06/02/markdown/Datawarehouse/Overview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rachel Rui Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey Hey Hey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Data Wharehousing, Business Intelligence, and Dimensional Modeling Primer</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-02T20:28:10+00:00">
+                2019-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/02/markdown/Datawarehouse/Overview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/06/02/markdown/Datawarehouse/Overview/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="key-difference-between-operational-system-and-data-warehouse"><a class="markdownIt-Anchor" href="#key-difference-between-operational-system-and-data-warehouse"></a> Key difference between operational system and Data warehouse</h1>
+<ul>
+<li>一个往里面送数据，一个往外查数据</li>
+<li>一个要求transaction并且保持当前状态准确，业务逻辑严格按照流程来；一个要求大量查询和比对，查询需求不停变化</li>
+</ul>
+<h1 id="goals-of-data-warehousing-and-business-intelligence"><a class="markdownIt-Anchor" href="#goals-of-data-warehousing-and-business-intelligence"></a> Goals of Data Warehousing and Business Intelligence</h1>
+<ul>
+<li>收集的数据不好用</li>
+<li>收集的数据不是查询友好</li>
+<li>业务人员用起来不方便</li>
+<li>数据不一致</li>
+<li>我们想实现fact-based决策</li>
+</ul>
+<p>所以DW需要，</p>
+<ul>
+<li>数据贴近业务人员；好理解</li>
+<li>consistent： 一样的名字必须代表一样的东西</li>
+<li>能够支持需求变化，能够支持变化的时候对用户透明</li>
+<li>数据必须及时，即使需要clean和validate</li>
+<li>数据安全非常重要， DW的信息决定了一个企业“卖什么东西给谁以什么价格”</li>
+<li>DW是一个decision support system</li>
+<li>DW必须得到业务人员的支持和使用才能成功；跟业务系统不一样，DW是optional，不好用就会被废弃</li>
+</ul>
+<h2 id="publishing-metaphor-for-dwbi-managers"><a class="markdownIt-Anchor" href="#publishing-metaphor-for-dwbi-managers"></a> Publishing Metaphor for DW/BI Managers</h2>
+<p>把DW必须成发行杂志。DW需要</p>
+<ul>
+<li>理解读者</li>
+<li>取悦读者</li>
+<li>保证发行</li>
+</ul>
+<p>类似于发行杂志，DW需要选择数据源，保证数据准确，然后以正确的方式展现给读者（用户），定期更新。</p>
+<h1 id="dimensional-modeling-introduction"><a class="markdownIt-Anchor" href="#dimensional-modeling-introduction"></a> Dimensional Modeling Introduction</h1>
+<p>Dimensional modeling实现了两个难点：</p>
+<ul>
+<li>易于被业务user理解</li>
+<li>查询快速</li>
+</ul>
+<p>“We sell products in various markets and measure our performance over time”<br>
+这句话里面蕴含了3个dimension， “product”，”market“和”time”</p>
+<p>Dimensional model常常使用关系型数据库，但是和3NF（normal form）模型不同。</p>
+<ul>
+<li>3NF的目的是去除redundency， 属于ER （entity relationship）模型； Dimensional模型也属于ER模型</li>
+<li>3NF和Dimential model的关键不同是normalization的程度</li>
+<li>3NF的normalization程度更高，我们一般叫normalized model</li>
+<li>3NF的缺点是复杂以及查询性能不好</li>
+<li>dimensional model易于用户理解；查询性能好，易于根据业务需求变化而变化</li>
+</ul>
+<h2 id="star-schemas-versus-olap-cubes"><a class="markdownIt-Anchor" href="#star-schemas-versus-olap-cubes"></a> Star Schemas Versus OLAP Cubes</h2>
+<ul>
+<li>Dimensional model用关系型数据库实现就是Star Schema</li>
+<li>Dimensional model用多维数据库实现就是OLAP data cube</li>
+</ul>
+<h2 id="olap-deployment-considerations"><a class="markdownIt-Anchor" href="#olap-deployment-considerations"></a> OLAP Deployment Considerations</h2>
+<ul>
+<li>Star Schema是基础</li>
+<li>OLAP的性能优势在被新技术蚕食（例如内存数据库，columnar DB）</li>
+<li>OLAP的表设计常常绑定技术提供商，移植性比较差。</li>
+<li>OLAP的数据安全性比较好；可以做到限制用户只能看到summary</li>
+<li>OLAP的分析能力更强大</li>
+<li>OLAP对变化的dimension支持更好</li>
+<li>OLAP支持snapshot fact但是不支持accumulate</li>
+<li>OLAP对hirarchy等类型的数据查询支持比较好</li>
+</ul>
+<h2 id="fact-tables-for-measurements"><a class="markdownIt-Anchor" href="#fact-tables-for-measurements"></a> Fact Tables for Measurements</h2>
+<ul>
+<li>Each row in a fact table corresponds to a measurement event. 不能拆。</li>
+</ul>
+<blockquote>
+<p>a measurement event in the physical world has a one-to-one<br>
+relationship to a single row in the corresponding fact table is a bedrock principle<br>
+for dimensional modeling</p>
+</blockquote>
+<ul>
+<li>Facts are often described as continuously valued to help sort out what is a fact<br>
+versus a dimension attribute.
+<ul>
+<li>Additivity fact : 销售额</li>
+<li>Semi-Additivity fact： 例如account balance</li>
+<li>Non-Additivity fact：例如产品单价</li>
+</ul>
+</li>
+<li>textual Fact： 通常没有， 如果有也尽量放到Dimensional里面去</li>
+<li>Empty item. Fact 里面一定要放发生的事件，没有发生不要尝试放0.</li>
+<li>Fact表通常非常sparse； Fact表通常占据90%的存储； Fact表通常row非常大，column比较少；Fact表通常可以通过size预估行数</li>
+<li>Fact表分三种：transaction, periodic snapshot, and accumulating snapshot.</li>
+<li>Fact表至少有两个外键， 用来引用dimension表的主键</li>
+<li><strong>referential integrity</strong> 保证Fact表的条目引用的每个外键都正确</li>
+<li><strong>composite key</strong> Fact表的主键通常由所有的外键组合而成.</li>
+</ul>
+<h2 id="dimension-tables-for-descriptive-context"><a class="markdownIt-Anchor" href="#dimension-tables-for-descriptive-context"></a> Dimension Tables for Descriptive Context</h2>
+<ul>
+<li>Dimension table 用来定义measurable业务事件的textual context</li>
+<li>Dimension 表描述who, what,when,where, how, why</li>
+<li>Dimension表通常列非常多，通常50-100个很正常</li>
+<li>Dimension表通常row少，column多</li>
+<li>Dimension表只有一个主键</li>
+<li>Dimension的attribute是主要的查询，分组以及报告label的来源</li>
+<li>Dimension的attribute名字必须有业务含义</li>
+<li>例如如果一个code有前两个字段代表一个含义，后面两个字段代表一个含义，设计的时候最好单独出来一个dimension而不是让客户查询的时候manipulate字符串</li>
+<li>实际设计的时候，如何确定一个numeric value是fact还是dimensional – 确定它们是不是需要参与计算； 看数字是连续还是离散的</li>
+</ul>
+<h2 id="facts-and-dimensions-joined-in-a-star-schema"><a class="markdownIt-Anchor" href="#facts-and-dimensions-joined-in-a-star-schema"></a> Facts and Dimensions Joined in a Star Schema</h2>
+<p>Benefit of Star Schema</p>
+<ul>
+<li>
+<p>Easy to understand</p>
+</li>
+<li>
+<p>Simplicity brings in performance benefits</p>
+</li>
+<li>
+<p>Dimensional model are gracefuly extensible to accommodate change.</p>
+<ul>
+<li>Fact won’t change, but dimension values can.</li>
+<li>By adding new rows to dimension table or alter current fact table to add new dimension FK will fulfilll the change requirement</li>
+</ul>
+<p>A sample of SQL for star schema</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">store.district_name,</span><br><span class="line">product.brand,</span><br><span class="line"><span class="keyword">sum</span>(sales_facts.sales_dollars) <span class="keyword">AS</span> <span class="string">"Sales Dollars"</span></span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line"><span class="keyword">store</span>,</span><br><span class="line">product,</span><br><span class="line"><span class="built_in">date</span>,</span><br><span class="line">sales_facts</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">date.month_name=<span class="string">"January"</span> <span class="keyword">AND</span></span><br><span class="line">date.year=<span class="number">2013</span> <span class="keyword">AND</span></span><br><span class="line">store.store_key = sales_facts.store_key <span class="keyword">AND</span></span><br><span class="line">product.product_key = sales_facts.product_key <span class="keyword">AND</span></span><br><span class="line">date.date_key = sales_facts.date_key</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line">store.district_name,</span><br><span class="line">product.brand</span><br></pre></td></tr></table></figure>
+<p>Where clauses including filter then join between fact and dimention then group by  to estabsh the aggregation.</p>
+</li>
+</ul>
+<p>P54.</p>
+<h1 id="kimballs-dwbi-architecture"><a class="markdownIt-Anchor" href="#kimballs-dwbi-architecture"></a> Kimball’s DW/BI Architecture</h1>
+<p>4 components: Operational Source Systems, ETL system, Data PRZ area, BI applications</p>
+<h2 id="operational-source-systems"><a class="markdownIt-Anchor" href="#operational-source-systems"></a> Operational Source Systems</h2>
+<ul>
+<li>Focusing on : Performance and availability</li>
+<li>Maintain little historical data</li>
+</ul>
+<h2 id="extract-transformation-and-load-system"><a class="markdownIt-Anchor" href="#extract-transformation-and-load-system"></a> Extract, Transformation, and Load System</h2>
+<ul>
+<li>Extraction: move the data into DW scope</li>
+<li>Transformation: enrich, de-dup , etc</li>
+<li>Load the data into dimensional model
+<ul>
+<li>including Surrogate key assignment</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Industry argument, should ETL landing area be normalized structure? No need.</p>
+</blockquote>
+<h2 id="presentation-area-to-support-business-intelligence"><a class="markdownIt-Anchor" href="#presentation-area-to-support-business-intelligence"></a> Presentation Area to Support Business Intelligence</h2>
+<ul>
+<li>Baseline: data must be dimensional schema or OLAP cubes ; this has been accepted by industry</li>
+<li>presentation area must contain atomic data (vs summary data );
+<ul>
+<li>it’s <strong>unacceptable</strong> to put atomic data in to 3NF model and only put summary data into star schema (WRONG)</li>
+</ul>
+</li>
+<li>Data area should be around process measurement; and across organizational dep boundaries.</li>
+<li>When the bus architecture is used as a framework, you can develop the enterprise data warehouse in an agile, decentralized, realistically scoped, iterative manner.</li>
+</ul>
+<blockquote>
+<p>Data in the queryable presentation area of the DW/BI system must be dimensional, atomic (complemented by performance-enhancing aggregates), business process-centric, and adhere to the enterprise data warehouse bus architecture.The data must not be structured according to individual departments’ interpretation of the data.</p>
+</blockquote>
+<h2 id="business-intelligence-applications"><a class="markdownIt-Anchor" href="#business-intelligence-applications"></a> Business Intelligence Applications</h2>
+<ul>
+<li>Tableau (??)</li>
+</ul>
+<p>P59</p>
+<h2 id="restaurant-metaphor-for-the-kimball-architecture"><a class="markdownIt-Anchor" href="#restaurant-metaphor-for-the-kimball-architecture"></a> Restaurant Metaphor for the Kimball Architecture</h2>
+<ul>
+<li>ETL : Backend kitchen</li>
+</ul>
+<p>ETL should focusing on ,<br>
+<strong>Quality</strong><br>
+<strong>Consistency</strong><br>
+<strong>Integrity</strong></p>
+<p>ETL should avoid being involved by DW/BI patrons.</p>
+<ul>
+<li>Data Presentation and BI: Front Dining Room</li>
+</ul>
+<p>Focusing on : properly organized and utilized to deliver as needed to the presentation area’s food, decor, service, and cost.</p>
+<h1 id="alternative-dwbi-architectures"><a class="markdownIt-Anchor" href="#alternative-dwbi-architectures"></a> Alternative DW/BI Architectures</h1>
+<h2 id="independent-data-mart-architecture"><a class="markdownIt-Anchor" href="#independent-data-mart-architecture"></a> Independent Data Mart Architecture</h2>
+<ul>
+<li>Data after multiple ETL logic landed in multiple models designed for different front room.</li>
+<li>No centralized data governance</li>
+<li>Short term low cost; normally already applied star schema for each model</li>
+</ul>
+<h2 id="hub-and-spoke-corporate-information-factory-inmon-architecture"><a class="markdownIt-Anchor" href="#hub-and-spoke-corporate-information-factory-inmon-architecture"></a> Hub-and-Spoke Corporate Information Factory Inmon Architecture</h2>
+<ul>
+<li>3NF is re-enforced</li>
+</ul>
+<h2 id="hybrid-hub-and-spoke-and-kimball-architecture"><a class="markdownIt-Anchor" href="#hybrid-hub-and-spoke-and-kimball-architecture"></a> Hybrid Hub-and-Spoke and Kimball Architecture</h2>
+<ul>
+<li>2 Layers of ETL</li>
+<li>Source -&gt; 3NF -&gt; Kimball</li>
+</ul>
+<p>P66</p>
+<h1 id="dimensional-modeling-myths"><a class="markdownIt-Anchor" href="#dimensional-modeling-myths"></a> Dimensional Modeling Myths</h1>
+<h2 id="myth-1-dimensional-only-for-summary-data"><a class="markdownIt-Anchor" href="#myth-1-dimensional-only-for-summary-data"></a> Myth 1: Dimensional only for summary Data</h2>
+<p>Summary data should complement the granular details solely to provide improved performance for common queries, <strong>but not replace the details.</strong><br>
+The amount of history in dimensional models must only be driven by business’s requirement nor the performance purpose.</p>
+<h2 id="myth-2-dimensional-for-departmental"><a class="markdownIt-Anchor" href="#myth-2-dimensional-for-departmental"></a> Myth 2: Dimensional for Departmental</h2>
+<h2 id="myth-3-dimensional-are-not-scalable"><a class="markdownIt-Anchor" href="#myth-3-dimensional-are-not-scalable"></a> Myth 3: Dimensional are not scalable</h2>
+<p>It’s common for fact table to have billions of rows; some fact table containing 2 trillion rows have been seen.<br>
+Key difference between 3NF and Dimensional is Dimensional are easier to understand.</p>
+<h2 id="myth-4-dimensional-only-for-predictable-usage"><a class="markdownIt-Anchor" href="#myth-4-dimensional-only-for-predictable-usage"></a> Myth 4: Dimensional only for predictable usage</h2>
+<p>The model is center on measurement process not pre-defined reports or analyses.<br>
+“God is in the details”</p>
+<h2 id="myth-5-dimensional-cant-be-integrated"><a class="markdownIt-Anchor" href="#myth-5-dimensional-cant-be-integrated"></a> Myth 5: Dimensional Can’t be integrated</h2>
+<p>Data integration depends on standardized labels, values, and definitions.</p>
+<h1 id="more-reasons-to-think-dimensionally"><a class="markdownIt-Anchor" href="#more-reasons-to-think-dimensionally"></a> More Reasons to Think Dimensionally</h1>
+<p>Robust dimensions translate into robust DW/BI systems.</p>
+<h1 id="agile-considerations"><a class="markdownIt-Anchor" href="#agile-considerations"></a> Agile Considerations</h1>
+<h1 id="summary"><a class="markdownIt-Anchor" href="#summary"></a> Summary</h1>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Reward Makes Perfect</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Rachel Rui Liu Bitcoin">
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Rachel Rui Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://racheliurui.github.io/2019/06/02/markdown/Datawarehouse/Overview/" title="Data Wharehousing, Business Intelligence, and Dimensional Modeling Primer">https://racheliurui.github.io/2019/06/02/markdown/Datawarehouse/Overview/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Datawarehouse/" rel="tag"># Datawarehouse</a>
+          
+            <a href="/tags/BI/" rel="tag"># BI</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/01/markdown/BackToBasic/Postgres/Management/" rel="next" title="PostgreSQL">
+                <i class="fa fa-chevron-left"></i> PostgreSQL
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/17/markdown/Datawarehouse/04_Inventory/" rel="prev" title="Kimball Dimensional Modeling Techniques applied to Inventory Sample`">
+                Kimball Dimensional Modeling Techniques applied to Inventory Sample` <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg" alt="Rachel Rui Liu">
+          <p class="site-author-name" itemprop="name">Rachel Rui Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">178</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">193</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/racheliurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/rachel-rui-liu-a474a7a" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                    
+                      Linkedin
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#key-difference-between-operational-system-and-data-warehouse"><span class="nav-number">1.</span> <span class="nav-text"> Key difference between operational system and Data warehouse</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#goals-of-data-warehousing-and-business-intelligence"><span class="nav-number">2.</span> <span class="nav-text"> Goals of Data Warehousing and Business Intelligence</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#publishing-metaphor-for-dwbi-managers"><span class="nav-number">2.1.</span> <span class="nav-text"> Publishing Metaphor for DW/BI Managers</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dimensional-modeling-introduction"><span class="nav-number">3.</span> <span class="nav-text"> Dimensional Modeling Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#star-schemas-versus-olap-cubes"><span class="nav-number">3.1.</span> <span class="nav-text"> Star Schemas Versus OLAP Cubes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#olap-deployment-considerations"><span class="nav-number">3.2.</span> <span class="nav-text"> OLAP Deployment Considerations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fact-tables-for-measurements"><span class="nav-number">3.3.</span> <span class="nav-text"> Fact Tables for Measurements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dimension-tables-for-descriptive-context"><span class="nav-number">3.4.</span> <span class="nav-text"> Dimension Tables for Descriptive Context</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#facts-and-dimensions-joined-in-a-star-schema"><span class="nav-number">3.5.</span> <span class="nav-text"> Facts and Dimensions Joined in a Star Schema</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kimballs-dwbi-architecture"><span class="nav-number">4.</span> <span class="nav-text"> Kimball’s DW/BI Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#operational-source-systems"><span class="nav-number">4.1.</span> <span class="nav-text"> Operational Source Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extract-transformation-and-load-system"><span class="nav-number">4.2.</span> <span class="nav-text"> Extract, Transformation, and Load System</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#presentation-area-to-support-business-intelligence"><span class="nav-number">4.3.</span> <span class="nav-text"> Presentation Area to Support Business Intelligence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#business-intelligence-applications"><span class="nav-number">4.4.</span> <span class="nav-text"> Business Intelligence Applications</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#restaurant-metaphor-for-the-kimball-architecture"><span class="nav-number">4.5.</span> <span class="nav-text"> Restaurant Metaphor for the Kimball Architecture</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#alternative-dwbi-architectures"><span class="nav-number">5.</span> <span class="nav-text"> Alternative DW/BI Architectures</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#independent-data-mart-architecture"><span class="nav-number">5.1.</span> <span class="nav-text"> Independent Data Mart Architecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hub-and-spoke-corporate-information-factory-inmon-architecture"><span class="nav-number">5.2.</span> <span class="nav-text"> Hub-and-Spoke Corporate Information Factory Inmon Architecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hybrid-hub-and-spoke-and-kimball-architecture"><span class="nav-number">5.3.</span> <span class="nav-text"> Hybrid Hub-and-Spoke and Kimball Architecture</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dimensional-modeling-myths"><span class="nav-number">6.</span> <span class="nav-text"> Dimensional Modeling Myths</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#myth-1-dimensional-only-for-summary-data"><span class="nav-number">6.1.</span> <span class="nav-text"> Myth 1: Dimensional only for summary Data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#myth-2-dimensional-for-departmental"><span class="nav-number">6.2.</span> <span class="nav-text"> Myth 2: Dimensional for Departmental</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#myth-3-dimensional-are-not-scalable"><span class="nav-number">6.3.</span> <span class="nav-text"> Myth 3: Dimensional are not scalable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#myth-4-dimensional-only-for-predictable-usage"><span class="nav-number">6.4.</span> <span class="nav-text"> Myth 4: Dimensional only for predictable usage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#myth-5-dimensional-cant-be-integrated"><span class="nav-number">6.5.</span> <span class="nav-text"> Myth 5: Dimensional Can’t be integrated</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#more-reasons-to-think-dimensionally"><span class="nav-number">7.</span> <span class="nav-text"> More Reasons to Think Dimensionally</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#agile-considerations"><span class="nav-number">8.</span> <span class="nav-text"> Agile Considerations</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#summary"><span class="nav-number">9.</span> <span class="nav-text"> Summary</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rachel Rui Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://racheliurui-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://racheliurui.github.io/2019/06/02/markdown/Datawarehouse/Overview/';
+          this.page.identifier = '2019/06/02/markdown/Datawarehouse/Overview/';
+          this.page.title = 'Data Wharehousing, Business Intelligence, and Dimensional Modeling Primer';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://racheliurui-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

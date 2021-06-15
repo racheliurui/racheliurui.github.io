@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="AWS,AWS CloudFront,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hey Hey Hey" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Terminology Canaries: when deploy limite the new version into a contained env until fully tested then roll out. CloudFront = Content Delivery Network by AWS CloudFrontPop: Point Of Presence, Edge Loc">
+<meta name="keywords" content="AWS,AWS CloudFront">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS - CloudFront">
+<meta property="og:url" content="https://racheliurui.github.io/2018/04/10/markdown/AWS/AWS2018/08_CloudFront/index.html">
+<meta property="og:site_name" content="Hey Hey Hey">
+<meta property="og:description" content="Terminology Canaries: when deploy limite the new version into a contained env until fully tested then roll out. CloudFront = Content Delivery Network by AWS CloudFrontPop: Point Of Presence, Edge Loc">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/08_CloudFront_Issue.png?raw=true">
+<meta property="og:updated_time" content="2021-06-15T03:43:00.417Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AWS - CloudFront">
+<meta name="twitter:description" content="Terminology Canaries: when deploy limite the new version into a contained env until fully tested then roll out. CloudFront = Content Delivery Network by AWS CloudFrontPop: Point Of Presence, Edge Loc">
+<meta name="twitter:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/08_CloudFront_Issue.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://racheliurui.github.io/2018/04/10/markdown/AWS/AWS2018/08_CloudFront/">
+
+
+
+
+
+  <title>AWS - CloudFront | Hey Hey Hey</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey Hey Hey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://racheliurui.github.io/2018/04/10/markdown/AWS/AWS2018/08_CloudFront/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rachel Rui Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey Hey Hey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AWS - CloudFront</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-10T15:13:23+00:00">
+                2018-04-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/10/markdown/AWS/AWS2018/08_CloudFront/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/10/markdown/AWS/AWS2018/08_CloudFront/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="terminology"><a class="markdownIt-Anchor" href="#terminology"></a> Terminology</h1>
+<p>Canaries: when deploy limite the new version into a contained env until fully tested then roll out.</p>
+<p>CloudFront = Content Delivery Network by AWS</p>
+<p><strong>CloudFrontPop</strong>: Point Of Presence, Edge Location</p>
+<ul>
+<li>Located in DataCenter (Major metropolitan) with direct connection with multi ISPs</li>
+<li>Terminating Viewer connections</li>
+<li>Request routing to CloudFront is mainly done by <strong>DNS Layer</strong></li>
+</ul>
+<p>CloudFront deployed on Edge locations (number of Edge locations&gt;Available zones&gt; Regions)</p>
+<ul>
+<li>Source can be S3 , HTTP Server on AWS or outside AWS</li>
+<li>CloudFront only cache GET and HEAD requests, for POST,PUT,DELETE cloudfront will only proxy</li>
+<li>Different combinations to cache for static / dynamic websites
+<ul>
+<li>For static, we can select only cache documents , exclude HTML/css/code; or set TTL and cache all</li>
+<li>For dynamic, we can select only cache static content , exclude php/code ; or set TTL and cache all</li>
+</ul>
+</li>
+</ul>
+<h1 id="how-it-works"><a class="markdownIt-Anchor" href="#how-it-works"></a> How it works</h1>
+<p>Cache Key : generated using request URL (remove query string, protocol  and add encoding)</p>
+<p>Specify ExpireTime: sent from original header<br>
+Specify Max Age: for example max-age=300 means 5 min</p>
+<h2 id="cloudfront-configurations"><a class="markdownIt-Anchor" href="#cloudfront-configurations"></a> CloudFront Configurations</h2>
+<ul>
+<li>Config <strong>Cache Behaviors</strong></li>
+</ul>
+<h1 id="best-practise"><a class="markdownIt-Anchor" href="#best-practise"></a> Best Practise</h1>
+<h2 id="try-to-use-ecs-enabled-resolver"><a class="markdownIt-Anchor" href="#try-to-use-ecs-enabled-resolver"></a> Try to use ECS-Enabled Resolver</h2>
+<p><img src="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/08_CloudFront_Issue.png?raw=true" alt="CloudFront Common Issue"></p>
+<p>Issue , when View send request to ISP, ISP will forward the request to AWS and lost the original viewer’s location information, and aws Route53 will only return the Edge Server which has smallest latency with the ISP instead of the viewer.</p>
+<p>Resolution:</p>
+<ul>
+<li>Use local resolver</li>
+<li>Use Resolver that Support ECS (EDNS0 Client Subnet)—&gt;DNS Query include requester’s network info</li>
+<li>Some resolver like google support this new standard.</li>
+</ul>
+<h2 id="cache-the-error-page"><a class="markdownIt-Anchor" href="#cache-the-error-page"></a> cache the error page</h2>
+<p>When source returns error page, that static error page can also be cached.</p>
+<h2 id="cache-dynamic-content"><a class="markdownIt-Anchor" href="#cache-dynamic-content"></a> Cache Dynamic content</h2>
+<p>Set TTL =0 (???)</p>
+<h2 id="version-your-contents"><a class="markdownIt-Anchor" href="#version-your-contents"></a> Version your contents</h2>
+<p>If you don’t, then the new version might not be relfected. Version your contents means different version of content have different url</p>
+<h2 id="minimize-forwardheaders-values"><a class="markdownIt-Anchor" href="#minimize-forwardheaders-values"></a> minimize ForwardHeaders values</h2>
+<p>Forwarded headers will be used as part of Cache Key</p>
+<h2 id="debug-use-the-cloudfront-logs"><a class="markdownIt-Anchor" href="#debug-use-the-cloudfront-logs"></a> Debug --&gt; Use the CloudFront Logs</h2>
+<p>Log your request ID</p>
+<h2 id="use-pre-configured-waf-rules-with-waf-to-protect-cloudfront"><a class="markdownIt-Anchor" href="#use-pre-configured-waf-rules-with-waf-to-protect-cloudfront"></a> Use pre-configured WAF Rules with WAF to protect CloudFront</h2>
+<h2 id="protect-private-content"><a class="markdownIt-Anchor" href="#protect-private-content"></a> Protect Private Content</h2>
+<p>How to stop user directly access your origin<br>
+Option 1: Prevent direct connect to origin (OAI, Origin Access Identify)<br>
+Option 2: Origin only accept request from Caching layer (limit source IP address)</p>
+<p>Use signed URL to restrict access to certain file (no correct url no access)<br>
+Use signed cookie ; restrict access to multiple file (module)</p>
+<h1 id="monitoring"><a class="markdownIt-Anchor" href="#monitoring"></a> Monitoring</h1>
+<p>Metrics: Server-side Metrics; Canaries;  3rd party http tests</p>
+<h1 id="design-pattern-for-availability"><a class="markdownIt-Anchor" href="#design-pattern-for-availability"></a> Design Pattern for Availability (???)</h1>
+<p><strong>Food Tasting</strong><br>
+<strong>Flash Crowds</strong><br>
+<strong>Defence In Depth</strong><br>
+<strong>Time Bomb Jitter Protection</strong></p>
+<h1 id="rum-real-user-monitoring"><a class="markdownIt-Anchor" href="#rum-real-user-monitoring"></a> RUM (Real User Monitoring)</h1>
+<h2 id="synthetic-monitoring"><a class="markdownIt-Anchor" href="#synthetic-monitoring"></a> Synthetic Monitoring</h2>
+<ul>
+<li>Synthetic Monitoring
+<ul>
+<li>Simulate client to test the performance of the application ; can use as baseline of the application</li>
+</ul>
+</li>
+<li>Consistent Signal of Service Health</li>
+</ul>
+<h2 id="rum"><a class="markdownIt-Anchor" href="#rum"></a> RUM</h2>
+<ul>
+<li>Script Injected in webpage to send data back and aggregate the data.</li>
+<li>Analysis RUM
+<ul>
+<li>Use CloudFront</li>
+<li>Use Multi Region</li>
+<li>Use HTTP/2 (support multi thread to serve multi objects at the same time)</li>
+</ul>
+</li>
+</ul>
+<h1 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h1>
+<blockquote>
+<p>033.mp4 034.mp4 – cloudfront overview</p>
+</blockquote>
+<p>Design pattern for HA, lessons from AWS CloudFront (???)</p>
+<blockquote>
+<p><a href="https://youtu.be/n8qQGLJeUYA" target="_blank" rel="noopener">https://youtu.be/n8qQGLJeUYA</a></p>
+</blockquote>
+<p>CloudFront Best practise</p>
+<blockquote>
+<p><a href="https://youtu.be/fgbJJ412qRE" target="_blank" rel="noopener">https://youtu.be/fgbJJ412qRE</a></p>
+</blockquote>
+<h1 id="using-amazon-cloudfront-for-your-websites-apps"><a class="markdownIt-Anchor" href="#using-amazon-cloudfront-for-your-websites-apps"></a> Using Amazon CloudFront For Your Websites &amp; Apps</h1>
+<h2 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h2>
+<blockquote>
+<p><a href="https://youtu.be/gUAuhdtHacI" target="_blank" rel="noopener">https://youtu.be/gUAuhdtHacI</a></p>
+</blockquote>
+<ul>
+<li>Tangible things to take away</li>
+</ul>
+<h2 id="best-practise-to-set-up-your-origin"><a class="markdownIt-Anchor" href="#best-practise-to-set-up-your-origin"></a> Best Practise to set up your origin</h2>
+<ul>
+<li>Use Rout53 Health check and DNS failover for your origin
+<ul>
+<li>Enable latency based routing to multi edge locations
+<ul>
+<li>Sample scenario: 1 single region app act as origin for 4 cloud front edge in 4 regions
+<ul>
+<li>Improved: multi origin in multi regions, one origin down, the cloud front will fetch origin from avaiable origin</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>If you enable, Route53 will do health check automatically agianst your origin and if the backend is not healthy, the request is automatically detoured to other healthy origins</li>
+</ul>
+</li>
+<li>Configure multi origins
+<ul>
+<li>Setup multiple origins — dynamic contents to application and static to S3</li>
+</ul>
+</li>
+<li>Secure your origin
+<ul>
+<li>If content is hosted via S3, by limit origin via OAI (Object Access Identity) only from could front, it will improve performance and protect the S3</li>
+<li>If content is hosted via backend and with cloudfront cache, limit the origin at back end via white list cloudfront’s IP address.
+<ul>
+<li>How to automatically update these addresses : subscribe AWS official SNS, when ip changes use lambda to parse the notification and update security groups.</li>
+</ul>
+</li>
+<li>Prevent backend overload</li>
+</ul>
+</li>
+<li>Log request IDs
+<ul>
+<li>Generate request id and log to help debugging (???)</li>
+</ul>
+</li>
+<li>Set origin response headers
+<ul>
+<li>Strict-Transport-Security:  max-age=15552000
+<ul>
+<li>tells browser to only send request via https, even address is http, the browser should change it to https.</li>
+<li>helps with downgrade attacks</li>
+</ul>
+</li>
+<li>X-Frame-Options: SAMEORIGIN
+<ul>
+<li>used to tell if the response can be put inside an iframe. If yes, then the content can be hi-jacked and embeded into other website’s iframe webpage.</li>
+</ul>
+</li>
+<li>X-XSS-Protection: 1; mode=block Options
+<ul>
+<li>means to enable the XSS protection</li>
+</ul>
+</li>
+<li>Cache-Control: max-age=300;public</li>
+</ul>
+</li>
+</ul>
+<p>Demo: create security group to allow all cloudfront ip address, add the security group to VPC subnet allow list where the real origin sits inside the subnet; use lambda to update the security group based on AWS published clouddfront list (SNS)</p>
+<h2 id="gaining-visibility-into-your-distribution"><a class="markdownIt-Anchor" href="#gaining-visibility-into-your-distribution"></a> Gaining visibility into your distribution</h2>
+<p>Scenario: monitor cache hit/miss directly using cloudfront’s report view.<br>
+Scenario: look at cache statistics: “Percentage of GET Requests that Didn’t Finish Downloading” is surging up.</p>
+<ul>
+<li>Check the Popular Objects, ranking by “Incomplete Download”, possible reason is that file is too large and not segmented.<br>
+Scenario: Check the “Viewers”  to check customer by location (country)<br>
+Scenario: Check the “Viewers” to check the customer by device</li>
+</ul>
+<p>Scenario: how to identify bots? Create log to cloudwatch, filter log by bots and create alarms<br>
+Scenario: how to disable SSLv2 gracefully ? Create log to cloudwatch, filter log to check how many user are using SSL v3, then decide wether to turn SSL v3 on.</p>
+<h2 id="how-to-improve-cacheability"><a class="markdownIt-Anchor" href="#how-to-improve-cacheability"></a> how to improve cacheability</h2>
+<h3 id="versionning-website-assets"><a class="markdownIt-Anchor" href="#versionning-website-assets"></a> Versionning website assets</h3>
+<ul>
+<li>
+<p>Two ways to version cached assets,</p>
+<ul>
+<li>Use version number <a href="http://www.sample.com/v1/css/style.css;" target="_blank" rel="noopener">www.sample.com/v1/css/style.css;</a> <a href="http://www.sample.com/v2/css/style.css" target="_blank" rel="noopener">www.sample.com/v2/css/style.css</a></li>
+<li>Use md5sum <a href="http://www.sample.com/css/style.css" target="_blank" rel="noopener">www.sample.com/css/style.css</a>?<md5sum>   (How it works?)</md5sum></li>
+</ul>
+</li>
+<li>
+<p>Benefits</p>
+<ul>
+<li>monitor the error percentage when release new version, easy to roll back once something is wrong.</li>
+</ul>
+</li>
+<li>
+<p>Common CloudFront Cache Strategies</p>
+<ul>
+<li>js, css, image, set to 1 year (as long as it can be)</li>
+<li>index.html (no cache, max age = max session age) – make sure unique session id is generated for each unique user</li>
+<li>live streaming (max-age =2 , make sure user will follow the streaming )</li>
+</ul>
+</li>
+<li>
+<p>Shared assets from multi properties</p>
+<ul>
+<li>Single S3 as origin for different domain, one .org and one .com</li>
+</ul>
+</li>
+<li>
+<p>Forwarded values<br>
+When request hits cloudfront, still some dynamic content needs to visit the backend origin , then forwarded values will define with header will be forwarded, (like jsessionid)</p>
+</li>
+<li>
+<p>Invalidate the cache from cloudfront</p>
+<ul>
+<li>it will only invalidate cache in cloudfront ,won’t touch cache in client browser side</li>
+</ul>
+</li>
+</ul>
+<h2 id="how-to-test-your-configuration"><a class="markdownIt-Anchor" href="#how-to-test-your-configuration"></a> How to test your configuration</h2>
+<ul>
+<li>Test In Development Mode
+<ul>
+<li>Set TTL to 0 (then request will go through cloudfront but without caching)</li>
+<li>Use WAF to white list only office IP</li>
+<li>Chrome dev mode to check the unique headers added by cloudfront</li>
+</ul>
+</li>
+<li>performance test
+<ul>
+<li>Backbone Testing , network provider to test from datacenter</li>
+<li>Last Mile Testing , network provider to help test from end user</li>
+<li>Real User Testing , use real web site user performance by injecting some scripts</li>
+</ul>
+</li>
+<li>Load testing
+<ul>
+<li>traditional load testing is from one client which is hard to simulate DNS load balancing and real user env.</li>
+<li>Better use distributed client with different ip in different region</li>
+</ul>
+</li>
+<li>SSL Lab
+<ul>
+<li>Helps you verify your ssl config</li>
+<li><a href="https://www.ssllabs.com/" target="_blank" rel="noopener">https://www.ssllabs.com/</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Reward Makes Perfect</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Rachel Rui Liu Bitcoin">
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Rachel Rui Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://racheliurui.github.io/2018/04/10/markdown/AWS/AWS2018/08_CloudFront/" title="AWS - CloudFront">https://racheliurui.github.io/2018/04/10/markdown/AWS/AWS2018/08_CloudFront/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AWS/" rel="tag"># AWS</a>
+          
+            <a href="/tags/AWS-CloudFront/" rel="tag"># AWS CloudFront</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/10/markdown/AWS/AWS2018/07_CLI/" rel="next" title="AWS - CLI">
+                <i class="fa fa-chevron-left"></i> AWS - CLI
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/10/markdown/AWS/AWS2018/09_RelationalDBService/" rel="prev" title="AWS - Relational Database Service">
+                AWS - Relational Database Service <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg" alt="Rachel Rui Liu">
+          <p class="site-author-name" itemprop="name">Rachel Rui Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">178</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">193</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/racheliurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/rachel-rui-liu-a474a7a" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                    
+                      Linkedin
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#terminology"><span class="nav-number">1.</span> <span class="nav-text"> Terminology</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#how-it-works"><span class="nav-number">2.</span> <span class="nav-text"> How it works</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cloudfront-configurations"><span class="nav-number">2.1.</span> <span class="nav-text"> CloudFront Configurations</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#best-practise"><span class="nav-number">3.</span> <span class="nav-text"> Best Practise</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#try-to-use-ecs-enabled-resolver"><span class="nav-number">3.1.</span> <span class="nav-text"> Try to use ECS-Enabled Resolver</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cache-the-error-page"><span class="nav-number">3.2.</span> <span class="nav-text"> cache the error page</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cache-dynamic-content"><span class="nav-number">3.3.</span> <span class="nav-text"> Cache Dynamic content</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#version-your-contents"><span class="nav-number">3.4.</span> <span class="nav-text"> Version your contents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#minimize-forwardheaders-values"><span class="nav-number">3.5.</span> <span class="nav-text"> minimize ForwardHeaders values</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug-use-the-cloudfront-logs"><span class="nav-number">3.6.</span> <span class="nav-text"> Debug --&gt; Use the CloudFront Logs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#use-pre-configured-waf-rules-with-waf-to-protect-cloudfront"><span class="nav-number">3.7.</span> <span class="nav-text"> Use pre-configured WAF Rules with WAF to protect CloudFront</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#protect-private-content"><span class="nav-number">3.8.</span> <span class="nav-text"> Protect Private Content</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#monitoring"><span class="nav-number">4.</span> <span class="nav-text"> Monitoring</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design-pattern-for-availability"><span class="nav-number">5.</span> <span class="nav-text"> Design Pattern for Availability (???)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rum-real-user-monitoring"><span class="nav-number">6.</span> <span class="nav-text"> RUM (Real User Monitoring)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#synthetic-monitoring"><span class="nav-number">6.1.</span> <span class="nav-text"> Synthetic Monitoring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rum"><span class="nav-number">6.2.</span> <span class="nav-text"> RUM</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">7.</span> <span class="nav-text"> Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#using-amazon-cloudfront-for-your-websites-apps"><span class="nav-number">8.</span> <span class="nav-text"> Using Amazon CloudFront For Your Websites &amp; Apps</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#references"><span class="nav-number">8.1.</span> <span class="nav-text"> References</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#best-practise-to-set-up-your-origin"><span class="nav-number">8.2.</span> <span class="nav-text"> Best Practise to set up your origin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gaining-visibility-into-your-distribution"><span class="nav-number">8.3.</span> <span class="nav-text"> Gaining visibility into your distribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#how-to-improve-cacheability"><span class="nav-number">8.4.</span> <span class="nav-text"> how to improve cacheability</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#versionning-website-assets"><span class="nav-number">8.4.1.</span> <span class="nav-text"> Versionning website assets</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#how-to-test-your-configuration"><span class="nav-number">8.5.</span> <span class="nav-text"> How to test your configuration</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rachel Rui Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://racheliurui-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://racheliurui.github.io/2018/04/10/markdown/AWS/AWS2018/08_CloudFront/';
+          this.page.identifier = '2018/04/10/markdown/AWS/AWS2018/08_CloudFront/';
+          this.page.title = 'AWS - CloudFront';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://racheliurui-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

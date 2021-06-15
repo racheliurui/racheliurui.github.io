@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="AWS,IAM,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hey Hey Hey" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="IAM Overview IAM: Identity and Access Management  010.mp4 overview  011.mp4  Understand the difference between AWS IAM and customer IAM Understand the difference between aws account and aws iam users">
+<meta name="keywords" content="AWS,IAM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS - IAM">
+<meta property="og:url" content="https://racheliurui.github.io/2018/02/07/markdown/AWS/AWS2018/03_IdentityAndAccessManagement/index.html">
+<meta property="og:site_name" content="Hey Hey Hey">
+<meta property="og:description" content="IAM Overview IAM: Identity and Access Management  010.mp4 overview  011.mp4  Understand the difference between AWS IAM and customer IAM Understand the difference between aws account and aws iam users">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/03_IntegrateWithMicrosoftAD.png?raw=true">
+<meta property="og:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/03_IAM_SAML.png?raw=true">
+<meta property="og:updated_time" content="2021-06-15T03:43:00.417Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AWS - IAM">
+<meta name="twitter:description" content="IAM Overview IAM: Identity and Access Management  010.mp4 overview  011.mp4  Understand the difference between AWS IAM and customer IAM Understand the difference between aws account and aws iam users">
+<meta name="twitter:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/03_IntegrateWithMicrosoftAD.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://racheliurui.github.io/2018/02/07/markdown/AWS/AWS2018/03_IdentityAndAccessManagement/">
+
+
+
+
+
+  <title>AWS - IAM | Hey Hey Hey</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey Hey Hey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://racheliurui.github.io/2018/02/07/markdown/AWS/AWS2018/03_IdentityAndAccessManagement/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rachel Rui Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey Hey Hey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AWS - IAM</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-07T09:13:23+00:00">
+                2018-02-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/07/markdown/AWS/AWS2018/03_IdentityAndAccessManagement/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/07/markdown/AWS/AWS2018/03_IdentityAndAccessManagement/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="iam-overview"><a class="markdownIt-Anchor" href="#iam-overview"></a> IAM Overview</h1>
+<p>IAM: <strong>Identity and Access Management</strong></p>
+<h2 id="010mp4-overview"><a class="markdownIt-Anchor" href="#010mp4-overview"></a> 010.mp4 overview</h2>
+<h2 id="011mp4"><a class="markdownIt-Anchor" href="#011mp4"></a> 011.mp4</h2>
+<ul>
+<li>Understand the difference between AWS IAM and customer IAM</li>
+<li>Understand the difference between aws account and aws iam users</li>
+<li>IAM is a service.</li>
+<li>IAM control access by policies which is organized by “statement”, it include : resource (like a table); action(like access database); effect (like allow)</li>
+<li>security compliance: Payment Card Industry (PCI) Data Security Standard (DSS)</li>
+<li>Auditing : using CloudTrail</li>
+<li>Credential Report: downloaded excel (the report is generated every 4 hours, so there’s delay)</li>
+</ul>
+<h3 id="user"><a class="markdownIt-Anchor" href="#user"></a> User</h3>
+<p>如何表示user：</p>
+<ul>
+<li>arn: amazon resource name， 格式，<br>
+arn:aws:iam::[accountIDNum]:user/Bill
+<ul>
+<li>loads of examples:</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html</a></p>
+</blockquote>
+<ul>
+<li>id --如果用户是命令行创建,则可以拿到用户id</li>
+<li>普通的unique的user name</li>
+<li>never give root access</li>
+</ul>
+<p>Credential的类型：</p>
+<ul>
+<li>密码</li>
+<li>access key</li>
+<li>SSH key</li>
+<li>Server Certificates</li>
+</ul>
+<p>用户re-name，</p>
+<ul>
+<li>console是不支持的，但是可以用CLI；powershell或者API</li>
+</ul>
+<h3 id="group"><a class="markdownIt-Anchor" href="#group"></a> Group</h3>
+<ul>
+<li><strong>不能nest group</strong></li>
+<li>每个account最多100个group</li>
+</ul>
+<h3 id="roles"><a class="markdownIt-Anchor" href="#roles"></a> Roles</h3>
+<ul>
+<li>EC2 定义roles来访问其它aws 服务</li>
+<li>赋给一个account下的user去访问其它account下的资源</li>
+</ul>
+<p>Role的定义包含：</p>
+<ul>
+<li>RoleName: unique name within the current aws account</li>
+<li>RoleARN: unique within whole AWS
+<ul>
+<li>arn:aws:iam::<uniqueaccountid>:role/<rolename></rolename></uniqueaccountid></li>
+</ul>
+</li>
+<li>Delegation:
+<ul>
+<li>Create a role in account that owns the resource; then attach policy to represent the role access; setup trust relationship (allow consume the role)</li>
+</ul>
+</li>
+</ul>
+<h3 id="identity-federation"><a class="markdownIt-Anchor" href="#identity-federation"></a> Identity Federation</h3>
+<ul>
+<li>正常aws一个account只允许5k user，但是做了id federation，就不受5k的限制了。</li>
+<li>ways to do ID federation
+<ul>
+<li>amazon cognito</li>
+<li>OAuth2</li>
+<li>SAML2.0</li>
+<li>LDAP 或者 AD</li>
+</ul>
+</li>
+</ul>
+<h1 id="012mp4"><a class="markdownIt-Anchor" href="#012mp4"></a> 012.mp4</h1>
+<ul>
+<li>Create User and groups<br>
+Group can attach policy, and users will be added to Group(s)<br>
+support bulk creating users ( and each user can have their  access key(like public key in keypair) and secret access key(like secret key in key pair) which means password )</li>
+<li>Create account password policy
+<ul>
+<li>The password policy is configured at account level, and limitation is for users under that account</li>
+<li>All users under a certain account will have a unique IAM url used to sign in.</li>
+</ul>
+</li>
+<li>Create role<br>
+Role can represent services under current account, to create a role mean give certain service under current account to access to other resources. (create a role represent certain type of resource, then apply policy to the role to giva access to resource, create trust relationship to allow other resource or user to consume this role.<br>
+Role can delecate the access to resource to allow access between different aws account</li>
+<li>download credentials report</li>
+</ul>
+<h2 id="identity-based-policy"><a class="markdownIt-Anchor" href="#identity-based-policy"></a> Identity-based policy</h2>
+<ul>
+<li>Identity-based policy ： 可以attach到user，group，role上的policy
+<ul>
+<li>Managed policy：定义好以后可以复用的policy
+<ul>
+<li>aws managed</li>
+<li>customer managed</li>
+</ul>
+</li>
+<li>in-line policy: hard code在user，group或者role的定义里的，不能重用的policy</li>
+</ul>
+</li>
+</ul>
+<p>aws managed policy<br>
+<a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html</a></p>
+<h1 id="013mp4-trusted-advisor-service"><a class="markdownIt-Anchor" href="#013mp4-trusted-advisor-service"></a> 013.mp4 Trusted Advisor Service</h1>
+<p>Trusted Advisor Services</p>
+<ul>
+<li>Cost Optimization<br>
+check unused EC2, RDS, Elastic LB, EBS, etc.</li>
+<li>performance<br>
+check bottleneck Services</li>
+<li>security<br>
+Check all security related config</li>
+<li>Fault torlerance<br>
+Check all failover related config</li>
+</ul>
+<p>can setup to send notification regularly to corresponding emails.</p>
+<h1 id="014mp4-iam-best-practise"><a class="markdownIt-Anchor" href="#014mp4-iam-best-practise"></a> 014.mp4 IAM Best Practise</h1>
+<ul>
+<li>Enable MFA and reduce root access
+<ul>
+<li>support google athenticator</li>
+</ul>
+</li>
+<li>Grant least privilege (start from nothing)
+<ul>
+<li>default deny</li>
+<li>try not using wildcard <em>:</em> policy</li>
+<li>try to use policy template</li>
+</ul>
+</li>
+<li>Create individual Users</li>
+<li>Manage permissions with group</li>
+<li>Use IAM roles to manage permissions accross account and between Services under your account
+<ul>
+<li>external ID condition in policy to allow 3rd party</li>
+</ul>
+</li>
+<li>Restrict further with conditions (for example, must use MFA when access certain api)
+<ul>
+<li>put condition to policy</li>
+</ul>
+</li>
+<li>Use a strong password policy (expiration, length, forbidden re-use )</li>
+<li>Rotate the password credential
+<ul>
+<li>use credential report to identify</li>
+<li>allow user to rotate credentials</li>
+</ul>
+</li>
+<li>Enable AWS CloudTrail</li>
+<li>AWS Key management Service</li>
+<li>VPC security</li>
+</ul>
+<h2 id="exercise"><a class="markdownIt-Anchor" href="#exercise"></a> Exercise:</h2>
+<ul>
+<li>ARN form.</li>
+<li>How to define policy for a website hosted on AWS</li>
+<li>maximum number of IAM access keys per user? 2</li>
+<li>one account can have only 1 alias</li>
+<li>Users need their own access keys(not password !!!) to make programmatic calls to AWS using the AWS Command Line Interface (AWS CLI), the AWS SDKs, or direct HTTP calls using the APIs for individual services.</li>
+<li>Policy sample definition (009.html)</li>
+</ul>
+<h2 id="others"><a class="markdownIt-Anchor" href="#others"></a> others</h2>
+<p>Sign in page url:<br>
+https://My_AWS_Account_ID.signin.aws.amazon.com/console/</p>
+<h2 id="integrate-with-ad-best-practise"><a class="markdownIt-Anchor" href="#integrate-with-ad-best-practise"></a> Integrate with AD - Best Practise</h2>
+<p><img src="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/03_IntegrateWithMicrosoftAD.png?raw=true" alt="image of integrate with AD"></p>
+<blockquote>
+<p><a href="https://youtu.be/Iu-CpNFMELs" target="_blank" rel="noopener">https://youtu.be/Iu-CpNFMELs</a></p>
+</blockquote>
+<p>3 Options:</p>
+<ul>
+<li>Option1, EC2 join in on-promise AD domain
+<ul>
+<li>Expose a lot of ports as needed by EC2 on cloud</li>
+<li>AD connector
+<ul>
+<li>Initial Solution:  LDAP forward to on-promise AD</li>
+<li>EC2 domain join</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Option2, Run AD on EC2 (Paas)
+<ul>
+<li>Trust model Or Replication Model</li>
+<li>Support NetBIOS name resolution</li>
+</ul>
+</li>
+<li>Option3, Use AWS AD (SAAS) (released at Dec 2015)
+<ul>
+<li>Trust model : no trust no replication</li>
+<li>Work well with other Microsoft SAAS on AWS (MS SQL server)</li>
+<li>one way trust and 2 way Trust
+<ul>
+<li>one way trust is used to access on cloud resource using local AD account</li>
+<li>2 way trust is used when cloud resource needs to access on-promise resource (say, printer)</li>
+</ul>
+</li>
+<li>limitation (at 2016): don’t support ldaps; max 5w users</li>
+</ul>
+</li>
+</ul>
+<h1 id="federation"><a class="markdownIt-Anchor" href="#federation"></a> Federation</h1>
+<h2 id="options"><a class="markdownIt-Anchor" href="#options"></a> Options</h2>
+<h3 id="option-1-simple-ad"><a class="markdownIt-Anchor" href="#option-1-simple-ad"></a> Option 1, Simple AD</h3>
+<ul>
+<li>Microsoft AD Compatible;
+<ul>
+<li>Can’t set up trust bettwen M AD and Simple AD</li>
+<li>Don’t support schema extention, MFA, ldaps</li>
+</ul>
+</li>
+<li>Cheapest Option, suitable for &lt;5000 users</li>
+</ul>
+<h3 id="option-2-microsoft-ad"><a class="markdownIt-Anchor" href="#option-2-microsoft-ad"></a> Option 2, Microsoft AD</h3>
+<ul>
+<li>Support trust with M AD</li>
+<li>Don’t support schema extention, MFA</li>
+<li>Suitable for &gt;5000 users and need trust with on-premise M AD</li>
+</ul>
+<h3 id="option-3-ad-connector"><a class="markdownIt-Anchor" href="#option-3-ad-connector"></a> Option 3, AD Connector</h3>
+<ul>
+<li>Proxy service to directly use on-premise M AD</li>
+<li>Support MFA</li>
+</ul>
+<h3 id="option-4-saml-security-assertion-markup-language"><a class="markdownIt-Anchor" href="#option-4-saml-security-assertion-markup-language"></a> Option 4: SAML : Security Assertion Markup Language</h3>
+<ul>
+<li>Identity provider and AWS build up relationship in advance</li>
+<li>login flow will use Identify provider’s service to do the authentication</li>
+</ul>
+<h2 id="how-to-plan-the-federation"><a class="markdownIt-Anchor" href="#how-to-plan-the-federation"></a> How to plan the federation</h2>
+<p>Choose your SAML provider : for example ADFS, Active Directly</p>
+<h3 id="federation-high-level-steps"><a class="markdownIt-Anchor" href="#federation-high-level-steps"></a> Federation High Level Steps</h3>
+<p><img src="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/03_IAM_SAML.png?raw=true" alt="SAML process"></p>
+<ul>
+<li>Prepare SAML provider in your network</li>
+<li>Config SAML provider in AWS IAM</li>
+<li>Config Roles for your federated users</li>
+<li>Create Groups in AD matching IAM Roles</li>
+<li>Config SAML IdP (Identity provider) &amp; create assertions for SAML auth response</li>
+<li>Post SAML assertion result to AWS login url</li>
+</ul>
+<p>So when user raise a request, it will be mapped to a group, and that group is mapped to IAM role.<br>
+When a user belongs to multiple group, and then the group will be mapped to multiple IAM role, user will have option to signin with one role.</p>
+<p>You can use aws CLI with SAML ( the session will be persisted by default for 60 min)</p>
+<h1 id="aws-active-directory-deep-dive"><a class="markdownIt-Anchor" href="#aws-active-directory-deep-dive"></a> AWS Active Directory deep dive</h1>
+<ul>
+<li>When create, 2 options</li>
+<li>Option 1, create AWS Simple Directory
+<ul>
+<li>When create , specify VPC and 2 subnets (in different AZ)</li>
+<li>for linux to join in the AWS simple directory, need install SSSD and use SSSD to join in the domain (need reboot)</li>
+<li>for windows, when create ec2 instance, you can specify the AWS simple directory</li>
+</ul>
+</li>
+<li>Option 2, create AD connector to on premise AD
+<ul>
+<li>pointing to MS AD (need VPN), and also need specify VPC and 2 subnets.</li>
+</ul>
+</li>
+</ul>
+<h1 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h1>
+<blockquote>
+<p>AWS AD federation<br>
+<a href="https://www.youtube.com/watch?v=ytSjsEER-y0" target="_blank" rel="noopener">https://www.youtube.com/watch?v=ytSjsEER-y0</a></p>
+</blockquote>
+<blockquote>
+<p>Best Practise of integrate with MS AD (2016 Nov)<br>
+<a href="https://youtu.be/Iu-CpNFMELs" target="_blank" rel="noopener">https://youtu.be/Iu-CpNFMELs</a></p>
+</blockquote>
+<blockquote>
+<p>AWS AD deep dive<br>
+<a href="https://youtu.be/CY-xvo8Cc54" target="_blank" rel="noopener">https://youtu.be/CY-xvo8Cc54</a></p>
+</blockquote>
+<h1 id="progressive-journey-through-aws-iam-federations-options-2015-sec07"><a class="markdownIt-Anchor" href="#progressive-journey-through-aws-iam-federations-options-2015-sec07"></a> Progressive Journey Through AWS IAM Federations Options - 2015 (SEC07)</h1>
+<blockquote>
+<p><a href="https://youtu.be/-XARG9W2bGc" target="_blank" rel="noopener">https://youtu.be/-XARG9W2bGc</a></p>
+</blockquote>
+<h2 id="saml-primer-security-assertion-markup-language"><a class="markdownIt-Anchor" href="#saml-primer-security-assertion-markup-language"></a> SAML Primer – Security Assertion Markup Language</h2>
+<ul>
+<li>Configuration Time:
+<ul>
+<li>Identity Provider and Service Provider to exchange metadata in advance</li>
+</ul>
+</li>
+<li>Run time:
+<ul>
+<li>Cryptographic Trusted Assertion (login flow)</li>
+</ul>
+</li>
+</ul>
+<h2 id="demo-automating-onboarding"><a class="markdownIt-Anchor" href="#demo-automating-onboarding"></a> Demo – Automating onboarding</h2>
+<ul>
+<li>
+<p>Use python script to create providers, roles and policies into AWS</p>
+<ul>
+<li>python script to create IAM provider</li>
+<li>python script to create role with inline policy</li>
+<li>python to generate ldif (ldap exchange file) file and load group definition back into ldap</li>
+</ul>
+</li>
+<li>
+<p>Use python script to create group definitions into Directory</p>
+</li>
+</ul>
+<h2 id="aws-business-partners-solution-demo"><a class="markdownIt-Anchor" href="#aws-business-partners-solution-demo"></a> AWS Business Partner’s Solution Demo</h2>
+<h1 id="nova"><a class="markdownIt-Anchor" href="#nova"></a> Nova</h1>
+<ul>
+<li>Solution quite like Ranger</li>
+<li>User authenticate request with Nova is routed to AD</li>
+<li>AD pass then authentication and reply user id to Nova.</li>
+<li>Nova query user group information from AD, map to AWS group saved in its database</li>
+<li>Nova reply customer ask for which role the user want to log in</li>
+<li>Nova request sts from IAM and return to user (either login aws console or get temp access keys)</li>
+</ul>
+<h1 id="nova-2"><a class="markdownIt-Anchor" href="#nova-2"></a> Nova 2</h1>
+<ul>
+<li>add another dimention by using tag – to label team / resource</li>
+</ul>
+<h1 id="nova-3"><a class="markdownIt-Anchor" href="#nova-3"></a> Nova 3</h1>
+<ul>
+<li>allow user to select which account, which application and which environment to work on</li>
+</ul>
+<h1 id="basics"><a class="markdownIt-Anchor" href="#basics"></a> Basics</h1>
+<p>Identity based Policy vs Resource based policy:<br>
+Identity based：for a given user, define what resource he/she can access<br>
+Resource based：for a given resource, see who have access to it</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Reward Makes Perfect</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Rachel Rui Liu Bitcoin">
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Rachel Rui Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://racheliurui.github.io/2018/02/07/markdown/AWS/AWS2018/03_IdentityAndAccessManagement/" title="AWS - IAM">https://racheliurui.github.io/2018/02/07/markdown/AWS/AWS2018/03_IdentityAndAccessManagement/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AWS/" rel="tag"># AWS</a>
+          
+            <a href="/tags/IAM/" rel="tag"># IAM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/05/markdown/AWS/AWS2018/01_Overview/" rel="next" title="AWS - Overview">
+                <i class="fa fa-chevron-left"></i> AWS - Overview
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/07/markdown/Trending/InfoQ/" rel="prev" title="InfoQ Readings">
+                InfoQ Readings <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg" alt="Rachel Rui Liu">
+          <p class="site-author-name" itemprop="name">Rachel Rui Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">178</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">193</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/racheliurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/rachel-rui-liu-a474a7a" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                    
+                      Linkedin
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#iam-overview"><span class="nav-number">1.</span> <span class="nav-text"> IAM Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#010mp4-overview"><span class="nav-number">1.1.</span> <span class="nav-text"> 010.mp4 overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#011mp4"><span class="nav-number">1.2.</span> <span class="nav-text"> 011.mp4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#user"><span class="nav-number">1.2.1.</span> <span class="nav-text"> User</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#group"><span class="nav-number">1.2.2.</span> <span class="nav-text"> Group</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#roles"><span class="nav-number">1.2.3.</span> <span class="nav-text"> Roles</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#identity-federation"><span class="nav-number">1.2.4.</span> <span class="nav-text"> Identity Federation</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#012mp4"><span class="nav-number">2.</span> <span class="nav-text"> 012.mp4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#identity-based-policy"><span class="nav-number">2.1.</span> <span class="nav-text"> Identity-based policy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#013mp4-trusted-advisor-service"><span class="nav-number">3.</span> <span class="nav-text"> 013.mp4 Trusted Advisor Service</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#014mp4-iam-best-practise"><span class="nav-number">4.</span> <span class="nav-text"> 014.mp4 IAM Best Practise</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#exercise"><span class="nav-number">4.1.</span> <span class="nav-text"> Exercise:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#others"><span class="nav-number">4.2.</span> <span class="nav-text"> others</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#integrate-with-ad-best-practise"><span class="nav-number">4.3.</span> <span class="nav-text"> Integrate with AD - Best Practise</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#federation"><span class="nav-number">5.</span> <span class="nav-text"> Federation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#options"><span class="nav-number">5.1.</span> <span class="nav-text"> Options</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#option-1-simple-ad"><span class="nav-number">5.1.1.</span> <span class="nav-text"> Option 1, Simple AD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#option-2-microsoft-ad"><span class="nav-number">5.1.2.</span> <span class="nav-text"> Option 2, Microsoft AD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#option-3-ad-connector"><span class="nav-number">5.1.3.</span> <span class="nav-text"> Option 3, AD Connector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#option-4-saml-security-assertion-markup-language"><span class="nav-number">5.1.4.</span> <span class="nav-text"> Option 4: SAML : Security Assertion Markup Language</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#how-to-plan-the-federation"><span class="nav-number">5.2.</span> <span class="nav-text"> How to plan the federation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#federation-high-level-steps"><span class="nav-number">5.2.1.</span> <span class="nav-text"> Federation High Level Steps</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#aws-active-directory-deep-dive"><span class="nav-number">6.</span> <span class="nav-text"> AWS Active Directory deep dive</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number">7.</span> <span class="nav-text"> References</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#progressive-journey-through-aws-iam-federations-options-2015-sec07"><span class="nav-number">8.</span> <span class="nav-text"> Progressive Journey Through AWS IAM Federations Options - 2015 (SEC07)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#saml-primer-security-assertion-markup-language"><span class="nav-number">8.1.</span> <span class="nav-text"> SAML Primer – Security Assertion Markup Language</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#demo-automating-onboarding"><span class="nav-number">8.2.</span> <span class="nav-text"> Demo – Automating onboarding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#aws-business-partners-solution-demo"><span class="nav-number">8.3.</span> <span class="nav-text"> AWS Business Partner’s Solution Demo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nova"><span class="nav-number">9.</span> <span class="nav-text"> Nova</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nova-2"><span class="nav-number">10.</span> <span class="nav-text"> Nova 2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nova-3"><span class="nav-number">11.</span> <span class="nav-text"> Nova 3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#basics"><span class="nav-number">12.</span> <span class="nav-text"> Basics</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rachel Rui Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://racheliurui-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://racheliurui.github.io/2018/02/07/markdown/AWS/AWS2018/03_IdentityAndAccessManagement/';
+          this.page.identifier = '2018/02/07/markdown/AWS/AWS2018/03_IdentityAndAccessManagement/';
+          this.page.title = 'AWS - IAM';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://racheliurui-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

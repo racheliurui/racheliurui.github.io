@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Datawarehouse,Kimball,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hey Hey Hey" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Fundamental Concepts  Gather Business Requirements and Data Realities samples in the book Chapter 1 DW/BI and Dimensional Modeling Primer , p 5 Chapter 3 Retail Sales , p 70 Chapter 11 Telecommunicat">
+<meta name="keywords" content="Datawarehouse,Kimball">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kimball Dimensional Modeling Techniques Overview">
+<meta property="og:url" content="https://racheliurui.github.io/2019/06/17/markdown/Datawarehouse/02_KimballDimensionalModelingTechniquesOverview/index.html">
+<meta property="og:site_name" content="Hey Hey Hey">
+<meta property="og:description" content="Fundamental Concepts  Gather Business Requirements and Data Realities samples in the book Chapter 1 DW/BI and Dimensional Modeling Primer , p 5 Chapter 3 Retail Sales , p 70 Chapter 11 Telecommunicat">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-06-15T03:43:00.429Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kimball Dimensional Modeling Techniques Overview">
+<meta name="twitter:description" content="Fundamental Concepts  Gather Business Requirements and Data Realities samples in the book Chapter 1 DW/BI and Dimensional Modeling Primer , p 5 Chapter 3 Retail Sales , p 70 Chapter 11 Telecommunicat">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://racheliurui.github.io/2019/06/17/markdown/Datawarehouse/02_KimballDimensionalModelingTechniquesOverview/">
+
+
+
+
+
+  <title>Kimball Dimensional Modeling Techniques Overview | Hey Hey Hey</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey Hey Hey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://racheliurui.github.io/2019/06/17/markdown/Datawarehouse/02_KimballDimensionalModelingTechniquesOverview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rachel Rui Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey Hey Hey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kimball Dimensional Modeling Techniques Overview</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-17T20:28:10+00:00">
+                2019-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/17/markdown/Datawarehouse/02_KimballDimensionalModelingTechniquesOverview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/06/17/markdown/Datawarehouse/02_KimballDimensionalModelingTechniquesOverview/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="fundamental-concepts"><a class="markdownIt-Anchor" href="#fundamental-concepts"></a> Fundamental Concepts</h1>
+<h2 id="gather-business-requirements-and-data-realities"><a class="markdownIt-Anchor" href="#gather-business-requirements-and-data-realities"></a> Gather Business Requirements and Data Realities</h2>
+<p>samples in the book</p>
+<p>Chapter 1 DW/BI and Dimensional Modeling Primer , p 5<br>
+Chapter 3 Retail Sales , p 70<br>
+Chapter 11 Telecommunications , p 297<br>
+Chapter 17 Lifecycle Overview , p 412<br>
+Chapter 18 Dimensional Modeling Process and Tasks , p 431<br>
+Chapter 19 ETL Subsystems and Techniques ,p 444</p>
+<h2 id="collaborative-dimensional-modeling-workshops"><a class="markdownIt-Anchor" href="#collaborative-dimensional-modeling-workshops"></a> Collaborative Dimensional Modeling Workshops</h2>
+<p>Dimension models should be designed by folks who fully understand the business and their needs.</p>
+<h2 id="four-step-dimensional-design-process"><a class="markdownIt-Anchor" href="#four-step-dimensional-design-process"></a> Four-Step Dimensional Design process</h2>
+<ul>
+<li>Select the business Process</li>
+<li>Declare the Grain</li>
+<li>Identify the Dimensions</li>
+<li>Identify the facts</li>
+</ul>
+<h2 id="business-processes"><a class="markdownIt-Anchor" href="#business-processes"></a> Business Processes</h2>
+<p>Operational Activities</p>
+<h2 id="grain"><a class="markdownIt-Anchor" href="#grain"></a> Grain</h2>
+<p>The grain establishes exactly what a single fact table row represents.</p>
+<h2 id="dimensions-for-descriptive-context"><a class="markdownIt-Anchor" href="#dimensions-for-descriptive-context"></a> Dimensions for Descriptive Context</h2>
+<h2 id="facts-for-measurements"><a class="markdownIt-Anchor" href="#facts-for-measurements"></a> Facts for Measurements</h2>
+<h2 id="star-schemas-and-olap-cubes"><a class="markdownIt-Anchor" href="#star-schemas-and-olap-cubes"></a> Star Schemas and OLAP Cubes</h2>
+<h2 id="graceful-extensions-to-dimensional-models"><a class="markdownIt-Anchor" href="#graceful-extensions-to-dimensional-models"></a> Graceful Extensions to Dimensional Models</h2>
+<ul>
+<li>Add column to Fact table to describe FACT</li>
+<li>Add column to Fact table to contain foreign key to new dimension table</li>
+<li>Add column to Dimension table to add Attributes</li>
+</ul>
+<h1 id="basic-fact-table-techniques"><a class="markdownIt-Anchor" href="#basic-fact-table-techniques"></a> Basic Fact Table Techniques</h1>
+<h2 id="fact-table-structure"><a class="markdownIt-Anchor" href="#fact-table-structure"></a> Fact Table Structure</h2>
+<p>A fact table contains the numeric measure produced by an operational measurement event in the real world.</p>
+<h2 id="additive-semi-additive-non-additive-facts"><a class="markdownIt-Anchor" href="#additive-semi-additive-non-additive-facts"></a> Additive, Semi-Additive, Non-Additive Facts</h2>
+<p>Balance amounts are common semi-additive facts because they are additive across all dimensions except time.<br>
+Some measures are completely non-additive, such as ratios.</p>
+<h2 id="nulls-in-fact-tables"><a class="markdownIt-Anchor" href="#nulls-in-fact-tables"></a> Nulls in Fact Tables</h2>
+<p><strong>nulls must be avoided in the fact table’s foreign keys</strong></p>
+<h2 id="conformed-facts"><a class="markdownIt-Anchor" href="#conformed-facts"></a> Conformed facts</h2>
+<p>Same fact across different table, must use same name</p>
+<h2 id="transaction-fact-tables"><a class="markdownIt-Anchor" href="#transaction-fact-tables"></a> Transaction Fact Tables</h2>
+<h2 id="periodic-snapshot-fact-tables"><a class="markdownIt-Anchor" href="#periodic-snapshot-fact-tables"></a> Periodic Snapshot Fact Tables</h2>
+<h2 id="factless-fact-tables"><a class="markdownIt-Anchor" href="#factless-fact-tables"></a> Factless Fact Tables</h2>
+<p>Samples : table containing students attend school or not.</p>
+<h2 id="aggregate-fact-tables"><a class="markdownIt-Anchor" href="#aggregate-fact-tables"></a> Aggregate Fact Tables</h2>
+<p>For accelerate the query performance.</p>
+<h2 id="consolidated-fact-table"><a class="markdownIt-Anchor" href="#consolidated-fact-table"></a> Consolidated Fact Table</h2>
+<p>Sales actual and sales forcast being saved into same table, this design will make it easy to analysis but hard to ETL.</p>
+<h1 id="basic-dimension-table-techniques"><a class="markdownIt-Anchor" href="#basic-dimension-table-techniques"></a> Basic Dimension Table Techniques</h1>
+<h2 id="dimension-surrogate-key"><a class="markdownIt-Anchor" href="#dimension-surrogate-key"></a> Dimension Surrogate Key</h2>
+<ul>
+<li>Structure: wide, flat, denormalized tables with many low-cardinality text Attributes.</li>
+<li>Single primary keys
+<ul>
+<li>Can’t use operational system’s natural key</li>
+<li>Recommend to use anonymous integer primary key; Date dimension is exempt from this rule.</li>
+</ul>
+</li>
+</ul>
+<h2 id="natural-durable-and-supernatural-key"><a class="markdownIt-Anchor" href="#natural-durable-and-supernatural-key"></a> Natural, Durable and Supernatural key</h2>
+<ul>
+<li>
+<p>Natural key is generated from business System</p>
+</li>
+<li>
+<p>Durable / Supernatural key is generated by DW to indicate although Natural Key changed but it’s the same object. (for example an employ rejoined.)</p>
+</li>
+<li>
+<p>Drilling down: fundamental data analysis method</p>
+</li>
+<li>
+<p>Degenerate Dimensions</p>
+</li>
+</ul>
+<blockquote>
+<p>example : an invoice with multiple items.  Items fact table has all the dimensions as foreign key. Then invoice number become a dimension for item fact table ; but the invoice number dimension do not has any attribute with it. So the invoice number dimension table became a Degenerate Dimension. And this kind of dimension would be helpful with transaction and accumulating snapshot fact tables.</p>
+</blockquote>
+<ul>
+<li>Use text words in dimension attribute instead of crypic abbreviations , flags etc</li>
+<li>Why to use Date Dimension instead of using SQL compute: because Date Dimension has more attributes like: week number, holiday , fiscal period etc.
+<ul>
+<li>DateTime dimension table also need default row as normal dimension table</li>
+</ul>
+</li>
+<li>Role playing dimension: means dimension being defined once but being referenced mulitple times in one fact table and each time has different meaning. For example , Time dimension.</li>
+<li>Junk Dimension: when transaction has loads of dimension that don’t have a lot of value, we can combine some of them as one dimension.</li>
+<li>Snowflaked Dimensions: when you normalized all the dimension table.</li>
+<li>Outtrigger Dimensions: when dimension reference another dimension.
+<ul>
+<li>for example a dimension refer to date dimension.</li>
+<li>The baseline is dimensions are all supporting fact table. There shouldn’t be a case that fact table need one dimension to get the key of another dimension.</li>
+</ul>
+</li>
+</ul>
+<h1 id="integration-via-conformed-dimensions"><a class="markdownIt-Anchor" href="#integration-via-conformed-dimensions"></a> Integration via Conformed Dimensions</h1>
+<h1 id="dealing-with-slowly-changing-dimension-attributes"><a class="markdownIt-Anchor" href="#dealing-with-slowly-changing-dimension-attributes"></a> Dealing with Slowly Changing Dimension Attributes</h1>
+<h1 id="dealing-with-dimension-hierarchies"><a class="markdownIt-Anchor" href="#dealing-with-dimension-hierarchies"></a> Dealing with Dimension Hierarchies</h1>
+<h2 id="fixed-depth-positional-hierarchies"><a class="markdownIt-Anchor" href="#fixed-depth-positional-hierarchies"></a> Fixed Depth Positional Hierarchies</h2>
+<h2 id="slightly-raggedvariable-depth-hierarchies"><a class="markdownIt-Anchor" href="#slightly-raggedvariable-depth-hierarchies"></a> Slightly Ragged/Variable Depth Hierarchies</h2>
+<h2 id="raggedvariable-depth-hierarchies-with-hierarchy-bridge-tables"><a class="markdownIt-Anchor" href="#raggedvariable-depth-hierarchies-with-hierarchy-bridge-tables"></a> Ragged/Variable Depth Hierarchies with Hierarchy Bridge Tables</h2>
+<h2 id="raggedvariable-depth-hierarchies-with-pathstring-attributes"><a class="markdownIt-Anchor" href="#raggedvariable-depth-hierarchies-with-pathstring-attributes"></a> Ragged/Variable Depth Hierarchies with Pathstring Attributes</h2>
+<h1 id="advanced-fact-table-techniques"><a class="markdownIt-Anchor" href="#advanced-fact-table-techniques"></a> Advanced Fact Table Techniques</h1>
+<h1 id="advanced-dimension-techniques"><a class="markdownIt-Anchor" href="#advanced-dimension-techniques"></a> Advanced Dimension Techniques</h1>
+<h1 id="special-purpose-schemas"><a class="markdownIt-Anchor" href="#special-purpose-schemas"></a> Special Purpose Schemas</h1>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Reward Makes Perfect</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Rachel Rui Liu Bitcoin">
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Rachel Rui Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://racheliurui.github.io/2019/06/17/markdown/Datawarehouse/02_KimballDimensionalModelingTechniquesOverview/" title="Kimball Dimensional Modeling Techniques Overview">https://racheliurui.github.io/2019/06/17/markdown/Datawarehouse/02_KimballDimensionalModelingTechniquesOverview/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Datawarehouse/" rel="tag"># Datawarehouse</a>
+          
+            <a href="/tags/Kimball/" rel="tag"># Kimball</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/17/markdown/Datawarehouse/04_Inventory/" rel="next" title="Kimball Dimensional Modeling Techniques applied to Inventory Sample`">
+                <i class="fa fa-chevron-left"></i> Kimball Dimensional Modeling Techniques applied to Inventory Sample`
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/21/markdown/AWS/AWS2018/TroubleShooting/s3_access/" rel="prev" title="AWS - S3">
+                AWS - S3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg" alt="Rachel Rui Liu">
+          <p class="site-author-name" itemprop="name">Rachel Rui Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">178</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">193</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/racheliurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/rachel-rui-liu-a474a7a" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                    
+                      Linkedin
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fundamental-concepts"><span class="nav-number">1.</span> <span class="nav-text"> Fundamental Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gather-business-requirements-and-data-realities"><span class="nav-number">1.1.</span> <span class="nav-text"> Gather Business Requirements and Data Realities</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#collaborative-dimensional-modeling-workshops"><span class="nav-number">1.2.</span> <span class="nav-text"> Collaborative Dimensional Modeling Workshops</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#four-step-dimensional-design-process"><span class="nav-number">1.3.</span> <span class="nav-text"> Four-Step Dimensional Design process</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#business-processes"><span class="nav-number">1.4.</span> <span class="nav-text"> Business Processes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grain"><span class="nav-number">1.5.</span> <span class="nav-text"> Grain</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dimensions-for-descriptive-context"><span class="nav-number">1.6.</span> <span class="nav-text"> Dimensions for Descriptive Context</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#facts-for-measurements"><span class="nav-number">1.7.</span> <span class="nav-text"> Facts for Measurements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#star-schemas-and-olap-cubes"><span class="nav-number">1.8.</span> <span class="nav-text"> Star Schemas and OLAP Cubes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#graceful-extensions-to-dimensional-models"><span class="nav-number">1.9.</span> <span class="nav-text"> Graceful Extensions to Dimensional Models</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#basic-fact-table-techniques"><span class="nav-number">2.</span> <span class="nav-text"> Basic Fact Table Techniques</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fact-table-structure"><span class="nav-number">2.1.</span> <span class="nav-text"> Fact Table Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#additive-semi-additive-non-additive-facts"><span class="nav-number">2.2.</span> <span class="nav-text"> Additive, Semi-Additive, Non-Additive Facts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nulls-in-fact-tables"><span class="nav-number">2.3.</span> <span class="nav-text"> Nulls in Fact Tables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conformed-facts"><span class="nav-number">2.4.</span> <span class="nav-text"> Conformed facts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transaction-fact-tables"><span class="nav-number">2.5.</span> <span class="nav-text"> Transaction Fact Tables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#periodic-snapshot-fact-tables"><span class="nav-number">2.6.</span> <span class="nav-text"> Periodic Snapshot Fact Tables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#factless-fact-tables"><span class="nav-number">2.7.</span> <span class="nav-text"> Factless Fact Tables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#aggregate-fact-tables"><span class="nav-number">2.8.</span> <span class="nav-text"> Aggregate Fact Tables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#consolidated-fact-table"><span class="nav-number">2.9.</span> <span class="nav-text"> Consolidated Fact Table</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#basic-dimension-table-techniques"><span class="nav-number">3.</span> <span class="nav-text"> Basic Dimension Table Techniques</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dimension-surrogate-key"><span class="nav-number">3.1.</span> <span class="nav-text"> Dimension Surrogate Key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#natural-durable-and-supernatural-key"><span class="nav-number">3.2.</span> <span class="nav-text"> Natural, Durable and Supernatural key</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#integration-via-conformed-dimensions"><span class="nav-number">4.</span> <span class="nav-text"> Integration via Conformed Dimensions</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dealing-with-slowly-changing-dimension-attributes"><span class="nav-number">5.</span> <span class="nav-text"> Dealing with Slowly Changing Dimension Attributes</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dealing-with-dimension-hierarchies"><span class="nav-number">6.</span> <span class="nav-text"> Dealing with Dimension Hierarchies</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fixed-depth-positional-hierarchies"><span class="nav-number">6.1.</span> <span class="nav-text"> Fixed Depth Positional Hierarchies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slightly-raggedvariable-depth-hierarchies"><span class="nav-number">6.2.</span> <span class="nav-text"> Slightly Ragged/Variable Depth Hierarchies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#raggedvariable-depth-hierarchies-with-hierarchy-bridge-tables"><span class="nav-number">6.3.</span> <span class="nav-text"> Ragged/Variable Depth Hierarchies with Hierarchy Bridge Tables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#raggedvariable-depth-hierarchies-with-pathstring-attributes"><span class="nav-number">6.4.</span> <span class="nav-text"> Ragged/Variable Depth Hierarchies with Pathstring Attributes</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#advanced-fact-table-techniques"><span class="nav-number">7.</span> <span class="nav-text"> Advanced Fact Table Techniques</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#advanced-dimension-techniques"><span class="nav-number">8.</span> <span class="nav-text"> Advanced Dimension Techniques</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#special-purpose-schemas"><span class="nav-number">9.</span> <span class="nav-text"> Special Purpose Schemas</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rachel Rui Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://racheliurui-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://racheliurui.github.io/2019/06/17/markdown/Datawarehouse/02_KimballDimensionalModelingTechniquesOverview/';
+          this.page.identifier = '2019/06/17/markdown/Datawarehouse/02_KimballDimensionalModelingTechniquesOverview/';
+          this.page.title = 'Kimball Dimensional Modeling Techniques Overview';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://racheliurui-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

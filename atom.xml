@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hey Hey Hey</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://racheliurui.github.io/"/>
+  <updated>2021-06-15T03:43:00.429Z</updated>
+  <id>https://racheliurui.github.io/</id>
+  
+  <author>
+    <name>Rachel Rui Liu</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AWS - Redshift</title>
+    <link href="https://racheliurui.github.io/2020/12/31/markdown/AWS/AWS2021/redshift/"/>
+    <id>https://racheliurui.github.io/2020/12/31/markdown/AWS/AWS2021/redshift/</id>
+    <published>2020-12-31T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.429Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h1><blockquote></blockquote><p><a href="https://youtu.be/lj8oaSpCFTc" target="_blank" rel="noopener">https://youtu.be/lj8oaSpCFTc</a></p><h2 id="terminology"><a class="markdownIt-Anchor" href="#terminology"></a> Terminology</h2><ul><li>massively parallel, share Nothing Columnar architecture</li></ul><h2 id="best-practices-encoding-compression"><a class="markdownIt-Anchor" href="#best-practices-encoding-compression"></a> Best Practices: Encoding &amp; Compression</h2><blockquote></blockquote><p><a href="https://youtu.be/lj8oaSpCFTc?t=657" target="_blank" rel="noopener">https://youtu.be/lj8oaSpCFTc?t=657</a></p><ul><li>Use AZt4</li></ul><h3 id="basics"><a class="markdownIt-Anchor" href="#basics"></a> Basics</h3><ul><li>blocks (1MB immutable block encoded with 1 encoding)</li><li>zone maps</li><li>sort key</li></ul><blockquote></blockquote><p><a href="https://youtu.be/lj8oaSpCFTc?t=787" target="_blank" rel="noopener">https://youtu.be/lj8oaSpCFTc?t=787</a></p><h2 id="best-practices-sort-keys"><a class="markdownIt-Anchor" href="#best-practices-sort-keys"></a> Best Practices: Sort Keys</h2><blockquote></blockquote><p><a href="https://youtu.be/lj8oaSpCFTc?t=941" target="_blank" rel="noopener">https://youtu.be/lj8oaSpCFTc?t=941</a></p><ul><li>Compound key: Lowest cardinality columns first</li><li>Use script to help find the sort key</li><li>Define sort key on large table, four or less columns</li></ul><h2 id="best-practice-materialize-columns"><a class="markdownIt-Anchor" href="#best-practice-materialize-columns"></a> Best Practice: Materialize columns</h2><blockquote></blockquote><p><a href="https://youtu.be/lj8oaSpCFTc?t=1001" target="_blank" rel="noopener">https://youtu.be/lj8oaSpCFTc?t=1001</a></p><ul><li>Frequently filtered and unchanging dimension values should be materialized within fact tables;</li></ul><h2 id="basics-slice-data-distribution"><a class="markdownIt-Anchor" href="#basics-slice-data-distribution"></a> Basics: Slice, Data Distribution</h2><blockquote></blockquote><p><a href="https://youtu.be/lj8oaSpCFTc?t=1114" target="_blank" rel="noopener">https://youtu.be/lj8oaSpCFTc?t=1114</a></p><h2 id="best-practices-table-design-summary"><a class="markdownIt-Anchor" href="#best-practices-table-design-summary"></a> Best practices: table design summary</h2><blockquote></blockquote><p><a href="https://youtu.be/lj8oaSpCFTc?t=1455" target="_blank" rel="noopener">https://youtu.be/lj8oaSpCFTc?t=1455</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;reference&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#reference&quot;&gt;&lt;/a&gt; Reference&lt;/h1&gt;
+&lt;blockquote&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/lj8oaSpCFTc&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/lj8oaSpCFTc&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;terminology&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#terminology&quot;&gt;&lt;/a&gt; Terminology&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;massively parallel, share Nothing Columnar architecture&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;best-practices-encoding-compression&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#best-practices-encoding-compression&quot;&gt;&lt;/a&gt; Best Practices: Encoding &amp;amp; Compression&lt;/h2&gt;
+&lt;blockquote&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/lj8oaSpCFTc?t=657&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/lj8oaSpCFTc?t=657&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use AZt4&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;basics&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#basics&quot;&gt;&lt;/a&gt; Basics&lt;/h3&gt;
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+      <category term="Redshift" scheme="https://racheliurui.github.io/tags/Redshift/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - Reference Case, API First</title>
+    <link href="https://racheliurui.github.io/2020/12/29/markdown/AWS/AWS2021/DataAnalytics_Airflow/"/>
+    <id>https://racheliurui.github.io/2020/12/29/markdown/AWS/AWS2021/DataAnalytics_Airflow/</id>
+    <published>2020-12-29T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.429Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://aws.amazon.com/blogs/aws/introducing-amazon-managed-workflows-for-apache-airflow-mwaa/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/aws/introducing-amazon-managed-workflows-for-apache-airflow-mwaa/</a></p><p><a href="https://aws.amazon.com/blogs/containers/how-affirm-uses-aws-fargate-and-apache-airflow-to-manage-batch-jobs/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/containers/how-affirm-uses-aws-fargate-and-apache-airflow-to-manage-batch-jobs/</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/blogs/aws/introducing-amazon-managed-workflows-for-apache-airflow-mwaa/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://aws.amazon.com/blogs/aws/introducing-amazon-managed-workflows-for-apache-airflow-mwaa/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/blogs/containers/how-affirm-uses-aws-fargate-and-apache-airflow-to-manage-batch-jobs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://aws.amazon.com/blogs/containers/how-affirm-uses-aws-fargate-and-apache-airflow-to-manage-batch-jobs/&lt;/a&gt;&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="Airflow" scheme="https://racheliurui.github.io/tags/Airflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - BlogList</title>
+    <link href="https://racheliurui.github.io/2020/12/29/markdown/AWS/AWS2021/awsblog-index/"/>
+    <id>https://racheliurui.github.io/2020/12/29/markdown/AWS/AWS2021/awsblog-index/</id>
+    <published>2020-12-29T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.429Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote></blockquote><p><a href="https://aws.amazon.com/blogs/big-data/accessing-and-visualizing-external-tables-in-an-apache-hive-metastore-with-amazon-athena-and-amazon-quicksight/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/big-data/accessing-and-visualizing-external-tables-in-an-apache-hive-metastore-with-amazon-athena-and-amazon-quicksight/</a></p><p><a href="https://aws.amazon.com/blogs/big-data/setting-up-automated-data-quality-workflows-and-alerts-using-aws-glue-databrew-and-aws-lambda/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/big-data/setting-up-automated-data-quality-workflows-and-alerts-using-aws-glue-databrew-and-aws-lambda/</a></p><p><a href="https://aws.amazon.com/blogs/big-data/optimizing-amazon-emr-for-resilience-and-cost-with-capacity-optimized-spot-instances/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/big-data/optimizing-amazon-emr-for-resilience-and-cost-with-capacity-optimized-spot-instances/</a></p><p><a href="https://aws.amazon.com/blogs/big-data/amazon-emr-studio-preview-a-new-notebook-first-ide-experience-with-amazon-emr/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/big-data/amazon-emr-studio-preview-a-new-notebook-first-ide-experience-with-amazon-emr/</a></p><p><a href="https://aws.amazon.com/blogs/big-data/apply-record-level-changes-from-relational-databases-to-amazon-s3-data-lake-using-apache-hudi-on-amazon-emr-and-aws-database-migration-service/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/big-data/apply-record-level-changes-from-relational-databases-to-amazon-s3-data-lake-using-apache-hudi-on-amazon-emr-and-aws-database-migration-service/</a></p><p><a href="https://aws.amazon.com/blogs/big-data/amazon-emr-studio-preview-a-new-notebook-first-ide-experience-with-amazon-emr/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/big-data/amazon-emr-studio-preview-a-new-notebook-first-ide-experience-with-amazon-emr/</a></p><p><a href="https://aws.amazon.com/blogs/big-data/orchestrating-analytics-jobs-by-running-amazon-emr-notebooks-programmatically/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/big-data/orchestrating-analytics-jobs-by-running-amazon-emr-notebooks-programmatically/</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/blogs/big-data/accessing-and-visualizing-external-tables-in-an-apache-hive-metastore-with-amazon-athena-and-amazon-quicksight/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://aws.amazon.com/blogs/big-data/accessing-and-visualizing-external-tables-in-an-apache-hive-metastore-with-amazon-athena-and-amazon-quicksight/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/blogs/big-data/setting-up-automated-data-quality-workflows-and-alerts-using-aws-glue-databrew-and-aws-lambda/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://aws.amazon.com/blogs/big-data/setting-up-automated-data-quality-workflows-and-alerts-using-aws-glue-databrew-and-aws-lambda/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/blogs/big-data/optimizing-amazon-emr-for-resilience-and-cost-with-capacity-optimized-spot-instances/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://aws.amazon.com/blogs/big-data/optimizing-amazon-emr-for-resilience-and-cost-with-capacity-optimized-spot-instances/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/blogs/big-data/amazon-emr-studio-preview-a-new-notebook-first-ide-experience-with-amazon-emr/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://aws.amazon.com/blogs/big-data/amazon-emr-studio-preview-a-new-notebook-first-ide-experience-with-amazon-emr/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/blogs/big-data/apply-record-level-changes-from-relational-databases-to-amazon-s3-data-lake-using-apache-hudi-on-amazon-emr-and-aws-database-migration-service/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://aws.amazon.com/blogs/big-data/apply-record-level-changes-from-relational-databases-to-amazon-s3-data-lake-using-apache-hudi-on-amazon-emr-and-aws-database-migration-service/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/blogs/big-data/amazon-emr-studio-preview-a-new-notebook-first-ide-experience-with-amazon-emr/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://aws.amazon.com/blogs/big-data/amazon-emr-studio-preview-a-new-notebook-first-ide-experience-with-amazon-emr/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/blogs/big-data/orchestrating-analytics-jobs-by-running-amazon-emr-notebooks-programmatically/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://aws.amazon.com/blogs/big-data/orchestrating-analytics-jobs-by-running-amazon-emr-notebooks-programmatically/&lt;/a&gt;&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="AWS Blog" scheme="https://racheliurui.github.io/tags/AWS-Blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - HPC</title>
+    <link href="https://racheliurui.github.io/2020/08/05/markdown/AWS/AWS2020/Solution_HPC/"/>
+    <id>https://racheliurui.github.io/2020/08/05/markdown/AWS/AWS2020/Solution_HPC/</id>
+    <published>2020-08-05T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.429Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h1><ul><li>AWS re:Invent 2019: [REPEAT 1] HPC on AWS: Innovating without infrastructure constraints (CMP204-R1)</li></ul><blockquote><p><a href="https://youtu.be/g70bvcGlPY4" target="_blank" rel="noopener">https://youtu.be/g70bvcGlPY4</a></p></blockquote><ul><li>AWS re:Invent 2016: Building HPC Clusters as Code in the (Almost) Infinite Cloud( CMP318 )</li></ul><blockquote><p><a href="https://youtu.be/x7M3m1jZ7L8" target="_blank" rel="noopener">https://youtu.be/x7M3m1jZ7L8</a></p></blockquote><ul><li><a href="https://youtu.be/0bGZdqx6w1Q" target="_blank" rel="noopener">https://youtu.be/0bGZdqx6w1Q</a></li><li><a href="https://youtu.be/tHylCR0NIwU" target="_blank" rel="noopener">https://youtu.be/tHylCR0NIwU</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;references&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#references&quot;&gt;&lt;/a&gt; References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS re:Invent 2019: [REPEAT 1] HPC on AWS: Innovating without infrastructure constraints (CMP204-R1)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/g70bvcGlPY4&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/g70bvcGlPY4&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS re:Invent 2016: Building HPC Clusters as Code in the (Almost) Infinite Cloud( CMP318 )&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/x7M3m1jZ7L8&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/x7M3m1jZ7L8&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/0bGZdqx6w1Q&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/0bGZdqx6w1Q&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/tHylCR0NIwU&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/tHylCR0NIwU&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+      <category term="HPC" scheme="https://racheliurui.github.io/tags/HPC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - KMS</title>
+    <link href="https://racheliurui.github.io/2020/08/03/markdown/AWS/AWS2020/Security_KMS/"/>
+    <id>https://racheliurui.github.io/2020/08/03/markdown/AWS/AWS2020/Security_KMS/</id>
+    <published>2020-08-03T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.429Z</updated>
+    
+    <content type="html"><![CDATA[<ul><li>If you want to use AWS managed keys, then you can’t control key rotation, it would be every 3 years.</li><li>If you want to use Customer Managed Keys (CMK), you can turn on automatic rotation for sysmetric keys, it would be every year.</li><li>CMK sysmetric key and asysmetric private key never left KMS unencrypted</li><li>How to choose from Sysmetric and Asysmetric key</li></ul><blockquote><p><a href="https://docs.aws.amazon.com/kms/latest/developerguide/symm-asymm-choose.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/kms/latest/developerguide/symm-asymm-choose.html</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;If you want to use AWS managed keys, then you can’t control key rotation, it would be every 3 years.&lt;/li&gt;
+&lt;li&gt;If you want to use Customer Managed Keys (CMK), you can turn on automatic rotation for sysmetric keys, it would be every year.&lt;/li&gt;
+&lt;li&gt;CMK sysmetric key and asysmetric private key never left KMS unencrypted&lt;/li&gt;
+&lt;li&gt;How to choose from Sysmetric and Asysmetric key&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.aws.amazon.com/kms/latest/developerguide/symm-asymm-choose.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://docs.aws.amazon.com/kms/latest/developerguide/symm-asymm-choose.html&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+      <category term="KMS" scheme="https://racheliurui.github.io/tags/KMS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>LoraWAN</title>
+    <link href="https://racheliurui.github.io/2020/07/18/markdown/AWS/AWS2020/LoraWAN/"/>
+    <id>https://racheliurui.github.io/2020/07/18/markdown/AWS/AWS2020/LoraWAN/</id>
+    <published>2020-07-18T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.429Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h1><p><a href="https://youtu.be/8Oxcp9wQQnk" target="_blank" rel="noopener">https://youtu.be/8Oxcp9wQQnk</a></p><h1 id="terminology"><a class="markdownIt-Anchor" href="#terminology"></a> Terminology</h1><h2 id="lora-vs-lorawan"><a class="markdownIt-Anchor" href="#lora-vs-lorawan"></a> Lora vs LoraWAN</h2><ul><li>Lora is the protocol, __Lo__ng __Ra__nge ; LoRa is Layer2</li><li>LoraWAN is the IoT solution based on Lora technology</li></ul><h2 id="lora-procons"><a class="markdownIt-Anchor" href="#lora-procons"></a> Lora Pro/Cons</h2><ul><li>ISM Open frequency(415,868,915MHz, free ; no license required</li><li>Interference ; low data rate</li></ul><h2 id="limitations-parameters"><a class="markdownIt-Anchor" href="#limitations-parameters"></a> Limitations / Parameters</h2><p>Target: transmission message about 10 km and the battery last for 2 years.</p><ul><li>Frequency: Pay attention to band requirement per country</li><li>Tx power (transmission power): 2-14 dbm / 5-20 dBm; the higher the power , the longer distance signals can cover</li><li>Bandwidth (125/250/500 KHz): the higher the more data can be include in one transmission; the higher the bandwidth, the shorter battery life, the shorter range and more interference.(??); checked the local laws</li><li>spreading factor: (7-12), the larger spreading factor, the longer distance and shorter battery life.</li><li>coding rate: 4/5, 4/6, 4/7, 4/8,<br>4/5 means 5 error bits used to correct 4 bit of data. The more coding rate, means your data can transfer longer distance but lower battery life.</li></ul><h2 id="lora-device"><a class="markdownIt-Anchor" href="#lora-device"></a> LoRa Device</h2><ul><li><p>Lora Nodes:<br>Normally will integrate sensor, transponder, mircrocontroler all together.<br>Receive and transmit sensor data, send out via air using LoRa protocol</p><ul><li>LoPy ; LORA GPS Hat; RN2483</li></ul></li><li><p>Gateway :<br>Receive LoRa data via multi channels with different frequencies ; send out data to IP network.</p><ul><li>IMST IC880A-SPI (8 channels at a time)</li></ul></li></ul><h2 id="lorawan"><a class="markdownIt-Anchor" href="#lorawan"></a> LoRaWAN</h2><p>Layer 3 and 4 ;</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;references&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#references&quot;&gt;&lt;/a&gt; References&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/8Oxcp9wQQnk&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/8Oxcp9wQQnk&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;terminology&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#terminology&quot;&gt;&lt;/a&gt; Terminology&lt;/h1&gt;
+&lt;h2 id=&quot;lora-vs-lorawan&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#lora-vs-lorawan&quot;&gt;&lt;/a&gt; Lora vs LoraWAN&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Lora is the protocol, __Lo__ng __Ra__nge ; LoRa is Layer2&lt;/li&gt;
+&lt;li&gt;LoraWAN is the IoT solution based on Lora technology&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;lora-procons&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#lora-procons&quot;&gt;&lt;/a&gt; Lora Pro/Cons&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;ISM Open frequency(415,868,915MHz, free ; no license required&lt;/li&gt;
+&lt;li&gt;Interference ; low data rate&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;limitations-parameters&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#limitations-parameters&quot;&gt;&lt;/a&gt; Limitations / Parameters&lt;/h2&gt;
+&lt;p&gt;Target: transmission message about 10 km and the battery last for 2 years.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Frequency: Pay attention to band requirement per country&lt;/li&gt;
+&lt;li&gt;Tx power (transmission power): 2-14 dbm / 5-20 dBm; the higher the power , the longer distance signals can cover&lt;/li&gt;
+&lt;li&gt;Bandwidth (125/250/500 KHz): the higher the more data can be include in one transmission; the higher the bandwidth, the shorter battery life, the shorter range and more interference.(??); checked the local laws&lt;/li&gt;
+&lt;li&gt;spreading factor: (7-12), the larger spreading factor, the longer distance and shorter battery life.&lt;/li&gt;
+&lt;li&gt;coding rate: 4/5, 4/6, 4/7, 4/8,&lt;br&gt;
+4/5 means 5 error bits used to correct 4 bit of data. The more coding rate, means your data can transfer longer distance but lower battery life.&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="IoT" scheme="https://racheliurui.github.io/tags/IoT/"/>
+    
+      <category term="LoraWAN" scheme="https://racheliurui.github.io/tags/LoraWAN/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - Security</title>
+    <link href="https://racheliurui.github.io/2020/06/16/markdown/AWS/AWS2020/WAR_Security/"/>
+    <id>https://racheliurui.github.io/2020/06/16/markdown/AWS/AWS2020/WAR_Security/</id>
+    <published>2020-06-16T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.429Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h1><blockquote></blockquote><p><a href="https://youtu.be/u6BCVkXkPnM" target="_blank" rel="noopener">https://youtu.be/u6BCVkXkPnM</a></p><h1 id="aws-reinforce-2019-security-best-practices-the-well-architected-way-sdd318"><a class="markdownIt-Anchor" href="#aws-reinforce-2019-security-best-practices-the-well-architected-way-sdd318"></a> AWS re:Inforce 2019: Security Best Practices the Well-Architected Way (SDD318)</h1><h2 id="incident-response"><a class="markdownIt-Anchor" href="#incident-response"></a> Incident response</h2><p><a href="https://d1.awsstatic.com/whitepapers/aws_security_incident_response.pdf" target="_blank" rel="noopener">https://d1.awsstatic.com/whitepapers/aws_security_incident_response.pdf</a></p><p>Playbook vs Runbook: run book have more details</p><p><a href="https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_finding-types-active.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_finding-types-active.html</a></p><ul><li>predefined query against cloudwatch event</li></ul><h2 id="iam"><a class="markdownIt-Anchor" href="#iam"></a> IAM</h2><ul><li><p>SSO<br><a href="https://aws.amazon.com/blogs/security/how-to-establish-federated-access-to-your-aws-resources-by-using-active-directory-user-attributes/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/security/how-to-establish-federated-access-to-your-aws-resources-by-using-active-directory-user-attributes/</a></p></li><li><p>Permission boundaries</p></li><li><p>Automation</p></li><li><p>Role from Account 1 to assume role from Account 2 (hands on)</p></li></ul><h2 id="management"><a class="markdownIt-Anchor" href="#management"></a> Management</h2><p>Detective Control</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;reference&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#reference&quot;&gt;&lt;/a&gt; Reference&lt;/h1&gt;
+&lt;blockquote&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/u6BCVkXkPnM&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/u6BCVkXkPnM&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;aws-reinforce-2019-security-best-practices-the-well-architected-way-sdd318&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#aws-reinforce-2019-security-best-practices-the-well-architected-way-sdd318&quot;&gt;&lt;/a&gt; AWS re:Inforce 2019: Security Best Practices the Well-Architected Way (SDD318)&lt;/h1&gt;
+&lt;h2 id=&quot;incident-response&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#incident-response&quot;&gt;&lt;/a&gt; Incident response&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://d1.awsstatic.com/whitepapers/aws_security_incident_response.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://d1.awsstatic.com/whitepapers/aws_security_incident_response.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Playbook vs Runbook: run book have more details&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_finding-types-active.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_finding-types-active.html&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;predefined query against cloudwatch event&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;iam&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#iam&quot;&gt;&lt;/a&gt; IAM&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+      <category term="Security" scheme="https://racheliurui.github.io/tags/Security/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - Reference Case, API First</title>
+    <link href="https://racheliurui.github.io/2020/02/23/markdown/AWS/AWS2020/APIFirst/"/>
+    <id>https://racheliurui.github.io/2020/02/23/markdown/AWS/AWS2020/APIFirst/</id>
+    <published>2020-02-23T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.429Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h1><blockquote></blockquote><p><a href="https://youtu.be/TKgml4bSiZA" target="_blank" rel="noopener">https://youtu.be/TKgml4bSiZA</a></p><h2 id="key-take-away"><a class="markdownIt-Anchor" href="#key-take-away"></a> Key Take Away</h2><ul><li>No IT / Business separation</li><li>Cross functional teams</li><li>Born agile (DevOps)</li><li>TDD , automation and ChatOps</li><li>Customer-centric design</li><li>CD</li></ul><h2 id="archi"><a class="markdownIt-Anchor" href="#archi"></a> Archi</h2><h1 id="reference-openbanking-with-hsbc"><a class="markdownIt-Anchor" href="#reference-openbanking-with-hsbc"></a> Reference Openbanking with HSBC</h1><blockquote></blockquote><p><a href="https://youtu.be/QNM9LVV_eI0" target="_blank" rel="noopener">https://youtu.be/QNM9LVV_eI0</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;reference&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#reference&quot;&gt;&lt;/a&gt; Reference&lt;/h1&gt;
+&lt;blockquote&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/TKgml4bSiZA&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/TKgml4bSiZA&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;key-take-away&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#key-take-away&quot;&gt;&lt;/a&gt; Key Take Away&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;No IT / Business separation&lt;/li&gt;
+&lt;li&gt;Cross functional teams&lt;/li&gt;
+&lt;li&gt;Born agile (DevOps)&lt;/li&gt;
+&lt;li&gt;TDD , automation and ChatOps&lt;/li&gt;
+&lt;li&gt;Customer-centric design&lt;/li&gt;
+&lt;li&gt;CD&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;archi&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#archi&quot;&gt;&lt;/a&gt; Archi&lt;/h2&gt;
+&lt;h1 id=&quot;reference-openbanking-with-hsbc&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#reference-openbanking-with-hsbc&quot;&gt;&lt;/a&gt; Reference Openbanking with HSBC&lt;/h1&gt;
+&lt;blockquote&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/QNM9LVV_eI0&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/QNM9LVV_eI0&lt;/a&gt;&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+      <category term="API First" scheme="https://racheliurui.github.io/tags/API-First/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - Protection Ring</title>
+    <link href="https://racheliurui.github.io/2020/01/24/markdown/BackToBasic/Security/ProtectionRing/"/>
+    <id>https://racheliurui.github.io/2020/01/24/markdown/BackToBasic/Security/ProtectionRing/</id>
+    <published>2020-01-24T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.429Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Protection_ring" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Protection_ring</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Protection_ring&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://en.wikipedia.org/wiki/Protection_ring&lt;/a&gt;&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="Security" scheme="https://racheliurui.github.io/tags/Security/"/>
+    
+      <category term="Protection Rings" scheme="https://racheliurui.github.io/tags/Protection-Rings/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - Kinesis</title>
+    <link href="https://racheliurui.github.io/2020/01/18/markdown/AWS/AWS2021/Kinesis/"/>
+    <id>https://racheliurui.github.io/2020/01/18/markdown/AWS/AWS2021/Kinesis/</id>
+    <published>2020-01-18T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.429Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h1><blockquote></blockquote><p><a href="https://youtu.be/jKPlGznbfZ0" target="_blank" rel="noopener">https://youtu.be/jKPlGznbfZ0</a></p><h2 id="why-streaming"><a class="markdownIt-Anchor" href="#why-streaming"></a> Why Streaming</h2><ul><li>Data loses value quickly over time<ul><li>“Time critical decisions” need streaming data</li><li>inject as it’s generated, process on the fly and do real-time analytics/ML/Alert/Action</li></ul></li><li>Common streaming use case<ul><li>Smart home / automation / log / Data Lake / IoT</li></ul></li><li>Real time analytics demo (User Dashboard)</li></ul><h2 id="streams-producers-and-consumers"><a class="markdownIt-Anchor" href="#streams-producers-and-consumers"></a> Streams Producers and Consumers</h2><h3 id="producer-limits"><a class="markdownIt-Anchor" href="#producer-limits"></a> Producer limits</h3><ul><li>bandwidth limitation: 1MB/sec/shard</li><li>if not, aggregate your message, and use throughput limitation: 1k record/sec/shard</li></ul><h3 id="normal-consumer"><a class="markdownIt-Anchor" href="#normal-consumer"></a> Normal consumer</h3><ul><li><p>The slowest consumer will also impact number of shards, you might need increase the shards to allow the slowest consumer can process the message concurrently to pick up all the messages</p></li><li><p>The fastest speed you can get the data is one trasaction per 200ms</p></li><li><p>Multiple consumers share the 5 transaction/sec/shard and 1M data / sec /shard limitations.</p><ul><li>Multiple consumers will decrease the troughput as well as increase your latency</li></ul></li><li><p>Workaround , use master stream and copied slave stream</p></li></ul><h3 id="enhanced-fan-out"><a class="markdownIt-Anchor" href="#enhanced-fan-out"></a> Enhanced Fan out</h3><ul><li>use http/2 , subscribe, and data is pushed to consumer</li><li>each consumer gets dedicated 2MB/sec/shard ; message latency can be 15ms</li></ul><h2 id="comcast-streaming"><a class="markdownIt-Anchor" href="#comcast-streaming"></a> Comcast streaming</h2><ul><li>As a platform, design topic for teams to share/communication</li><li>Use API gateway to register the stream</li></ul><p><a href="https://comcastsamples.github.io/KinesisShardCalculator/" target="_blank" rel="noopener">https://comcastsamples.github.io/KinesisShardCalculator/</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;reference&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#reference&quot;&gt;&lt;/a&gt; Reference&lt;/h1&gt;
+&lt;blockquote&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/jKPlGznbfZ0&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/jKPlGznbfZ0&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;why-streaming&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#why-streaming&quot;&gt;&lt;/a&gt; Why Streaming&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Data loses value quickly over time
+&lt;ul&gt;
+&lt;li&gt;“Time critical decisions” need streaming data&lt;/li&gt;
+&lt;li&gt;inject as it’s generated, process on the fly and do real-time analytics/ML/Alert/Action&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Common streaming use case
+&lt;ul&gt;
+&lt;li&gt;Smart home / automation / log / Data Lake / IoT&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Real time analytics demo (User Dashboard)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;streams-producers-and-consumers&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#streams-producers-and-consumers&quot;&gt;&lt;/a&gt; Streams Producers and Consumers&lt;/h2&gt;
+&lt;h3 id=&quot;producer-limits&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#producer-limits&quot;&gt;&lt;/a&gt; Producer limits&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;bandwidth limitation: 1MB/sec/shard&lt;/li&gt;
+&lt;li&gt;if not, aggregate your message, and use throughput limitation: 1k record/sec/shard&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;normal-consumer&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#normal-consumer&quot;&gt;&lt;/a&gt; Normal consumer&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The slowest consumer will also impact number of shards, you might need increase the shards to allow the slowest consumer can process the message concurrently to pick up all the messages&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The fastest speed you can get the data is one trasaction per 200ms&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Multiple consumers share the 5 transaction/sec/shard and 1M data / sec /shard limitations.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Multiple consumers will decrease the troughput as well as increase your latency&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Workaround , use master stream and copied slave stream&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+      <category term="Kinesis" scheme="https://racheliurui.github.io/tags/Kinesis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - Design MQTT Topics for AWS IoT Core</title>
+    <link href="https://racheliurui.github.io/2020/01/02/markdown/AWS/AWS2020/BestPracticesMQTT/"/>
+    <id>https://racheliurui.github.io/2020/01/02/markdown/AWS/AWS2020/BestPracticesMQTT/</id>
+    <published>2020-01-02T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.429Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h1><p><a href="https://d1.awsstatic.com/whitepapers/Designing_MQTT_Topics_for_AWS_IoT_Core.pdf" target="_blank" rel="noopener">https://d1.awsstatic.com/whitepapers/Designing_MQTT_Topics_for_AWS_IoT_Core.pdf</a></p><h1 id="mqtt-communication-patterns"><a class="markdownIt-Anchor" href="#mqtt-communication-patterns"></a> MQTT Communication Patterns</h1><ul><li>Point to Point<ul><li>different devices subscribe to the topic relevant to itself</li></ul></li><li>Broadcast<ul><li>multiple devices subscribe to same topic</li></ul></li><li>Fan-in<ul><li>multiple devices publish to same topic</li><li>avoid using fan-in to a single end device (?); use fan-in to route a large fleet of messages via IoT Rules Engine.<ul><li>because this routing may hit a non-adjustable limit on a single device MQTT connection (!!!)</li></ul></li></ul></li></ul><h1 id="mqtt-communication-patterns-2"><a class="markdownIt-Anchor" href="#mqtt-communication-patterns-2"></a> MQTT Communication Patterns</h1><ul><li>device to device</li><li>device to cloud</li><li>cloud to device<ul><li>include session information for tracking purpose</li></ul></li><li>device to/from users</li></ul><h1 id="mqtt-design-best-practices"><a class="markdownIt-Anchor" href="#mqtt-design-best-practices"></a> MQTT Design Best Practices</h1><h2 id="general-best-practices"><a class="markdownIt-Anchor" href="#general-best-practices"></a> General Best Practices</h2><ul><li>topic level: lowercase letters, numbers and dashes</li><li>general to specific</li><li>include any relevant routing information in topic</li><li><strong>prefix</strong> to distinguish data and command topics</li><li>document topic structure as operation practices</li><li>use IoT Thing name as MQTT client ID – easy to correlate for logging and policy purpose</li><li>including Thing Name in any MQTT message published by a thing or sending to a specific thing</li><li>review the limitations<ul><li><a href="https://docs.aws.amazon.com/general/latest/gr/iot-core.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/general/latest/gr/iot-core.html</a></li></ul></li><li>include contextual information in payload messages</li><li>avoid fan-in to a single device – do not allow a single device subscribe to a shared topic (!!!)</li><li>never allow device to subscribe to all topics (#); Use single level wildcard (+) for IoT Rules</li></ul><h2 id="best-practices-for-telemetry"><a class="markdownIt-Anchor" href="#best-practices-for-telemetry"></a> Best Practices for Telemetry</h2><ul><li>IoT Basic Ingest for Telemetry<ul><li>topic is designed to help route to different rules in rule engine (no need for device-2-device)</li></ul></li><li>Traditional MQTT topics</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dt/&lt;application&gt;/&lt;context&gt;/&lt;thing-name&gt;/&lt;dt-type&gt;</span><br></pre></td></tr></table></figure><p><application>: useful for version switch<br><context>: grouping ; for example device group id<br><dt-type>: subcomponent of device / sensors</dt-type></context></application></p><h2 id="best-practices-for-commands"><a class="markdownIt-Anchor" href="#best-practices-for-commands"></a> Best Practices for Commands</h2><ul><li><p>IoT Shadow</p></li><li><p>AWS IoT Shadow is the preferred AWS IoT Service for implementing individual device<br>commands.</p></li><li><p>AWS IoT Device Jobs(?) should be used for fleet-wide operations as it<br>provides extra benefits, such as Amazon CloudWatch metrics for Job tracking, and the<br>ability to track multiple in-transit Jobs for a single device.</p></li><li><p>You can use a combination of<br>the AWS IoT Shadow, AWS IoT Job documents(?), and standard MQTT topics to support<br>your command use cases.</p></li></ul><h2 id="best-practices-for-using-the-aws-iot-shadow"><a class="markdownIt-Anchor" href="#best-practices-for-using-the-aws-iot-shadow"></a> Best Practices for Using the AWS IoT Shadow</h2><ul><li>Don’t share shadow</li><li>Shadow is for infrequent state or command happen in min/hour/day.</li><li>Use shadow for storing status metrics of device</li><li>Use shadow for firmware version (major.minor.patch)</li><li>use clientToken field for tracking purpose</li></ul><h2 id="best-practices-for-using-iot-jobs-for-commands"><a class="markdownIt-Anchor" href="#best-practices-for-using-iot-jobs-for-commands"></a> Best Practices for using IoT Jobs for commands</h2><p>IoT Job contains instructions that the thing must run to complete it’s tranction.</p><ul><li>Use thing group with AWS IoT Jobs<ul><li>update all things with certain firmware</li></ul></li><li>Use staged rollout using Device Jobs</li></ul><h2 id="best-practices-for-using-mqtt-topics-for-commands"><a class="markdownIt-Anchor" href="#best-practices-for-using-mqtt-topics-for-commands"></a> Best Practices for using MQTT Topics for commands</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmd/&lt;application&gt;/&lt;context&gt;/&lt;destination-id&gt;/&lt;req-type&gt;</span><br><span class="line">cmd/&lt;application&gt;/&lt;context&gt;/&lt;destination-id&gt;/&lt;res-type&gt;</span><br></pre></td></tr></table></figure><ul><li>Command Payload Syntax<ul><li>session id</li><li>response-topic</li></ul></li></ul><h1 id="applications-on-aws"><a class="markdownIt-Anchor" href="#applications-on-aws"></a> Applications on AWS</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;references&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#references&quot;&gt;&lt;/a&gt; References&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://d1.awsstatic.com/whitepapers/Designing_MQTT_Topics_for_AWS_IoT_Core.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://d1.awsstatic.com/whitepapers/Designing_MQTT_Topics_for_AWS_IoT_Core.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;mqtt-communication-patterns&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#mqtt-communication-patterns&quot;&gt;&lt;/a&gt; MQTT Communication Patterns&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Point to Point
+&lt;ul&gt;
+&lt;li&gt;different devices subscribe to the topic relevant to itself&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Broadcast
+&lt;ul&gt;
+&lt;li&gt;multiple devices subscribe to same topic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Fan-in
+&lt;ul&gt;
+&lt;li&gt;multiple devices publish to same topic&lt;/li&gt;
+&lt;li&gt;avoid using fan-in to a single end device (?); use fan-in to route a large fleet of messages via IoT Rules Engine.
+&lt;ul&gt;
+&lt;li&gt;because this routing may hit a non-adjustable limit on a single device MQTT connection (!!!)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;mqtt-communication-patterns-2&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#mqtt-communication-patterns-2&quot;&gt;&lt;/a&gt; MQTT Communication Patterns&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;device to device&lt;/li&gt;
+&lt;li&gt;device to cloud&lt;/li&gt;
+&lt;li&gt;cloud to device
+&lt;ul&gt;
+&lt;li&gt;include session information for tracking purpose&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;device to/from users&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;mqtt-design-best-practices&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#mqtt-design-best-practices&quot;&gt;&lt;/a&gt; MQTT Design Best Practices&lt;/h1&gt;
+&lt;h2 id=&quot;general-best-practices&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#general-best-practices&quot;&gt;&lt;/a&gt; General Best Practices&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;topic level: lowercase letters, numbers and dashes&lt;/li&gt;
+&lt;li&gt;general to specific&lt;/li&gt;
+&lt;li&gt;include any relevant routing information in topic&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;prefix&lt;/strong&gt; to distinguish data and command topics&lt;/li&gt;
+&lt;li&gt;document topic structure as operation practices&lt;/li&gt;
+&lt;li&gt;use IoT Thing name as MQTT client ID – easy to correlate for logging and policy purpose&lt;/li&gt;
+&lt;li&gt;including Thing Name in any MQTT message published by a thing or sending to a specific thing&lt;/li&gt;
+&lt;li&gt;review the limitations
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.aws.amazon.com/general/latest/gr/iot-core.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://docs.aws.amazon.com/general/latest/gr/iot-core.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;include contextual information in payload messages&lt;/li&gt;
+&lt;li&gt;avoid fan-in to a single device – do not allow a single device subscribe to a shared topic (!!!)&lt;/li&gt;
+&lt;li&gt;never allow device to subscribe to all topics (#); Use single level wildcard (+) for IoT Rules&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;best-practices-for-telemetry&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#best-practices-for-telemetry&quot;&gt;&lt;/a&gt; Best Practices for Telemetry&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+      <category term="IoT" scheme="https://racheliurui.github.io/tags/IoT/"/>
+    
+      <category term="MQTT" scheme="https://racheliurui.github.io/tags/MQTT/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - EC2</title>
+    <link href="https://racheliurui.github.io/2019/09/17/markdown/AWS/AWS2019/EC2/"/>
+    <id>https://racheliurui.github.io/2019/09/17/markdown/AWS/AWS2019/EC2/</id>
+    <published>2019-09-17T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.425Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h1><blockquote><p><a href="https://youtu.be/cb0KvqGjXRE" target="_blank" rel="noopener">https://youtu.be/cb0KvqGjXRE</a></p></blockquote><h2 id="ec2"><a class="markdownIt-Anchor" href="#ec2"></a> EC2</h2><ul><li>AWS’s vision of EC2 : compute platform for the world and keep innovation</li><li>EC2 new OS: Amazon Linux 2<ul><li>5 years support</li><li>You can use for on-premise</li></ul></li><li>EC2 support Windows<ul><li>Most windows on cloud runs on AWS</li></ul></li><li>BYO License use AWS License Manager</li><li>Specifically optimized for SAP</li></ul><h3 id="deep-dive"><a class="markdownIt-Anchor" href="#deep-dive"></a> Deep dive</h3><ul><li>AWS Nitro System, accelerate the hypervisor layer</li><li>AWS Firecracker, used by Lambda</li></ul><h2 id="serverless"><a class="markdownIt-Anchor" href="#serverless"></a> Serverless</h2><ul><li>Lambda are triggered trillions of times / month</li></ul><h2 id="storage"><a class="markdownIt-Anchor" href="#storage"></a> Storage</h2><ul><li>S3 Intelligent Tiering — Auto category the data</li><li>S3 Glacier Deep Archive — 70% cheaper than Glacier ; New product</li></ul><h2 id="hibernate-on-demand"><a class="markdownIt-Anchor" href="#hibernate-on-demand"></a> Hibernate On-demand</h2><h2 id="predictive-scaling-scale-for-you-to-more-cater-for-your-spike-need"><a class="markdownIt-Anchor" href="#predictive-scaling-scale-for-you-to-more-cater-for-your-spike-need"></a> Predictive Scaling : Scale for you to more cater for your spike need</h2><h2 id="reference-case"><a class="markdownIt-Anchor" href="#reference-case"></a> Reference Case</h2><ul><li>small company can compete with large studios by using AWS (Think Box)</li></ul><h2 id="hybrid"><a class="markdownIt-Anchor" href="#hybrid"></a> Hybrid</h2><ul><li>Outpost<ul><li>The compute capacity will show in your VPC</li><li>VM version and AWS version</li></ul></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;reference&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#reference&quot;&gt;&lt;/a&gt; Reference&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/cb0KvqGjXRE&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/cb0KvqGjXRE&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;ec2&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#ec2&quot;&gt;&lt;/a&gt; EC2&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS’s vision of EC2 : compute platform for the world and keep innovation&lt;/li&gt;
+&lt;li&gt;EC2 new OS: Amazon Linux 2
+&lt;ul&gt;
+&lt;li&gt;5 years support&lt;/li&gt;
+&lt;li&gt;You can use for on-premise&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;EC2 support Windows
+&lt;ul&gt;
+&lt;li&gt;Most windows on cloud runs on AWS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;BYO License use AWS License Manager&lt;/li&gt;
+&lt;li&gt;Specifically optimized for SAP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;deep-dive&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#deep-dive&quot;&gt;&lt;/a&gt; Deep dive&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS Nitro System, accelerate the hypervisor layer&lt;/li&gt;
+&lt;li&gt;AWS Firecracker, used by Lambda&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;serverless&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#serverless&quot;&gt;&lt;/a&gt; Serverless&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Lambda are triggered trillions of times / month&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;storage&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#storage&quot;&gt;&lt;/a&gt; Storage&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;S3 Intelligent Tiering — Auto category the data&lt;/li&gt;
+&lt;li&gt;S3 Glacier Deep Archive — 70% cheaper than Glacier ; New product&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+      <category term="EC2" scheme="https://racheliurui.github.io/tags/EC2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - Handson Best Practice</title>
+    <link href="https://racheliurui.github.io/2019/09/13/markdown/AWS/AWS2019/Handson_bestPractise/"/>
+    <id>https://racheliurui.github.io/2019/09/13/markdown/AWS/AWS2019/Handson_bestPractise/</id>
+    <published>2019-09-13T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.425Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="cloudformation"><a class="markdownIt-Anchor" href="#cloudformation"></a> CloudFormation</h1><ul><li>Define Security Group separated with Server</li><li>Otherwise the Server Stack is not able to be deleted when Security Group is referenced by Other Servers</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;cloudformation&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#cloudformation&quot;&gt;&lt;/a&gt; CloudFormation&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Define Security Group separated with Server&lt;/li&gt;
+&lt;li&gt;Otherwise the Server Stack is not able to be deleted when Security Group is referenced by Other Servers&lt;/li&gt;
+&lt;/ul&gt;
+
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+      <category term="Best Practice" scheme="https://racheliurui.github.io/tags/Best-Practice/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - Keynotes</title>
+    <link href="https://racheliurui.github.io/2019/08/27/markdown/AWS/AWS2019/Keynote/"/>
+    <id>https://racheliurui.github.io/2019/08/27/markdown/AWS/AWS2019/Keynote/</id>
+    <published>2019-08-27T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.425Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h1><blockquote><p><a href="https://youtu.be/femopq3JWJg" target="_blank" rel="noopener">https://youtu.be/femopq3JWJg</a></p></blockquote><h1 id="redesign-of-the-db-architecture"><a class="markdownIt-Anchor" href="#redesign-of-the-db-architecture"></a> Redesign of the DB architecture</h1><h2 id="history-of-aurora"><a class="markdownIt-Anchor" href="#history-of-aurora"></a> History of Aurora</h2><ul><li>Cell based architectures<ul><li>Shared storage</li><li>Easy plus one failure mode</li></ul></li><li>The log is the database<ul><li>Across the AZ and shard, it’s the log that being moved, not the data.</li></ul></li><li>Change happens at storage layer, redesign to make the storage layer database awareness.</li></ul><h2 id="history-of-dynamodb"><a class="markdownIt-Anchor" href="#history-of-dynamodb"></a> History of DynamoDB</h2><ul><li>Analysis show that 70% query to relational DB is just key value.</li></ul><blockquote><p>DYNAMO</p></blockquote><ul><li>Feature<ul><li>automatic re-sharding</li><li>DB migration service (From Oracle to Dynamo)</li></ul></li></ul><h2 id="basic-knowledge-with-aurora-sharding"><a class="markdownIt-Anchor" href="#basic-knowledge-with-aurora-sharding"></a> Basic knowledge with Aurora sharding</h2><ul><li><p>3 quorums across 3 AZ is not enough, 6 quorums across 3 AZ</p><ul><li>V=6 (every data have 6 copies all together) means there would be 6 node for the same data, when writing, it needs at least more than 3 nodes being alive.</li></ul></li><li><p>When a db using sharding, and has v quorums (servers), we can calculate how many write nodes and read nodes we need by applying the rules.</p><ul><li>if V=6 (we have a cluster of 6 servers) ; (V/2)=3, Vw&gt;3, so Vw=4 ; 4 nodes will be write consistent; Vw+Vr&gt;V, 4+?&gt;6, so Vr=3</li></ul><blockquote><p>Vw + Vr &gt; V<br>Vw&gt;V/2</p></blockquote></li></ul><h1 id="data-lake"><a class="markdownIt-Anchor" href="#data-lake"></a> Data Lake</h1><ul><li>S3 manage 60 terabit /sec in one region</li><li>Culture of durability</li><li>11 9s : Time to Fail and Time to Repair</li></ul><h1 id="1-nov-2018-worlds-largest-oracle-dw-to-redshift"><a class="markdownIt-Anchor" href="#1-nov-2018-worlds-largest-oracle-dw-to-redshift"></a> 1 Nov 2018 - World’s largest Oracle DW to Redshift</h1><ul><li>Redshift concurrency scaling<ul><li>consistently fast with thousands of concurrent queries.</li></ul></li></ul><h1 id="demo-fender-music"><a class="markdownIt-Anchor" href="#demo-fender-music"></a> Demo - Fender Music</h1><h1 id="serverless"><a class="markdownIt-Anchor" href="#serverless"></a> Serverless</h1><ul><li>Lambda handles trillions of request per month</li><li>Random spread the work load to multi servers</li><li>Lambda Layers (share binaries between different lambda functions)</li><li>Nested Application with Lambda</li></ul><h1 id="stepfunction"><a class="markdownIt-Anchor" href="#stepfunction"></a> StepFunction</h1><ul><li>Services that can be orchistrated by StepFunctions<ul><li>Batch , ECS, Fargate, Glue, DynamoDB, SNS, SQS, SageMaker</li></ul></li></ul><h1 id="api-gateway"><a class="markdownIt-Anchor" href="#api-gateway"></a> API Gateway</h1><ul><li>Websocket support for API Gateway</li><li>Move things from EC2 to serveless without change the API</li></ul><h2 id="kinesis-and-managed-streaming-for-kafka"><a class="markdownIt-Anchor" href="#kinesis-and-managed-streaming-for-kafka"></a> Kinesis and Managed Streaming for Kafka</h2><ul><li>Video and audio becoming streaming data</li><li>Kinesis Family</li></ul><h1 id="demo-nab"><a class="markdownIt-Anchor" href="#demo-nab"></a> Demo - NAB</h1><ul><li>Culture, you build it, you fix it, — craftsmanship</li><li>35% application in cloud by 2020</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;reference&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#reference&quot;&gt;&lt;/a&gt; Reference&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/femopq3JWJg&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/femopq3JWJg&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;redesign-of-the-db-architecture&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#redesign-of-the-db-architecture&quot;&gt;&lt;/a&gt; Redesign of the DB architecture&lt;/h1&gt;
+&lt;h2 id=&quot;history-of-aurora&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#history-of-aurora&quot;&gt;&lt;/a&gt; History of Aurora&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Cell based architectures
+&lt;ul&gt;
+&lt;li&gt;Shared storage&lt;/li&gt;
+&lt;li&gt;Easy plus one failure mode&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The log is the database
+&lt;ul&gt;
+&lt;li&gt;Across the AZ and shard, it’s the log that being moved, not the data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Change happens at storage layer, redesign to make the storage layer database awareness.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;history-of-dynamodb&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#history-of-dynamodb&quot;&gt;&lt;/a&gt; History of DynamoDB&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Analysis show that 70% query to relational DB is just key value.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;DYNAMO&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Feature
+&lt;ul&gt;
+&lt;li&gt;automatic re-sharding&lt;/li&gt;
+&lt;li&gt;DB migration service (From Oracle to Dynamo)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;basic-knowledge-with-aurora-sharding&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#basic-knowledge-with-aurora-sharding&quot;&gt;&lt;/a&gt; Basic knowledge with Aurora sharding&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Gazebo</title>
+    <link href="https://racheliurui.github.io/2019/08/16/markdown/Trending/Robotics/Robotics/"/>
+    <id>https://racheliurui.github.io/2019/08/16/markdown/Trending/Robotics/Robotics/</id>
+    <published>2019-08-16T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.429Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="gazebo"><a class="markdownIt-Anchor" href="#gazebo"></a> Gazebo</h1><p><a href="http://gazebosim.org/" target="_blank" rel="noopener">http://gazebosim.org/</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;gazebo&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#gazebo&quot;&gt;&lt;/a&gt; Gazebo&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;http://gazebosim.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://gazebosim.org/&lt;/a&gt;&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="Robotics" scheme="https://racheliurui.github.io/tags/Robotics/"/>
+    
+      <category term="Gazebo" scheme="https://racheliurui.github.io/tags/Gazebo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - CloudMap</title>
+    <link href="https://racheliurui.github.io/2019/08/15/markdown/AWS/AWS2019/CloudMap/"/>
+    <id>https://racheliurui.github.io/2019/08/15/markdown/AWS/AWS2019/CloudMap/</id>
+    <published>2019-08-15T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.425Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h1><blockquote></blockquote><p><a href="https://youtu.be/fMGd9IUaotE" target="_blank" rel="noopener">https://youtu.be/fMGd9IUaotE</a></p><h2 id="service-registers"><a class="markdownIt-Anchor" href="#service-registers"></a> Service registers</h2><ul><li>Zookeeper , Eureka, SmartStack, SkyDns, Doozerd, etcd, etc</li><li>CloudMap : dynamic map of your cloud</li></ul><h1 id="issue-try-to-solve"><a class="markdownIt-Anchor" href="#issue-try-to-solve"></a> Issue try to solve</h1><ul><li><p>Attribute based service discovery under complex service environment</p><ul><li>Multiple Stage</li><li>Multiple Version</li><li>Multiple Status</li></ul></li><li><p>Handle partial failure</p><ul><li>help you provision Route53 to help handle partial failure</li></ul></li></ul><h1 id="integrate-with-existing-aws-service"><a class="markdownIt-Anchor" href="#integrate-with-existing-aws-service"></a> Integrate with existing AWS service</h1><ul><li>Cloudformation</li><li>IAM</li></ul><h2 id="demo"><a class="markdownIt-Anchor" href="#demo"></a> Demo</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dig +short A backend.cloudmapdemo.com</span><br><span class="line">172.31.1.228</span><br><span class="line">172.31.0.100</span><br></pre></td></tr></table></figure><h2 id="work-with-consul"><a class="markdownIt-Anchor" href="#work-with-consul"></a> Work with Consul</h2><ul><li>AWS Cloud Map and Consul to extend hybrid infra to multi-region</li></ul><blockquote></blockquote><p><a href="https://www.youtube.com/watch?v=fMGd9IUaotE&amp;list=PL72BC_ThTrzW0wfjYWsPIG-sRb920Ubs3&amp;index=24&amp;t=614s" target="_blank" rel="noopener">https://www.youtube.com/watch?v=fMGd9IUaotE&amp;list=PL72BC_ThTrzW0wfjYWsPIG-sRb920Ubs3&amp;index=24&amp;t=614s</a></p><h2 id="feeling"><a class="markdownIt-Anchor" href="#feeling"></a> Feeling</h2><ul><li>An solution based on Route53.</li><li>A service discovery service.</li><li>provide namespace and service name, it will provide a list of service endpoints.</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;reference&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#reference&quot;&gt;&lt;/a&gt; Reference&lt;/h1&gt;
+&lt;blockquote&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/fMGd9IUaotE&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/fMGd9IUaotE&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;service-registers&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#service-registers&quot;&gt;&lt;/a&gt; Service registers&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Zookeeper , Eureka, SmartStack, SkyDns, Doozerd, etcd, etc&lt;/li&gt;
+&lt;li&gt;CloudMap : dynamic map of your cloud&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;issue-try-to-solve&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#issue-try-to-solve&quot;&gt;&lt;/a&gt; Issue try to solve&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Attribute based service discovery under complex service environment&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Multiple Stage&lt;/li&gt;
+&lt;li&gt;Multiple Version&lt;/li&gt;
+&lt;li&gt;Multiple Status&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Handle partial failure&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;help you provision Route53 to help handle partial failure&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;integrate-with-existing-aws-service&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#integrate-with-existing-aws-service&quot;&gt;&lt;/a&gt; Integrate with existing AWS service&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Cloudformation&lt;/li&gt;
+&lt;li&gt;IAM&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;demo&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#demo&quot;&gt;&lt;/a&gt; Demo&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+      <category term="CloudMap" scheme="https://racheliurui.github.io/tags/CloudMap/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - DotNet</title>
+    <link href="https://racheliurui.github.io/2019/08/15/markdown/AWS/AWS2019/DotNet/"/>
+    <id>https://racheliurui.github.io/2019/08/15/markdown/AWS/AWS2019/DotNet/</id>
+    <published>2019-08-15T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.425Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h1><blockquote></blockquote><p><a href="https://youtu.be/FteCJQcTDc4" target="_blank" rel="noopener">https://youtu.be/FteCJQcTDc4</a></p><h2 id="modern-net-applications-on-aws"><a class="markdownIt-Anchor" href="#modern-net-applications-on-aws"></a> Modern .NET applications on AWS</h2><p>Mosaic image</p><ul><li>Service being used: .net tool, lambda, xray, ecr fargate, dynamodb, cognito, s3, code pipeline, sqs, stepfunction, aws batch, ssm param, cloudformation</li></ul><h3 id="demo-use-visual-studio-to-cicd"><a class="markdownIt-Anchor" href="#demo-use-visual-studio-to-cicd"></a> Demo : use visual studio to CICD</h3><ul><li>AWS Batch<ul><li>Work as queue; ability to use EC2 Spot Instances</li></ul></li><li>Use Visual Studio, you can directly publish the code to generate Docker image and publish to AWS ECR<ul><li>The code logic is to download the pic, and upload to corresponding S3 Raw folder</li></ul></li><li>Use Visual Studio, directly publish Lambda function<ul><li>In lambda , register XRay will enable XRay drill down details of the invoke</li></ul></li><li>Code Pipeline</li><li>Use step function to link all the functions</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;reference&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#reference&quot;&gt;&lt;/a&gt; Reference&lt;/h1&gt;
+&lt;blockquote&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/FteCJQcTDc4&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/FteCJQcTDc4&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;modern-net-applications-on-aws&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#modern-net-applications-on-aws&quot;&gt;&lt;/a&gt; Modern .NET applications on AWS&lt;/h2&gt;
+&lt;p&gt;Mosaic image&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Service being used: .net tool, lambda, xray, ecr fargate, dynamodb, cognito, s3, code pipeline, sqs, stepfunction, aws batch, ssm param, cloudformation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;demo-use-visual-studio-to-cicd&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#demo-use-visual-studio-to-cicd&quot;&gt;&lt;/a&gt; Demo : use visual studio to CICD&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS Batch
+&lt;ul&gt;
+&lt;li&gt;Work as queue; ability to use EC2 Spot Instances&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Use Visual Studio, you can directly publish the code to generate Docker image and publish to AWS ECR
+&lt;ul&gt;
+&lt;li&gt;The code logic is to download the pic, and upload to corresponding S3 Raw folder&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Use Visual Studio, directly publish Lambda function
+&lt;ul&gt;
+&lt;li&gt;In lambda , register XRay will enable XRay drill down details of the invoke&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Code Pipeline&lt;/li&gt;
+&lt;li&gt;Use step function to link all the functions&lt;/li&gt;
+&lt;/ul&gt;
+
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+      <category term="DotNet" scheme="https://racheliurui.github.io/tags/DotNet/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - MachineLearning</title>
+    <link href="https://racheliurui.github.io/2019/08/14/markdown/AWS/AWS2019/MachineLearning/"/>
+    <id>https://racheliurui.github.io/2019/08/14/markdown/AWS/AWS2019/MachineLearning/</id>
+    <published>2019-08-14T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.425Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="hands-on"><a class="markdownIt-Anchor" href="#hands-on"></a> Hands-on</h1><p><a href="https://s3.amazonaws.com/solutions-reference/predictive-maintenance-using-machine-learning/latest/predictive-maintenance-using-machine-learning.pdf" target="_blank" rel="noopener">https://s3.amazonaws.com/solutions-reference/predictive-maintenance-using-machine-learning/latest/predictive-maintenance-using-machine-learning.pdf</a></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Couldn&apos;t call &apos;describe_notebook_instance&apos; to get the Role ARN of the instance PredictiveMaintenanceNotebookInstance.</span><br></pre></td></tr></table></figure><p>Update the role attached to the sagemaker instance</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ResourceLimitExceeded</span><br></pre></td></tr></table></figure><p>Change to train_instance_type = ‘ml.p2.xlarge’</p><h1 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h1><blockquote></blockquote><p><a href="https://youtu.be/GW0Bktm55nI" target="_blank" rel="noopener">https://youtu.be/GW0Bktm55nI</a></p><h2 id="aws-machine-learning-stack"><a class="markdownIt-Anchor" href="#aws-machine-learning-stack"></a> AWS Machine Learning Stack</h2><ul><li>ML Frameworks &amp; Infrastructures<ul><li>Frameworks<ul><li>Tensorflow ( 85% TensorFlow workloads in cloud runs on AWS)</li><li>Apache Mxnet – Deep learning for Enterprise dev ; liner scalable</li><li>Pytorch – Facebook ; flexible , versatile and portable</li><li>AWS is framework agnostic</li></ul></li></ul></li><li>ML Services<ul><li>SageMaker workflows</li><li>SageMaker Ground Truth</li><li>Use SageMaker to do Re-enforced ML : For example Vehicle routing</li><li>Sagemaker Neo (Opensource)<ul><li>Accelerate the cycle of doing Machine learning</li><li>CICD</li><li>Optimize between different frameworks</li></ul></li></ul></li><li>AI Services<ul><li>Textract</li></ul></li></ul><h2 id="ge-healthcare-demo"><a class="markdownIt-Anchor" href="#ge-healthcare-demo"></a> GE Healthcare Demo</h2><ul><li>Neural Network Compression : reduce layer and retrain the model</li><li>How to archive network compression using AWS service<ul><li>Use SageMaker RL<ul><li>State current network archi</li><li>Action : remove layer or not</li><li>Reward : Accuracy + compression ratio</li></ul></li><li>Result : 40% smaller model and 1%-2% loss of accuracy</li></ul></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;hands-on&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#hands-on&quot;&gt;&lt;/a&gt; Hands-on&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://s3.amazonaws.com/solutions-reference/predictive-maintenance-using-machine-learning/latest/predictive-maintenance-using-machine-learning.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://s3.amazonaws.com/solutions-reference/predictive-maintenance-using-machine-learning/latest/predictive-maintenance-using-machine-learning.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Couldn&amp;apos;t call &amp;apos;describe_notebook_instance&amp;apos; to get the Role ARN of the instance PredictiveMaintenanceNotebookInstance.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Update the role attached to the sagemaker instance&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ResourceLimitExceeded&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Change to train_instance_type = ‘ml.p2.xlarge’&lt;/p&gt;
+&lt;h1 id=&quot;reference&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#reference&quot;&gt;&lt;/a&gt; Reference&lt;/h1&gt;
+&lt;blockquote&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/GW0Bktm55nI&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/GW0Bktm55nI&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;aws-machine-learning-stack&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#aws-machine-learning-stack&quot;&gt;&lt;/a&gt; AWS Machine Learning Stack&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+      <category term="Machine Learning" scheme="https://racheliurui.github.io/tags/Machine-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AWS - Encryption</title>
+    <link href="https://racheliurui.github.io/2019/08/14/markdown/AWS/AWS2019/Security/"/>
+    <id>https://racheliurui.github.io/2019/08/14/markdown/AWS/AWS2019/Security/</id>
+    <published>2019-08-14T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.425Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="reference-s3-sse-kms"><a class="markdownIt-Anchor" href="#reference-s3-sse-kms"></a> Reference - S3 SSE-KMS</h1><blockquote><p><a href="https://youtu.be/jZYkJf-9yXI" target="_blank" rel="noopener">https://youtu.be/jZYkJf-9yXI</a></p></blockquote><p><img src="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2019/images/Encryption_KMS.PNG?raw=true" alt="Encryption_KMS.PNG"></p><p><img src="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2019/images/Encryption_KMS_1.PNG?raw=true" alt="Encryption_KMS_1.PNG"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;reference-s3-sse-kms&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#reference-s3-sse-kms&quot;&gt;&lt;/a&gt; Reference - S3 SSE-KMS&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/jZYkJf-9yXI&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://youtu.be/jZYkJf-9yXI&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/racheliurui/markdown/blob/master/AWS/AWS2019/images/Encryption_KMS.PNG?raw=true&quot; alt=&quot;Encryption_KMS.PNG&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/racheliurui/markdown/blob/master/AWS/AWS2019/images/Encryption_KMS_1.PNG?raw=true&quot; alt=&quot;Encryption_KMS_1.PNG&quot;&gt;&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="AWS" scheme="https://racheliurui.github.io/tags/AWS/"/>
+    
+      <category term="Encryption" scheme="https://racheliurui.github.io/tags/Encryption/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Server Hardware</title>
+    <link href="https://racheliurui.github.io/2019/08/13/markdown/BackToBasic/Hardware/"/>
+    <id>https://racheliurui.github.io/2019/08/13/markdown/BackToBasic/Hardware/</id>
+    <published>2019-08-13T11:37:23.000Z</published>
+    <updated>2021-06-15T03:43:00.429Z</updated>
+    
+    <content type="html"><![CDATA[<p>HPE Ethernet 10Gb 2-port 562FLR-SFP+ Adapter</p><p>FLR: integrated on motherboard<br>SFP: fiber<br>SPF+ : single port fiber support 10G</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;HPE Ethernet 10Gb 2-port 562FLR-SFP+ Adapter&lt;/p&gt;
+&lt;p&gt;FLR: integrated on motherboard&lt;br&gt;
+SFP: fiber&lt;br&gt;
+SPF+ : single port fiber support 10G&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="hardware" scheme="https://racheliurui.github.io/tags/hardware/"/>
+    
+      <category term="Server" scheme="https://racheliurui.github.io/tags/Server/"/>
+    
+  </entry>
+  
+</feed>

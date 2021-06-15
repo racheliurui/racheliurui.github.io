@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Machine Learning,Density Estimation,Gaussian Distribution,Anomaly Detection Algorithm,recommender system,Collaborative filtering Algorithm,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hey Hey Hey" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Anomaly Detection Anomaly Detection 不规则检测。举例子：飞机引擎的各种参数，如果一个新的引擎的发热或者其它参数突然与众不同，那么我们肯定担心有什么问题。 应用场景： Fraud Detection Manufactoring 根据data建模p(x)，当新的x造成$p(x)&amp;lt;$$\epsilon$$$的时候，就是说明数据异常。  Gaussian (no">
+<meta name="keywords" content="Machine Learning,Density Estimation,Gaussian Distribution,Anomaly Detection Algorithm,recommender system,Collaborative filtering Algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning - Week 9">
+<meta property="og:url" content="https://racheliurui.github.io/2018/01/27/markdown/Trending/MachineLearning/MachineLearning_9/index.html">
+<meta property="og:site_name" content="Hey Hey Hey">
+<meta property="og:description" content="Anomaly Detection Anomaly Detection 不规则检测。举例子：飞机引擎的各种参数，如果一个新的引擎的发热或者其它参数突然与众不同，那么我们肯定担心有什么问题。 应用场景： Fraud Detection Manufactoring 根据data建模p(x)，当新的x造成$p(x)&amp;lt;$$\epsilon$$$的时候，就是说明数据异常。  Gaussian (no">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-06-15T03:43:00.429Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Machine Learning - Week 9">
+<meta name="twitter:description" content="Anomaly Detection Anomaly Detection 不规则检测。举例子：飞机引擎的各种参数，如果一个新的引擎的发热或者其它参数突然与众不同，那么我们肯定担心有什么问题。 应用场景： Fraud Detection Manufactoring 根据data建模p(x)，当新的x造成$p(x)&amp;lt;$$\epsilon$$$的时候，就是说明数据异常。  Gaussian (no">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://racheliurui.github.io/2018/01/27/markdown/Trending/MachineLearning/MachineLearning_9/">
+
+
+
+
+
+  <title>Machine Learning - Week 9 | Hey Hey Hey</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey Hey Hey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://racheliurui.github.io/2018/01/27/markdown/Trending/MachineLearning/MachineLearning_9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rachel Rui Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey Hey Hey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Machine Learning - Week 9</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-27T12:54:16+00:00">
+                2018-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/27/markdown/Trending/MachineLearning/MachineLearning_9/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/27/markdown/Trending/MachineLearning/MachineLearning_9/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="anomaly-detection"><a class="markdownIt-Anchor" href="#anomaly-detection"></a> Anomaly Detection</h1>
+<p>Anomaly Detection 不规则检测。举例子：飞机引擎的各种参数，如果一个新的引擎的发热或者其它参数突然与众不同，那么我们肯定担心有什么问题。</p>
+<p>应用场景：<br>
+Fraud Detection<br>
+Manufactoring</p>
+<p>根据data建模p(x)，当新的x造成<span>$p(x)&lt;$$\epsilon$$$</span><!-- Has MathJax -->的时候，就是说明数据异常。</p>
+<h2 id="gaussian-normal-distribution"><a class="markdownIt-Anchor" href="#gaussian-normal-distribution"></a> Gaussian (normal) Distribution</h2>
+<p>公式表达：</p>
+<span>$$\begin{align*}
+X\thicksim N(\mu,\sigma^2)
+\end{align*}$$</span><!-- Has MathJax -->
+<span>$\thicksim$</span><!-- Has MathJax --> 读作“distributed as”，N是normal的意思，<span>$\mu$</span><!-- Has MathJax -->代表正态分布的最高点投射到横轴的读数，<span>$\sigma$</span><!-- Has MathJax -->表示的是正态分布的驼峰的宽度。<span>$/sigma$</span><!-- Has MathJax -->又叫standard deviation.
+<span>$$\begin{align*}
+p(x;\mu,\sigma^2)=\frac{1}{\sqrt{2\pi }\sigma }exp(-\frac{(x-\mu)^2}{\sigma^2})
+\end{align*}$$</span><!-- Has MathJax -->
+<p>For a dataset,</p>
+<span>$$\begin{align*}
+\{x^\left(1\right),x^\left(2\right),...x^\left(m\right)\}, x\left(i\right)\in\Re
+\end{align*}$$</span><!-- Has MathJax -->
+<p>有以下求值公式来推导已知数据的正态分布：</p>
+<span>$$\begin{align*}
+\mu=\frac{1}{m}\displaystyle\sum\limits_{i=1}^m x^\left(i\right)
+\end{align*}$$</span><!-- Has MathJax -->
+<span>$$\begin{align*}
+\sigma ^2=\frac{1}{m}\displaystyle\sum\limits_{i=1}^m (x^\left(i\right)-\mu )^2
+\end{align*}$$</span><!-- Has MathJax -->
+<ul>
+<li>在统计分析课中，有时候除以m会写成除以（m-1），在machine learning中，m通常很大，所以我们忽略这种不同。</li>
+</ul>
+<h2 id="density-estimation"><a class="markdownIt-Anchor" href="#density-estimation"></a> Density Estimation</h2>
+<p>当数据是n维的时候，我们的p(x)公式变成了：</p>
+<span>$$\begin{align*}
+p(x)= \prod_{j=1}^np(x_j;\mu_j,\sigma_j^2)
+\end{align*}$$</span><!-- Has MathJax -->
+<h3 id="algorithm-evaluation"><a class="markdownIt-Anchor" href="#algorithm-evaluation"></a> Algorithm evaluation</h3>
+<p>直接使用cv或者test set算正确率不准确，因为stewed data。<br>
+使用cv set选择<span>$\varepsilon$</span><!-- Has MathJax --></p>
+<p>比如： 10000个正常引擎数据，40个不合格引擎的数据。</p>
+<p>推荐，6000个数据用来做算法求正态分布<br>
+2000个正常引擎和20个不合格引擎的数据用来做CV set，选择<span>$\varepsilon$</span><!-- Has MathJax --><br>
+2000个正常引擎和20个不合格引擎的数据用来做test set，用来验证模型正确。</p>
+<h3 id="anomaly-detection-vs-supervised-learning"><a class="markdownIt-Anchor" href="#anomaly-detection-vs-supervised-learning"></a> Anomaly Detection vs Supervised Learning</h3>
+<p>Anomaly Detection： 特别适合属于Anomaly的数据非常少的情况，即y=0的数据非常多，y=1的数据也就几十个（1-20个）。未来的Anomaly data可能和现有的数据完全不一样。<br>
+Supervised Learning： 大量的数据，有positive和negative，未来的negative数据会跟现有的有一定的类似。</p>
+<p>典型的对比，Fraud detection： 如果我们还不知道Fraud一般会有什么特征，那么使用Anomaly Detection我们可以找到特别不同寻常的操作；但是如果我们有大量的数据做参考，那么这种Fraud detection就可以使用Supervised Learning来建模了，例如spam letter的算法。</p>
+<ul>
+<li>Anomaly Detection的例子：  Fraud Detection； Manufacturing （例如飞机引擎）； 监控数据中心的机器</li>
+<li>Supervised Learning的例子：Spam letter labeling；Weather Prediction； Cancer Classification</li>
+</ul>
+<h3 id="choose-correct-features-for-anomaly-detection-algorithm"><a class="markdownIt-Anchor" href="#choose-correct-features-for-anomaly-detection-algorithm"></a> Choose correct features for Anomaly detection Algorithm</h3>
+<p>先把数据plot出来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">% check the data size</span><br><span class="line">size(x)</span><br><span class="line">% plot the data</span><br><span class="line">hist(x)</span><br><span class="line">% adjust the plot display</span><br><span class="line">hist(x,50)</span><br><span class="line">% transform the data, until it looks more gaussian</span><br><span class="line">hist(x.^0.5,50)</span><br><span class="line">hist(x.^0.2,50)</span><br><span class="line">hist(x.^0.1,50)</span><br><span class="line">% define the new feature based on original one</span><br><span class="line">xNew=x.^0.1</span><br></pre></td></tr></table></figure>
+<p>常用技巧： 使用正态分布找出异常数据，观察异常数据的异常之处，然后定义新的feature出来。<br>
+常用技巧： 挑选数据在异常时候能说明问题的，比如监控数据中心的例子中，cpu和网络traffic一般是线性关系，如果使用cpu/网络traffic就可以得到一个feature帮助识别cpu的infinite loop或死锁之类的问题。</p>
+<h2 id="recommendation-system-formulation"><a class="markdownIt-Anchor" href="#recommendation-system-formulation"></a> Recommendation System Formulation</h2>
+<h3 id="predicting-movie-rating"><a class="markdownIt-Anchor" href="#predicting-movie-rating"></a> Predicting Movie Rating</h3>
+<p>使用Liner Regression来预测user对电影的打分。<br>
+方法： 创造feature，如action，romantic等，然后为每个movie量化这些feature，最后，根据用户之前的打分来找出用户的打分模型，从而预测用户的打分。</p>
+<h4 id="collaborative-filtering"><a class="markdownIt-Anchor" href="#collaborative-filtering"></a> Collaborative filtering</h4>
+<p>中心思想：</p>
+<p>先猜测一下电影的feature<br>
+Loop<br>
+{<br>
+已知电影的feature，根据用户打分可以预测/修正用户的打分模型<br>
+已知用户打分模型（例如最喜欢action电影，不喜欢romance），可以根据用户打分预测/修正电影的feature参数<br>
+}</p>
+<p>book store &amp; clothing store</p>
+<h3 id="collaborative-filtering-algorithm"><a class="markdownIt-Anchor" href="#collaborative-filtering-algorithm"></a> Collaborative filtering Algorithm</h3>
+<p>与其loop求值，不如将两组数据结合起来一起看。</p>
+<p>cost function是：</p>
+<span>$$\begin{align*}
+J(x^{(1)},,,x^{(n_m)},\theta^{(1)},,,\theta^{(n_u)})=\frac{1}{2}\sum_{ (i,j) :r(i,j)=1} (\theta^{(j)})^T
+ x^{(i)} - y^{(i,j)} )^2 +\frac{\lambda }{2}\sum_{i=1}^{n_m}\sum_{k=1}^{n}{({x_k}^{(i)} )}^2+\frac{\lambda }{2}\sum_{j=1}^{n_u}\sum_{k=1}^{n}{({\theta_k}^{(j)} )}^2
+\end{align*}$$</span><!-- Has MathJax -->
+<p>对应的算法是：<br>
+step 1， random 初始化所有的x和theta<br>
+step 2， gradient descent</p>
+<p>求x，</p>
+<span>$$\begin{align*}
+{x_k}^{(i)}:={x_k}^{(i)}-\alpha (\sum_{ j :r(i,j)=1} ((\theta^{(j)})^T
+ x^{(i)} - y^{(i,j)} ){\theta_k}^{(j)}  +\lambda {x_k}^{(i)} )
+\end{align*}$$</span><!-- Has MathJax -->
+<p>求theta，</p>
+<span>$$\begin{align*}
+{\theta_k}^{(j)}:={\theta_k}^{(j)}-\alpha (\sum_{ i :r(i,j)=1} ((\theta^{(j)})^T
+ x^{(i)} - y^{(i,j)} ){x_k}^{(i)}  +\lambda {\theta_k}^{(j)} )
+\end{align*}$$</span><!-- Has MathJax -->
+<p>注意参数的random初始化，否则会跟Neron network类似的symetric问题。</p>
+<h3 id="low-rank-matrix-factorization"><a class="markdownIt-Anchor" href="#low-rank-matrix-factorization"></a> low rank matrix factorization</h3>
+<p>上述算法中的matrix化的表达方式。</p>
+<p>预测打分： X*Theta^<br>
+找到类似的电影：补公式</p>
+<span>$$\begin{align*}
+X = \begin{bmatrix} - &amp; (x^{(1)})^T &amp; - \\ &amp; \vdots &amp; \\ - &amp; (x^{(n_m)} &amp; - \end{bmatrix},\ \Theta = \begin{bmatrix} - &amp; (\theta^{(1)})^T &amp; - \\ &amp; \vdots &amp; \\ - &amp; (\theta^{(n_u)} &amp; - \end{bmatrix}
+\end{align*}$$</span><!-- Has MathJax -->
+<span>$$\begin{align*}
+X \Theta^T
+\end{align*}$$</span><!-- Has MathJax -->
+<h3 id="mean-normalization-的使用"><a class="markdownIt-Anchor" href="#mean-normalization-的使用"></a> mean normalization 的使用</h3>
+<p>当用户从来没打分过，根据前面的算法，预估的打分会是全零。<br>
+这不合理。<br>
+昨晚mean normalization后，未知用户的打分就接近平均分了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Reward Makes Perfect</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Rachel Rui Liu Bitcoin">
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Rachel Rui Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://racheliurui.github.io/2018/01/27/markdown/Trending/MachineLearning/MachineLearning_9/" title="Machine Learning - Week 9">https://racheliurui.github.io/2018/01/27/markdown/Trending/MachineLearning/MachineLearning_9/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          
+            <a href="/tags/Density-Estimation/" rel="tag"># Density Estimation</a>
+          
+            <a href="/tags/Gaussian-Distribution/" rel="tag"># Gaussian Distribution</a>
+          
+            <a href="/tags/Anomaly-Detection-Algorithm/" rel="tag"># Anomaly Detection Algorithm</a>
+          
+            <a href="/tags/recommender-system/" rel="tag"># recommender system</a>
+          
+            <a href="/tags/Collaborative-filtering-Algorithm/" rel="tag"># Collaborative filtering Algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/21/markdown/Trending/MachineLearning/LaTexEditing/" rel="next" title="LaTex Editing">
+                <i class="fa fa-chevron-left"></i> LaTex Editing
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/03/markdown/Trending/MachineLearning/MachineLearning_10/" rel="prev" title="Machine Learning - Week 10">
+                Machine Learning - Week 10 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg" alt="Rachel Rui Liu">
+          <p class="site-author-name" itemprop="name">Rachel Rui Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">178</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">193</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/racheliurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/rachel-rui-liu-a474a7a" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                    
+                      Linkedin
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#anomaly-detection"><span class="nav-number">1.</span> <span class="nav-text"> Anomaly Detection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gaussian-normal-distribution"><span class="nav-number">1.1.</span> <span class="nav-text"> Gaussian (normal) Distribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#density-estimation"><span class="nav-number">1.2.</span> <span class="nav-text"> Density Estimation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#algorithm-evaluation"><span class="nav-number">1.2.1.</span> <span class="nav-text"> Algorithm evaluation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#anomaly-detection-vs-supervised-learning"><span class="nav-number">1.2.2.</span> <span class="nav-text"> Anomaly Detection vs Supervised Learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#choose-correct-features-for-anomaly-detection-algorithm"><span class="nav-number">1.2.3.</span> <span class="nav-text"> Choose correct features for Anomaly detection Algorithm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#recommendation-system-formulation"><span class="nav-number">1.3.</span> <span class="nav-text"> Recommendation System Formulation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#predicting-movie-rating"><span class="nav-number">1.3.1.</span> <span class="nav-text"> Predicting Movie Rating</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#collaborative-filtering"><span class="nav-number">1.3.1.1.</span> <span class="nav-text"> Collaborative filtering</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#collaborative-filtering-algorithm"><span class="nav-number">1.3.2.</span> <span class="nav-text"> Collaborative filtering Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#low-rank-matrix-factorization"><span class="nav-number">1.3.3.</span> <span class="nav-text"> low rank matrix factorization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mean-normalization-的使用"><span class="nav-number">1.3.4.</span> <span class="nav-text"> mean normalization 的使用</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rachel Rui Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://racheliurui-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://racheliurui.github.io/2018/01/27/markdown/Trending/MachineLearning/MachineLearning_9/';
+          this.page.identifier = '2018/01/27/markdown/Trending/MachineLearning/MachineLearning_9/';
+          this.page.title = 'Machine Learning - Week 9';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://racheliurui-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

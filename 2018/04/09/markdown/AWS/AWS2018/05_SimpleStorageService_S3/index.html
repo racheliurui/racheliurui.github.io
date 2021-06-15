@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="AWS,S3,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hey Hey Hey" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="S3 Overview S3 is a webstore , not a file system !! S3 – writing concurrency  “Eventually Consistency”: make sure concurrent write will eventually get synced “Read after Write Consistency”: make sure">
+<meta name="keywords" content="AWS,S3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS - S3">
+<meta property="og:url" content="https://racheliurui.github.io/2018/04/09/markdown/AWS/AWS2018/05_SimpleStorageService_S3/index.html">
+<meta property="og:site_name" content="Hey Hey Hey">
+<meta property="og:description" content="S3 Overview S3 is a webstore , not a file system !! S3 – writing concurrency  “Eventually Consistency”: make sure concurrent write will eventually get synced “Read after Write Consistency”: make sure">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/05_S3_CrossRegionReplication.png?raw=true">
+<meta property="og:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/05_S3_CrossRegionRepli_Policy.png?raw=true">
+<meta property="og:updated_time" content="2021-06-15T03:43:00.417Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AWS - S3">
+<meta name="twitter:description" content="S3 Overview S3 is a webstore , not a file system !! S3 – writing concurrency  “Eventually Consistency”: make sure concurrent write will eventually get synced “Read after Write Consistency”: make sure">
+<meta name="twitter:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/05_S3_CrossRegionReplication.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://racheliurui.github.io/2018/04/09/markdown/AWS/AWS2018/05_SimpleStorageService_S3/">
+
+
+
+
+
+  <title>AWS - S3 | Hey Hey Hey</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey Hey Hey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://racheliurui.github.io/2018/04/09/markdown/AWS/AWS2018/05_SimpleStorageService_S3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rachel Rui Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey Hey Hey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AWS - S3</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-09T09:57:23+00:00">
+                2018-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/09/markdown/AWS/AWS2018/05_SimpleStorageService_S3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/09/markdown/AWS/AWS2018/05_SimpleStorageService_S3/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="s3-overview"><a class="markdownIt-Anchor" href="#s3-overview"></a> S3 Overview</h1>
+<p>S3 is a webstore , not a file system !!</p>
+<p>S3 – writing concurrency</p>
+<ul>
+<li>“Eventually Consistency”: make sure concurrent write will eventually get synced</li>
+<li>“Read after Write Consistency”: make sure read access do not need to wait until write consistency is archived.</li>
+</ul>
+<h2 id="s3-event-notification"><a class="markdownIt-Anchor" href="#s3-event-notification"></a> S3 Event Notification</h2>
+<ul>
+<li>Configure when event is triggerred</li>
+<li>Configure filter : File Prefix (Path and name) , Suffix</li>
+<li>Notification can integrate with Lambda, SQS , SNS</li>
+</ul>
+<h2 id="lifecycle-management"><a class="markdownIt-Anchor" href="#lifecycle-management"></a> LifeCycle Management</h2>
+<p>S3 --&gt; S3 IA --&gt; Glacier</p>
+<ul>
+<li>S3 IA has same durability 11 9’s with S3 (Availability is lower as 2 9’s)</li>
+<li>You can move object to IA by life cycle policy or direct upload with parameter to specify to save in IA</li>
+</ul>
+<h2 id="cross-region-replication"><a class="markdownIt-Anchor" href="#cross-region-replication"></a> Cross region replication</h2>
+<ul>
+<li>
+<p>ACL (Access Control List ) policies, if it’s S3 encryption , it will be copied ; if it’s using KMS then you have to handle manually by your self</p>
+</li>
+<li>
+<p>Any existing objects before turn on this feature needs to be copied manually to new region (only replicate new PUT)</p>
+</li>
+<li>
+<p><strong>Versioning must be enabled</strong></p>
+</li>
+<li>
+<p>The remote bucket can be managed by different user</p>
+</li>
+<li>
+<p>Can replicate objects only with certain prefix (folder)</p>
+</li>
+<li>
+<p>If delete object and specify the version , then the remote bucket won’t delete that object (have to manually );</p>
+<ul>
+<li>From another material, it’s said “delete and life cycle actions are not replicated”</li>
+</ul>
+</li>
+<li>
+<p>You can specify A bucket replicate to B and then specify B replicate to A. This will result in A and B synced.</p>
+</li>
+<li>
+<p>Once the replication is turned on , you can head-object to S3 object and check the ReplicationStatus metadata</p>
+</li>
+<li>
+<p>Very useful feature when you want to accelerate upload to a remote region, upload to local region then replicate to remote</p>
+</li>
+</ul>
+<p><img src="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/05_S3_CrossRegionReplication.png?raw=true" alt="cross Region Replication cli"></p>
+<p><img src="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/05_S3_CrossRegionRepli_Policy.png?raw=true" alt="cross Region Replication policy"></p>
+<h1 id="026mp4-hands-on-demo-on-s3-polices-and-acl"><a class="markdownIt-Anchor" href="#026mp4-hands-on-demo-on-s3-polices-and-acl"></a> 026.mp4 - hands on demo on S3 Polices and ACL</h1>
+<ul>
+<li>Add/Edit/Delete bucket/bucket object permissions (which grantee has what access) --either at bucket level or object level</li>
+<li>Create bucket policy (JSON) – AWS Policy Editor or copy from samples – only available at bucket level</li>
+</ul>
+<p>How to spcify a S3 object using ARN, for example<br>
+arn:aws:s3:::examplebucket/developers/design_info.doc</p>
+<blockquote>
+<p><a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html</a></p>
+</blockquote>
+<p>AWS S3 RRS option<br>
+<a href="https://aws.amazon.com/s3/reduced-redundancy/" target="_blank" rel="noopener">https://aws.amazon.com/s3/reduced-redundancy/</a></p>
+<p>S3 Bucket URL<br>
+<a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html</a></p>
+<p>Difference of Durability &amp; Availability &amp; Concurrent facility fault torlerance<br>
+<a href="https://aws.amazon.com/s3/reduced-redundancy/" target="_blank" rel="noopener">https://aws.amazon.com/s3/reduced-redundancy/</a></p>
+<p>How to share object with others via pre-signed URL<br>
+<a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/ShareObjectPreSignedURL.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonS3/latest/dev/ShareObjectPreSignedURL.html</a></p>
+<ul>
+<li>use (your credential + expiretime) to create the url</li>
+</ul>
+<p>Difference between : (ACL is legacy method to control access to S3)<br>
+Bucket ACL/policy<br>
+Object ACL/Policy</p>
+<p>Error Message code,<br>
+<a href="https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html</a><br>
+For durability, RRS objects have an average annual expected loss of 0.01% of objects. If an RRS object is lost, when requests are made to that object, Amazon S3 returns a 405 (Method Not Allowed) error.</p>
+<h2 id="best-practise-to-max-the-s3-performance"><a class="markdownIt-Anchor" href="#best-practise-to-max-the-s3-performance"></a> Best practise to max the S3 performance</h2>
+<h3 id="key-naming"><a class="markdownIt-Anchor" href="#key-naming"></a> Key naming</h3>
+<p>Useful when your S3 reach 100 TPS (100 request per second)<br>
+<a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/request-rate-perf-considerations.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonS3/latest/dev/request-rate-perf-considerations.html</a></p>
+<ul>
+<li>S3的object的path类似于key，为了能够均匀分布使得存取性能优越可以：<br>
+1） 加hash在key前面<br>
+2） reverse key string</li>
+</ul>
+<p>Sample of anti-pattern</p>
+<p>All the files will be saved on same partition which not favor of concurrent searching. Especially when query reach 100TPS , must not allow below naming converntion.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-buckt&gt;/2018-0601-001.png</span><br><span class="line">&lt;my-buckt&gt;/2018-0601-002.png</span><br><span class="line">&lt;my-buckt&gt;/2018-0601-003.png</span><br><span class="line">&lt;my-buckt&gt;/2018-0602-001.png</span><br><span class="line">&lt;my-buckt&gt;/2018-0601-002.png</span><br></pre></td></tr></table></figure>
+<h3 id="s3-transfer-accerleration"><a class="markdownIt-Anchor" href="#s3-transfer-accerleration"></a> <strong>S3 Transfer Accerleration</strong></h3>
+<ul>
+<li>Once enabled, it will give a new endpoint;</li>
+<li>it support automatically route upload to closest location.(Make use of Edge Locations)</li>
+</ul>
+<h3 id="multi-part-uploading"><a class="markdownIt-Anchor" href="#multi-part-uploading"></a> multi part uploading</h3>
+<p><a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html</a></p>
+<p>Get request: put Range in the header</p>
+<h3 id="make-use-of-cloudfront"><a class="markdownIt-Anchor" href="#make-use-of-cloudfront"></a> Make use of CloudFront</h3>
+<p>Difference between ElasticCache and Cloudfront — which is the destination to cache S3 objects?<br>
+ElastiCache uses redis and memcached to improve the performance of web applications by allowing you to retrieve information from fast, managed, in-memory data stores, instead of relying entirely on slower disk-based databases.</p>
+<p>While CloudFront is a global content delivery network (CDN) service that accelerates delivery of your websites, APIs, video content or other web assets</p>
+<p><a href="https://acloud.guru/forums/aws-certified-solutions-architect-associate/discussion/-KbKW7V5i1NIZ6n9S_TK/what_is_the_difference_between" target="_blank" rel="noopener">https://acloud.guru/forums/aws-certified-solutions-architect-associate/discussion/-KbKW7V5i1NIZ6n9S_TK/what_is_the_difference_between</a></p>
+<p>S3 detect data corruption<br>
+Content-MD5 Checksum and CRCs to detect data corruption<br>
+<a href="https://aws.amazon.com/s3/faqs/#" target="_blank" rel="noopener">https://aws.amazon.com/s3/faqs/#</a></p>
+<h1 id="hands-on"><a class="markdownIt-Anchor" href="#hands-on"></a> Hands-On</h1>
+<ul>
+<li>Enable , disable versioning at bucket level</li>
+<li>Before enable version , object has default version id of <strong>null</strong></li>
+<li>Delete &amp; revert deletion of object</li>
+<li>List versions for an object, apply a selected version</li>
+<li>Add life cycle rule to selected bucket: which scope in the selected bucket will be moved to what storage after defined days and be deleted from S3 after another defined days.</li>
+<li>Enable logging ( S3 access related logging )</li>
+<li>Add tag to S3 bucket (easy management)</li>
+<li>Define cross region replication</li>
+<li>Define events – SNS/SQS or Lambda</li>
+<li>Requester Pays</li>
+</ul>
+<h2 id="new-feature"><a class="markdownIt-Anchor" href="#new-feature"></a> New feature</h2>
+<p>Retrieve data within minutes from Glacier<br>
+<a href="https://aws.amazon.com/about-aws/whats-new/2016/11/access-your-amazon-glacier-data-in-minutes-with-new-retrieval-options/" target="_blank" rel="noopener">https://aws.amazon.com/about-aws/whats-new/2016/11/access-your-amazon-glacier-data-in-minutes-with-new-retrieval-options/</a></p>
+<p>S3 Analytics :  storage data analysis</p>
+<ul>
+<li>Category the access pattern by object prefix,name,bucket or tag to help you create proper rule</li>
+</ul>
+<p>S3 Inventory:</p>
+<ul>
+<li>Save the money of List API when you have loads of object.Generate List every day (or week depending on your config)</li>
+<li>need to config policy to allow S3 to write inventory list report into your bucket</li>
+</ul>
+<p>Object Tag:</p>
+<ul>
+<li>Max 10 tag per object</li>
+<li>Tag can be used in LifeCycle management, Access Control or Storage Analysis</li>
+</ul>
+<p>CloudTrail: S3 Data Events:</p>
+<ul>
+<li>Object level events</li>
+<li>Security and Audit purpose</li>
+</ul>
+<p>CloudWatch: S3 Metrics</p>
+<ul>
+<li>Not free; $0.3 per metrics</li>
+<li>every 1 min</li>
+</ul>
+<h2 id="vpc-endpoint-for-s3"><a class="markdownIt-Anchor" href="#vpc-endpoint-for-s3"></a> VPC endpoint for S3</h2>
+<ul>
+<li>Security Control
+<ul>
+<li>VPC can specify allow certain action to specific S3</li>
+<li>S3 can specify allow  which vpc to access it.</li>
+</ul>
+</li>
+</ul>
+<h1 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h1>
+<blockquote>
+<p>024.mp4 - S3 overview</p>
+</blockquote>
+<h1 id="other-important-thing-about-s3"><a class="markdownIt-Anchor" href="#other-important-thing-about-s3"></a> Other important thing about S3</h1>
+<h2 id="how-s3-authenticate-the-http-request"><a class="markdownIt-Anchor" href="#how-s3-authenticate-the-http-request"></a> how S3 authenticate the http request</h2>
+<ul>
+<li>User use secret key to encrypt a header signature</li>
+<li>AWS S3 received the request, then retrive the user secret</li>
+<li>AWS encrypt to get the header signature</li>
+<li>AWS compares the signature with user submitted one, if same then pass the authentication.</li>
+</ul>
+<p><a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Reward Makes Perfect</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Rachel Rui Liu Bitcoin">
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Rachel Rui Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://racheliurui.github.io/2018/04/09/markdown/AWS/AWS2018/05_SimpleStorageService_S3/" title="AWS - S3">https://racheliurui.github.io/2018/04/09/markdown/AWS/AWS2018/05_SimpleStorageService_S3/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AWS/" rel="tag"># AWS</a>
+          
+            <a href="/tags/S3/" rel="tag"># S3</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/09/markdown/AWS/AWS2018/06_HandsOn_NodeJSDevelopment/" rel="next" title="AWS - Handson NodeJs">
+                <i class="fa fa-chevron-left"></i> AWS - Handson NodeJs
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/10/markdown/AWS/AWS2018/07_CLI/" rel="prev" title="AWS - CLI">
+                AWS - CLI <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg" alt="Rachel Rui Liu">
+          <p class="site-author-name" itemprop="name">Rachel Rui Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">178</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">193</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/racheliurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/rachel-rui-liu-a474a7a" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                    
+                      Linkedin
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#s3-overview"><span class="nav-number">1.</span> <span class="nav-text"> S3 Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#s3-event-notification"><span class="nav-number">1.1.</span> <span class="nav-text"> S3 Event Notification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lifecycle-management"><span class="nav-number">1.2.</span> <span class="nav-text"> LifeCycle Management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cross-region-replication"><span class="nav-number">1.3.</span> <span class="nav-text"> Cross region replication</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#026mp4-hands-on-demo-on-s3-polices-and-acl"><span class="nav-number">2.</span> <span class="nav-text"> 026.mp4 - hands on demo on S3 Polices and ACL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#best-practise-to-max-the-s3-performance"><span class="nav-number">2.1.</span> <span class="nav-text"> Best practise to max the S3 performance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#key-naming"><span class="nav-number">2.1.1.</span> <span class="nav-text"> Key naming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#s3-transfer-accerleration"><span class="nav-number">2.1.2.</span> <span class="nav-text"> S3 Transfer Accerleration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#multi-part-uploading"><span class="nav-number">2.1.3.</span> <span class="nav-text"> multi part uploading</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#make-use-of-cloudfront"><span class="nav-number">2.1.4.</span> <span class="nav-text"> Make use of CloudFront</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hands-on"><span class="nav-number">3.</span> <span class="nav-text"> Hands-On</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#new-feature"><span class="nav-number">3.1.</span> <span class="nav-text"> New feature</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vpc-endpoint-for-s3"><span class="nav-number">3.2.</span> <span class="nav-text"> VPC endpoint for S3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text"> Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#other-important-thing-about-s3"><span class="nav-number">5.</span> <span class="nav-text"> Other important thing about S3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#how-s3-authenticate-the-http-request"><span class="nav-number">5.1.</span> <span class="nav-text"> how S3 authenticate the http request</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rachel Rui Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://racheliurui-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://racheliurui.github.io/2018/04/09/markdown/AWS/AWS2018/05_SimpleStorageService_S3/';
+          this.page.identifier = '2018/04/09/markdown/AWS/AWS2018/05_SimpleStorageService_S3/';
+          this.page.title = 'AWS - S3';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://racheliurui-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

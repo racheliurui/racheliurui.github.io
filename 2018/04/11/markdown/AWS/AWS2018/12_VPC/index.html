@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="AWS,VPC,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hey Hey Hey" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="VPC deepdive 2016  https://youtu.be/Qep11X1r1QA very deep session about BGP, VPN, Direct connect. Loads of technical details   Difference between IPSec VPN and DirectConnect  Hardware VPN  2 tunnels/">
+<meta name="keywords" content="AWS,VPC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS - VPC">
+<meta property="og:url" content="https://racheliurui.github.io/2018/04/11/markdown/AWS/AWS2018/12_VPC/index.html">
+<meta property="og:site_name" content="Hey Hey Hey">
+<meta property="og:description" content="VPC deepdive 2016  https://youtu.be/Qep11X1r1QA very deep session about BGP, VPN, Direct connect. Loads of technical details   Difference between IPSec VPN and DirectConnect  Hardware VPN  2 tunnels/">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-06-15T03:43:00.421Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AWS - VPC">
+<meta name="twitter:description" content="VPC deepdive 2016  https://youtu.be/Qep11X1r1QA very deep session about BGP, VPN, Direct connect. Loads of technical details   Difference between IPSec VPN and DirectConnect  Hardware VPN  2 tunnels/">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://racheliurui.github.io/2018/04/11/markdown/AWS/AWS2018/12_VPC/">
+
+
+
+
+
+  <title>AWS - VPC | Hey Hey Hey</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey Hey Hey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://racheliurui.github.io/2018/04/11/markdown/AWS/AWS2018/12_VPC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rachel Rui Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey Hey Hey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AWS - VPC</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-11T11:37:23+00:00">
+                2018-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/11/markdown/AWS/AWS2018/12_VPC/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/11/markdown/AWS/AWS2018/12_VPC/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="vpc-deepdive-2016"><a class="markdownIt-Anchor" href="#vpc-deepdive-2016"></a> VPC deepdive 2016</h1>
+<blockquote>
+<p><a href="https://youtu.be/Qep11X1r1QA" target="_blank" rel="noopener">https://youtu.be/Qep11X1r1QA</a><br>
+very deep session about BGP, VPN, Direct connect. Loads of technical details</p>
+</blockquote>
+<h2 id="difference-between-ipsec-vpn-and-directconnect"><a class="markdownIt-Anchor" href="#difference-between-ipsec-vpn-and-directconnect"></a> Difference between IPSec VPN and DirectConnect</h2>
+<h2 id="hardware-vpn"><a class="markdownIt-Anchor" href="#hardware-vpn"></a> Hardware VPN</h2>
+<ul>
+<li>2 tunnels/VPC; each tunnel will connect to one AZ</li>
+<li>0.05/hours/VPN (that includes 2 tunnels); ( EC2 medium is 0.1/hour)</li>
+<li>support static VPN and dynamic VPN (BGP)</li>
+</ul>
+<h3 id="static-vpn-vs-dynamic-vpn"><a class="markdownIt-Anchor" href="#static-vpn-vs-dynamic-vpn"></a> Static VPN vs Dynamic VPN</h3>
+<ul>
+<li>Static VPN
+<ul>
+<li>IP address is Static</li>
+<li>each tunnel need 2 pairs of Security Association (inbound and outbound); that means 1 VPC connection needs 4 SA pairs</li>
+</ul>
+</li>
+<li>Dynamic VPN
+<ul>
+<li>BGP IP address is dynamically generated</li>
+<li>Use ASN as registry to talk with each other (for AWS, 1 ASN/Region; for customer side, also need to configure ASN)</li>
+<li>In PROD, you can setup 2 tunnels per VPC from customer site to connect to each VPC owned by you.</li>
+</ul>
+</li>
+</ul>
+<h3 id="common-maintain-faq-for-vpn"><a class="markdownIt-Anchor" href="#common-maintain-faq-for-vpn"></a> Common maintain FAQ for VPN</h3>
+<ul>
+<li>How to change pre-shared key?</li>
+</ul>
+<blockquote>
+<p>Create a new VPN connection and delete current.  — (IP config might change)</p>
+</blockquote>
+<ul>
+<li>How to change crypto?</li>
+</ul>
+<blockquote>
+<p>change the config and the it will be updated during negotiation.</p>
+</blockquote>
+<ul>
+<li>Migration VPN to another VPC</li>
+</ul>
+<blockquote>
+<p>detach the VGW from VPC and re-attach to new VPC</p>
+</blockquote>
+<h3 id="vpn-billing"><a class="markdownIt-Anchor" href="#vpn-billing"></a> VPN Billing</h3>
+<ul>
+<li>0.05/hour/VPN</li>
+<li>Data Transfer
+<ul>
+<li>Flow in is free</li>
+<li>VPC to VPC is not free</li>
+</ul>
+</li>
+</ul>
+<h2 id="direct-connect"><a class="markdownIt-Anchor" href="#direct-connect"></a> Direct Connect</h2>
+<ul>
+<li>For direct connect, your VPC can be private or public</li>
+<li>Data in is free, data out via Direct Connect is cheaper compared to internet</li>
+<li>One direct connection can be shared between multiple AWS accounts</li>
+<li>Direct Connect only use BGP</li>
+<li>Dedicated vs Hosted Direct Connection
+<ul>
+<li>Dedicated: Connect from AWS Partner DataCenter to AWS router via fiber (1G or 10G)</li>
+<li>Hosted: Connect to AWS via shared connection provided by AWS Partners (50-500MBps)
+<ul>
+<li>Hosted only support single Virtual interface</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Public VIF vs Private VIF
+<ul>
+<li>Private VIF only connect you to VPC (not DNS and not S3)</li>
+<li>Public VIF : can connect you to anything</li>
+<li>Configure VIF specify: Public or Private; VLAN ; BGP Session</li>
+</ul>
+</li>
+</ul>
+<h3 id="maintain-faq-for-direct-connection"><a class="markdownIt-Anchor" href="#maintain-faq-for-direct-connection"></a> maintain FAQ for Direct Connection</h3>
+<ul>
+<li>How to move between accounts
+<ul>
+<li>don’t delete, raise a support request</li>
+</ul>
+</li>
+<li>How to move VIF
+<ul>
+<li>Delete and create new (copy the old setting)</li>
+</ul>
+</li>
+<li>Need public IP for VIF?
+<ul>
+<li>support case</li>
+</ul>
+</li>
+<li>Change bandwith
+<ul>
+<li>Partner support case</li>
+</ul>
+</li>
+</ul>
+<h3 id="direct-connect-billing"><a class="markdownIt-Anchor" href="#direct-connect-billing"></a> Direct Connect Billing</h3>
+<ul>
+<li>More expesive per hour but cheaper for data transfer fee
+<ul>
+<li>Data transfer fee is depending on who owns the VIF which support data transfer out
+<ul>
+<li>For example, for public VIF, you access S3 owned by you, you pay; you access S3 owned by other people , they pay</li>
+<li>For example, for private VIF, data transfer out via the VIF owned by you , you pay</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="ipv6-on-direct-connect"><a class="markdownIt-Anchor" href="#ipv6-on-direct-connect"></a> IPV6 on Direct Connect</h3>
+<ul>
+<li>Adding IPV6 to existing DX
+<ul>
+<li>Select current DX , add peering , select IPV6</li>
+<li>Then your DX page will show IPV4 and IPV6</li>
+</ul>
+</li>
+<li>Your DX can support IPV4 or IPV6 or both</li>
+</ul>
+<h2 id="bgp-base-knowledge"><a class="markdownIt-Anchor" href="#bgp-base-knowledge"></a> BGP base knowledge</h2>
+<ul>
+<li>TCP protocol on port 179</li>
+<li>ASN: Autonomous System Numbers : alway check when create
+<ul>
+<li>If you use Public ASN to connect with aws via BGP, you must own that ASN ;</li>
+<li>From 29min ???</li>
+</ul>
+</li>
+<li>iBGP is used between peers inside same ASN, eBGP is used between peers belong to different ASN</li>
+<li>AS_PATH : Measure of network distance</li>
+<li>Local Preference: configure as preferred local connection</li>
+</ul>
+<h2 id="vpc-routing-preference"><a class="markdownIt-Anchor" href="#vpc-routing-preference"></a> VPC routing preference</h2>
+<ul>
+<li>local VPC routing wins</li>
+<li>non local address will first check longest prefix (for example route config for 10.0.0.0/32 wins 10.0.0.0/16, because it’s more specific)</li>
+<li>Static route config wins agaist dynamic</li>
+<li>Dynamic routes, DX connection wins
+<ul>
+<li>If both connection are DX, then, shorter AS_PATH wins</li>
+<li>Same AS_PATH, then compare traffic</li>
+</ul>
+</li>
+<li>Dynamic(BGP), non DX, then VPN
+<ul>
+<li>Static VPN wins against BGP VPN</li>
+<li>compare AS_PATH</li>
+</ul>
+</li>
+</ul>
+<h2 id="aws-vpn-cloudhub"><a class="markdownIt-Anchor" href="#aws-vpn-cloudhub"></a> AWS VPN CloudHub</h2>
+<ul>
+<li>AWS muti region connect to multiple cooperate DC via eBGP;</li>
+<li>Advanced Scenario: use direct connect with one Cooperate DC, then use VPN CloudHub, and all datacenter can make use of the direct connect to speed up</li>
+<li>With the multi to multi scenario ,the VPN hub is a pair of EC2 to act as soft VPN sits in transit VPC (use official cloudformation to automate)</li>
+</ul>
+<h2 id="vpn-over-vif"><a class="markdownIt-Anchor" href="#vpn-over-vif"></a> VPN over VIF</h2>
+<ul>
+<li>Direct Connection by default is not encrypted, what if I want to use DX but want the traffic to be encrypted?</li>
+<li>Use VRF feature provided by router hardware to setup VPN tunnel based on DX</li>
+</ul>
+<h1 id="vpc-deep-dive"><a class="markdownIt-Anchor" href="#vpc-deep-dive"></a> VPC Deep Dive</h1>
+<p>Backgroud of VPC: 2009 aws lanched VPC and then simplified to create a default VPC to every account.</p>
+<h2 id="create-a-vpc"><a class="markdownIt-Anchor" href="#create-a-vpc"></a> create a VPC</h2>
+<figure class="highlight plain"><figcaption><span>cli</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 describe-account-attribute</span><br><span class="line">aws ec2 create-vpc --cidr 10.0.0.1/16</span><br></pre></td></tr></table></figure>
+<h2 id="command-to-create-an-ipsec-vpn"><a class="markdownIt-Anchor" href="#command-to-create-an-ipsec-vpn"></a> command to create an IPSec VPN</h2>
+<figure class="highlight plain"><figcaption><span>cli</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 create-vpn-gateway --type ipsec.1</span><br><span class="line">aws ec2 attach-bpn-gateway --vpn vgw-f9da06e7 --vpc vpc-c15180a4</span><br><span class="line">aws ec2 create-customer-gateway --type ipsec.1 --public 54.64.1.2 --bgp 6500  </span><br><span class="line">aws ec2 create-vpn-connection --vpn vgw-f9da06e7 --cust cgw-f4d905ea --t ipsec.1</span><br></pre></td></tr></table></figure>
+<h2 id="command-to-create-direct-connect"><a class="markdownIt-Anchor" href="#command-to-create-direct-connect"></a> command to create direct connect</h2>
+<figure class="highlight plain"><figcaption><span>cli</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aws directconnect create-connection --loc EqSE2 -b 1Gbps --con My_First</span><br><span class="line">aws directconnect create-private-virtual-interface --con dxcon-fgp13h2s --new VirutalInterfaceName=foo,vlan=10,asn=60,authkey=testing, amazonAddress=192.168.0.1/24,customerAddress=192.168.0.2/24,VirtualGatewayId=vgw-f9da06e7</span><br></pre></td></tr></table></figure>
+<h2 id="combine-above-2-connectons"><a class="markdownIt-Anchor" href="#combine-above-2-connectons"></a> Combine above 2 connectons</h2>
+<ul>
+<li>We can setup 1 direct connect plus 1 vpn between aws vpc and on-promise network.</li>
+</ul>
+<h2 id="configure-vpc-routing-table"><a class="markdownIt-Anchor" href="#configure-vpc-routing-table"></a> Configure VPC routing table</h2>
+<ul>
+<li>Each VPC will have 1 default route table connected with all subnets.</li>
+</ul>
+<h2 id="further-step-create-internet-gateway-to-enable-vpcs-internet-connection"><a class="markdownIt-Anchor" href="#further-step-create-internet-gateway-to-enable-vpcs-internet-connection"></a> Further step: create internet gateway to enable VPC’s internet connection</h2>
+<figure class="highlight plain"><figcaption><span>cli</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 create-internet-gateway</span><br><span class="line">aws ec2 attach-internet-gateway --internet igw-5a1ae13f --vpc vpc-c15180a74</span><br><span class="line">aws ec2 delete-route -ro rtb-ef36e58a --dest 0.0.0.0/0</span><br><span class="line">aws ec2 create-route -ro rtb-ef36e58a --dest 0.0.0.0/0 --gateway-id igw-5a1ae13f</span><br><span class="line">aws ec2 create-route -ro rtb-ef36e58a --dest 192.168.0.0/16 --gateway-id vgw-5a1ae13f</span><br></pre></td></tr></table></figure>
+<h2 id="automatic-route-propagation-from-vgw"><a class="markdownIt-Anchor" href="#automatic-route-propagation-from-vgw"></a> Automatic Route Propagation from VGW</h2>
+<figure class="highlight plain"><figcaption><span>cli</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 delete-route -ro rtb-ef36e58a --dest 192.168.0.0/16</span><br><span class="line">aws ec2 enable-vgw-route-propapation -ro rtb-ef36e58a --gateway-id vgw-5a1ae13f</span><br></pre></td></tr></table></figure>
+<h2 id="isolate-some-of-the-subnets-connection-inside-the-vpc"><a class="markdownIt-Anchor" href="#isolate-some-of-the-subnets-connection-inside-the-vpc"></a> Isolate some of the subnet’s connection inside the VPC</h2>
+<ul>
+<li>Create separate route table for the subnet</li>
+</ul>
+<h2 id="software-firewall-to-internet-nat"><a class="markdownIt-Anchor" href="#software-firewall-to-internet-nat"></a> software firewall to internet (NAT)</h2>
+<figure class="highlight plain"><figcaption><span>cli</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># by-default it won&apos;t work, we need to change the eni of the NAT server. Disable the source and dest check</span><br><span class="line">aws ec2 modify-network-interface-attribute --net eni-f832afcc --no-source-dest-check</span><br><span class="line">aws ec2 create-route --ro rtb-ef36e58a --dest 0.0.0.0/0 --instance-id i-f832afcc</span><br><span class="line">aws ec2 create-route --ro rtb-ef36e31c --dest 0.0.0.0/0 --gateway-id igw-5a1ae13f</span><br></pre></td></tr></table></figure>
+<h2 id="vpc-peering"><a class="markdownIt-Anchor" href="#vpc-peering"></a> VPC peering</h2>
+<ul>
+<li>VPC peering support across acount, across region</li>
+<li>VPC peering is a service ; no Single point of failure</li>
+<li>Use case :</li>
+<li>shared service running inside VCP and peering with other VPC.</li>
+<li>Separate backend DEV/TEST/PROD; with VPC peering, all env have same ip , the service pointing different VPC by configure the iprouting table to pick the correct VPC, and each DEV/TEST/PROD VPC will have exact same IP setting.</li>
+<li>2 to-be-peered VPCs can’t have IP address overlap, but 1 VPC can peer with multiple VPCs which has ipaddress overlap.</li>
+<li>Security Groups can’t be refered across VPC</li>
+<li>VPC peering can use similiar way as a NAT server. (routing internet connect via another VPC )
+<ul>
+<li>so one VPC don’t need to have internet access, it connect to internet through another VPC’s igw</li>
+</ul>
+</li>
+</ul>
+<h1 id="remote-connection-best-practice"><a class="markdownIt-Anchor" href="#remote-connection-best-practice"></a> Remote connection Best Practice</h1>
+<ul>
+<li>For each customer gateway create 2 VPN tunnel to 2 availability zones that VPC has .</li>
+<li>use 2 customer gateway on-promise for failover. Then customer gateway has 2 VPN tunnel link to different AZ.</li>
+<li>Use 2 direct connect, each direct connect will link to 1 AZ, then add another IPSec VPN (customer gateway) and link 2 different AZ.</li>
+</ul>
+<h1 id="vpc-performance"><a class="markdownIt-Anchor" href="#vpc-performance"></a> VPC Performance</h1>
+<p><strong>packats per second</strong> : important capability for instances to get high VPC performance</p>
+<ul>
+<li>EC2 has driver to better use physical network and bypass the virtualization layer</li>
+</ul>
+<h1 id="reference-customer-use-case"><a class="markdownIt-Anchor" href="#reference-customer-use-case"></a> Reference Customer Use Case</h1>
+<h2 id="live-video"><a class="markdownIt-Anchor" href="#live-video"></a> live video</h2>
+<ul>
+<li>A backpack containing multi routers to provide multi connections to internet to makesure the live vidio being sent.</li>
+<li>inside AWS, to transcoding and published</li>
+</ul>
+<h2 id="tradeair"><a class="markdownIt-Anchor" href="#tradeair"></a> TradeAir</h2>
+<p>Small banking solution on cloud.</p>
+<ul>
+<li>Use direct connect with on-promise</li>
+</ul>
+<h1 id="vpc-migration"><a class="markdownIt-Anchor" href="#vpc-migration"></a> VPC migration</h1>
+<p>ClassicLink : EC2-Classic instances communicate with EC2-VPC instances<br>
+Helps to migrate  EC2-Classic platform into VPC network.</p>
+<ul>
+<li>move aws managed services first</li>
+<li>Make ELB ready to route traffic to both classic and VPC networks</li>
+<li>start new VPC EC2 instances and route the traffic in</li>
+<li>turn off the old classic EC2 instances gracefully</li>
+</ul>
+<h2 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h2>
+<blockquote></blockquote>
+<p><a href="https://youtu.be/i6Zf9lwXRcY" target="_blank" rel="noopener">https://youtu.be/i6Zf9lwXRcY</a></p>
+<blockquote>
+<p>VPC deepdive 2015<br>
+<a href="https://youtu.be/B8vnhRJDujw" target="_blank" rel="noopener">https://youtu.be/B8vnhRJDujw</a></p>
+</blockquote>
+<h1 id="hosted-virtual-interface-vs-hosted-connection-when-using-direct-connection"><a class="markdownIt-Anchor" href="#hosted-virtual-interface-vs-hosted-connection-when-using-direct-connection"></a> Hosted Virtual Interface vs Hosted Connection — when using direct connection</h1>
+<ul>
+<li>VIF is direct connection (1Gpbs) – you can share with multiple account</li>
+<li>Hosted Connection is direct connection but being splitted by AWS partner and garanteed speed (for example 50Mbps per connection)</li>
+</ul>
+<h2 id="reference-2"><a class="markdownIt-Anchor" href="#reference-2"></a> Reference</h2>
+<blockquote>
+<p><a href="https://youtu.be/r7zamTFGxcM" target="_blank" rel="noopener">https://youtu.be/r7zamTFGxcM</a></p>
+</blockquote>
+<h1 id="vpc-enhancements"><a class="markdownIt-Anchor" href="#vpc-enhancements"></a> VPC enhancements</h1>
+<h2 id="elastic-network-adapter"><a class="markdownIt-Anchor" href="#elastic-network-adapter"></a> Elastic Network Adapter</h2>
+<ul>
+<li>PCI device to support variable speed</li>
+<li>If you are not using AWS AMI , you need to install the driver to get best performance</li>
+<li>HVM instance can have access to AWS 10Gbps pysical network card</li>
+<li>Only high end EC2 support ENA ; you can manually build and install the driver</li>
+<li>There’s only enable (there’s no disable after enabled)</li>
+</ul>
+<h1 id="reference-3"><a class="markdownIt-Anchor" href="#reference-3"></a> Reference</h1>
+<blockquote>
+<p><a href="https://youtu.be/CBmSl3O-AhI" target="_blank" rel="noopener">https://youtu.be/CBmSl3O-AhI</a></p>
+</blockquote>
+<h1 id="044mp4-045mp4-virtual-private-cloud"><a class="markdownIt-Anchor" href="#044mp4-045mp4-virtual-private-cloud"></a> 044.mp4 045.mp4 – virtual private cloud</h1>
+<ul>
+<li>Inside a certain region and spanning multiple availble zones</li>
+<li>Class A/B/C private network ranges; subnet mask</li>
+<li>Important: aws reserve first 3 and last 1 ip addresses (for example, 0,1,2,3 and 255)
+<ul>
+<li>255 is the broadcasting address</li>
+<li>one address is preserved for Internet Gateway</li>
+<li>TODO: how this 4 address is preserved???</li>
+</ul>
+</li>
+<li>default VPC: 172.31.0.0/16, which means (2^(32-16) - 4) availble ips</li>
+<li>1 VPC can have multiple subnet;
+<ul>
+<li>min size is /28, with means 2^(32-28)-1 (for bradcassing) -1( 0 ?? IGW??) =14 available addresses</li>
+</ul>
+</li>
+</ul>
+<h2 id="how-to-connect-to-a-vpc"><a class="markdownIt-Anchor" href="#how-to-connect-to-a-vpc"></a> how to connect to a VPC</h2>
+<ul>
+<li>via internet gateway or via virtual private gateway and via VPN</li>
+<li>Route Tables: if any instances inside a VPC need access to internet, then Route Table is needed
+<ul>
+<li>Main Route Table and Custom route table</li>
+</ul>
+</li>
+<li>NAT Gateway: Network Address Translation (NAT)
+<ul>
+<li>Internet Gateway is attached to VPC. NAT Gateway sits in a Public Subnet.</li>
+<li>NAT gateway is not necessary. Instance in Public Subnet can directly access internet via IWG, only only when we want to configure to let instance sits in Private Subnet to have limited access to internet (only connection initiated from private subnet is allowed and must go through NAT), we can configure NAT to control this.</li>
+<li>For any instance sits in a private subnet, they access internet via 0.0.0.0/0 pointing to NAT sits in public subnet; then from NAT instance, they can visit internet.</li>
+<li><a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="vpc-security"><a class="markdownIt-Anchor" href="#vpc-security"></a> VPC Security</h2>
+<ul>
+<li>Security Groups : Instance Level</li>
+<li>ACL (Access Controle Lists): Subnet level</li>
+<li>Flow Logs (Capture as CloudWatch logs)</li>
+</ul>
+<h1 id="046mp4-vpc-handon-demo"><a class="markdownIt-Anchor" href="#046mp4-vpc-handon-demo"></a> 046.mp4 – VPC handon demo</h1>
+<ul>
+<li>VPC wizard to create VPC</li>
+<li>Select one of the option to use “VPC with public and private subnet”</li>
+<li>Select the NAT Gateway (rates apply) – use the service or start an EC2 instance acting as NAT (Here t2.micro is selected)</li>
+<li>Service Endpoints : AWS S3 not sits inside VPC, when EC2 in VPC need access S3, instead of define role for each EC2, we can define a Service Endpoint to allow EC2 access the S3 without assign a role.
+<ul>
+<li>select service – only S3 Available</li>
+<li>Select which subnet</li>
+<li>select access policy</li>
+<li>can create multiple endpoints for a VPC</li>
+</ul>
+</li>
+<li>Check the ACL being created and binded with the Subnets
+<ul>
+<li>check and edit the inbound/outbound rules</li>
+<li>ACL rule is stateless compared with security group (Security group don’t define in/outbound separatedly)</li>
+<li>ACL rule has both allow and deny rules compared to security group</li>
+</ul>
+</li>
+<li>Check subnets — check the route being configured for public and private subnet</li>
+<li>To have internet access to EC2 : have route to igw,  ACL allowed, security group allowed</li>
+</ul>
+<p>CIDR block ; when a subnet designed is too small<br>
+<a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html</a><br>
+<a href="https://aws.amazon.com/premiumsupport/knowledge-center/vpc-ip-address-range/" target="_blank" rel="noopener">https://aws.amazon.com/premiumsupport/knowledge-center/vpc-ip-address-range/</a></p>
+<p>Basic : ClassABC private network address<br>
+<a href="https://en.wikipedia.org/wiki/Private_network" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Private_network</a></p>
+<p>VPC Peering<br>
+<a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-peering.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-peering.html</a></p>
+<p>VPN-Only Subnet<br>
+<a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Scenario3.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Scenario3.html</a></p>
+<p>VPC Security Group<br>
+<a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html</a></p>
+<p>Two types of security groups: for EC2-classic / for EC2-VPC <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html#ec2-classic-security-groups" target="_blank" rel="noopener">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html#ec2-classic-security-groups</a><br>
+Difference between 2 types of Security Groups<br>
+<a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html#VPC_Security_Group_Differences" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html#VPC_Security_Group_Differences</a></p>
+<p>VPC Primary Private IP Address ; Secondary Private IP address<br>
+<a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-ip-addressing.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-ip-addressing.html</a></p>
+<ul>
+<li>Primary Private IP Address is the main IP address binding with eth0</li>
+<li>Secondary Private IP Addreess is additional manually assigned IP address. It can be reassigned</li>
+<li>Both Primary and Secondary Private IP addresses, once assigned will be attached to instance until it’s terminted</li>
+</ul>
+<p>ENI: Elastic Network Interface<br>
+<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html</a></p>
+<ul>
+<li>虚拟网卡。 每个instance默认有eth0</li>
+<li>根据instance类型不同，允许attach不同数目的虚拟网卡</li>
+<li>ENI是instance能够有secondary private IP address的基础。</li>
+<li>常用场景是一个instance坐在两个subnet上，一个网卡（例如eth0）连subnet A，一个连subnet B。
+<ul>
+<li>Subnet A 是public subnet，通过安全控制使得该instance可以提供http网络服务</li>
+<li>Subnet B 是private subnet，通过安全控制使得该instance只能连VPN Gateway，通过该gateway允许指定内网ip地址提供ssh连接进行管理。</li>
+</ul>
+</li>
+</ul>
+<p>BGP-capable VPN device (Border Gateway Protocol)<br>
+<a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html</a></p>
+<p>Tenancy property for EC2 instance has 2 values to choose from : default ; dedicated<br>
+<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html</a></p>
+<p>Activate VPC Peering connection<br>
+<a href="https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/create-vpc-peering-connection.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/create-vpc-peering-connection.html</a></p>
+<p>VPC limitations,<br>
+<a href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Appendix_Limits.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Appendix_Limits.html</a></p>
+<p>VPN Pricing<br>
+<a href="https://aws.amazon.com/vpc/pricing/" target="_blank" rel="noopener">https://aws.amazon.com/vpc/pricing/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Reward Makes Perfect</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Rachel Rui Liu Bitcoin">
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Rachel Rui Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://racheliurui.github.io/2018/04/11/markdown/AWS/AWS2018/12_VPC/" title="AWS - VPC">https://racheliurui.github.io/2018/04/11/markdown/AWS/AWS2018/12_VPC/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AWS/" rel="tag"># AWS</a>
+          
+            <a href="/tags/VPC/" rel="tag"># VPC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/10/markdown/AWS/AWS2018/09_RelationalDBService/" rel="next" title="AWS - Relational Database Service">
+                <i class="fa fa-chevron-left"></i> AWS - Relational Database Service
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/11/markdown/AWS/AWS2018/10_DynamoDB/" rel="prev" title="AWS - DynamoDB">
+                AWS - DynamoDB <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg" alt="Rachel Rui Liu">
+          <p class="site-author-name" itemprop="name">Rachel Rui Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">178</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">193</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/racheliurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/rachel-rui-liu-a474a7a" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                    
+                      Linkedin
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vpc-deepdive-2016"><span class="nav-number">1.</span> <span class="nav-text"> VPC deepdive 2016</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#difference-between-ipsec-vpn-and-directconnect"><span class="nav-number">1.1.</span> <span class="nav-text"> Difference between IPSec VPN and DirectConnect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hardware-vpn"><span class="nav-number">1.2.</span> <span class="nav-text"> Hardware VPN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#static-vpn-vs-dynamic-vpn"><span class="nav-number">1.2.1.</span> <span class="nav-text"> Static VPN vs Dynamic VPN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#common-maintain-faq-for-vpn"><span class="nav-number">1.2.2.</span> <span class="nav-text"> Common maintain FAQ for VPN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vpn-billing"><span class="nav-number">1.2.3.</span> <span class="nav-text"> VPN Billing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#direct-connect"><span class="nav-number">1.3.</span> <span class="nav-text"> Direct Connect</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#maintain-faq-for-direct-connection"><span class="nav-number">1.3.1.</span> <span class="nav-text"> maintain FAQ for Direct Connection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#direct-connect-billing"><span class="nav-number">1.3.2.</span> <span class="nav-text"> Direct Connect Billing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ipv6-on-direct-connect"><span class="nav-number">1.3.3.</span> <span class="nav-text"> IPV6 on Direct Connect</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bgp-base-knowledge"><span class="nav-number">1.4.</span> <span class="nav-text"> BGP base knowledge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vpc-routing-preference"><span class="nav-number">1.5.</span> <span class="nav-text"> VPC routing preference</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#aws-vpn-cloudhub"><span class="nav-number">1.6.</span> <span class="nav-text"> AWS VPN CloudHub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vpn-over-vif"><span class="nav-number">1.7.</span> <span class="nav-text"> VPN over VIF</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vpc-deep-dive"><span class="nav-number">2.</span> <span class="nav-text"> VPC Deep Dive</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#create-a-vpc"><span class="nav-number">2.1.</span> <span class="nav-text"> create a VPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#command-to-create-an-ipsec-vpn"><span class="nav-number">2.2.</span> <span class="nav-text"> command to create an IPSec VPN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#command-to-create-direct-connect"><span class="nav-number">2.3.</span> <span class="nav-text"> command to create direct connect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#combine-above-2-connectons"><span class="nav-number">2.4.</span> <span class="nav-text"> Combine above 2 connectons</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#configure-vpc-routing-table"><span class="nav-number">2.5.</span> <span class="nav-text"> Configure VPC routing table</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#further-step-create-internet-gateway-to-enable-vpcs-internet-connection"><span class="nav-number">2.6.</span> <span class="nav-text"> Further step: create internet gateway to enable VPC’s internet connection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#automatic-route-propagation-from-vgw"><span class="nav-number">2.7.</span> <span class="nav-text"> Automatic Route Propagation from VGW</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isolate-some-of-the-subnets-connection-inside-the-vpc"><span class="nav-number">2.8.</span> <span class="nav-text"> Isolate some of the subnet’s connection inside the VPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#software-firewall-to-internet-nat"><span class="nav-number">2.9.</span> <span class="nav-text"> software firewall to internet (NAT)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vpc-peering"><span class="nav-number">2.10.</span> <span class="nav-text"> VPC peering</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#remote-connection-best-practice"><span class="nav-number">3.</span> <span class="nav-text"> Remote connection Best Practice</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vpc-performance"><span class="nav-number">4.</span> <span class="nav-text"> VPC Performance</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference-customer-use-case"><span class="nav-number">5.</span> <span class="nav-text"> Reference Customer Use Case</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#live-video"><span class="nav-number">5.1.</span> <span class="nav-text"> live video</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tradeair"><span class="nav-number">5.2.</span> <span class="nav-text"> TradeAir</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vpc-migration"><span class="nav-number">6.</span> <span class="nav-text"> VPC migration</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">6.1.</span> <span class="nav-text"> Reference</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hosted-virtual-interface-vs-hosted-connection-when-using-direct-connection"><span class="nav-number">7.</span> <span class="nav-text"> Hosted Virtual Interface vs Hosted Connection — when using direct connection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#reference-2"><span class="nav-number">7.1.</span> <span class="nav-text"> Reference</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vpc-enhancements"><span class="nav-number">8.</span> <span class="nav-text"> VPC enhancements</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#elastic-network-adapter"><span class="nav-number">8.1.</span> <span class="nav-text"> Elastic Network Adapter</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference-3"><span class="nav-number">9.</span> <span class="nav-text"> Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#044mp4-045mp4-virtual-private-cloud"><span class="nav-number">10.</span> <span class="nav-text"> 044.mp4 045.mp4 – virtual private cloud</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#how-to-connect-to-a-vpc"><span class="nav-number">10.1.</span> <span class="nav-text"> how to connect to a VPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vpc-security"><span class="nav-number">10.2.</span> <span class="nav-text"> VPC Security</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#046mp4-vpc-handon-demo"><span class="nav-number">11.</span> <span class="nav-text"> 046.mp4 – VPC handon demo</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rachel Rui Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://racheliurui-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://racheliurui.github.io/2018/04/11/markdown/AWS/AWS2018/12_VPC/';
+          this.page.identifier = '2018/04/11/markdown/AWS/AWS2018/12_VPC/';
+          this.page.title = 'AWS - VPC';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://racheliurui-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

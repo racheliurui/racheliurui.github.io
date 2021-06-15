@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="AWS,AWS RDS,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hey Hey Hey" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="RDS  Max Storage limites  MS SQL Server 4TB My SQL, Oracle, PostgreSQL, MariaDB 6TB Aurora  64TB   Supported Relational DB types  Support 6 Relational DB types, MS sql;mysql;Oracle; AWS Aurora; Postg">
+<meta name="keywords" content="AWS,AWS RDS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS - Relational Database Service">
+<meta property="og:url" content="https://racheliurui.github.io/2018/04/10/markdown/AWS/AWS2018/09_RelationalDBService/index.html">
+<meta property="og:site_name" content="Hey Hey Hey">
+<meta property="og:description" content="RDS  Max Storage limites  MS SQL Server 4TB My SQL, Oracle, PostgreSQL, MariaDB 6TB Aurora  64TB   Supported Relational DB types  Support 6 Relational DB types, MS sql;mysql;Oracle; AWS Aurora; Postg">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/09_RDS_EncryptDataAtRest.png?raw=true">
+<meta property="og:updated_time" content="2021-06-15T03:43:00.417Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AWS - Relational Database Service">
+<meta name="twitter:description" content="RDS  Max Storage limites  MS SQL Server 4TB My SQL, Oracle, PostgreSQL, MariaDB 6TB Aurora  64TB   Supported Relational DB types  Support 6 Relational DB types, MS sql;mysql;Oracle; AWS Aurora; Postg">
+<meta name="twitter:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/09_RDS_EncryptDataAtRest.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://racheliurui.github.io/2018/04/10/markdown/AWS/AWS2018/09_RelationalDBService/">
+
+
+
+
+
+  <title>AWS - Relational Database Service | Hey Hey Hey</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey Hey Hey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://racheliurui.github.io/2018/04/10/markdown/AWS/AWS2018/09_RelationalDBService/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rachel Rui Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey Hey Hey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AWS - Relational Database Service</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-10T15:55:23+00:00">
+                2018-04-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/10/markdown/AWS/AWS2018/09_RelationalDBService/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/10/markdown/AWS/AWS2018/09_RelationalDBService/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="rds"><a class="markdownIt-Anchor" href="#rds"></a> RDS</h1>
+<h2 id="max-storage-limites"><a class="markdownIt-Anchor" href="#max-storage-limites"></a> Max Storage limites</h2>
+<ul>
+<li>MS SQL Server <strong>4TB</strong></li>
+<li>My SQL, Oracle, PostgreSQL, MariaDB <strong>6TB</strong></li>
+<li>Aurora  <strong>64TB</strong></li>
+</ul>
+<h2 id="supported-relational-db-types"><a class="markdownIt-Anchor" href="#supported-relational-db-types"></a> Supported Relational DB types</h2>
+<ul>
+<li>Support 6 Relational DB types, MS sql;mysql;Oracle; AWS Aurora; PostgreSQL; MariaDB</li>
+<li>Backup - to S3 (can be encrypted for db or snapshot at rest)</li>
+<li>Failover - Multi-AZ ; when master fails , standby is promoted , then CName is updated to poiting to standby, then new instance is created to replace the master</li>
+<li>Read Replica (don’t support ms sql and oracle); one DB can have multiple read replicas
+<ul>
+<li>If you have multiple read replica, then routing from single url using Route53 or customed HAProxy , <strong>not support AWS ELB</strong></li>
+</ul>
+</li>
+</ul>
+<h1 id="security"><a class="markdownIt-Anchor" href="#security"></a> Security</h1>
+<ul>
+<li>Network firewall control<br>
+Like EC2 security group, RDS has its own security group settings</li>
+<li>Access Control<br>
+IAM : IAM can’t control who can log in database (database user and groups); IAM only controls who can have what level of access to the RDS service.</li>
+<li>Compliance and Transport SSL</li>
+<li>At Rest Encryption: using KMS(key management service) &amp; Envolope Encryption
+<ul>
+<li>Limit risk of compromise key</li>
+<li>Centralized access and audit of key activity</li>
+<li>just click “enable encryption”</li>
+</ul>
+</li>
+<li>At Rest Encryption Limitations
+<ul>
+<li>only available when creation a new database; and once enabled , can’t be removed.</li>
+<li>Unencrpyted snapshot can be changed to encrypted snapshot</li>
+<li>Encrypted db across region (aws is working on that)</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/09_RDS_EncryptDataAtRest.png?raw=true" alt="config to enable encryption"></p>
+<h1 id="metrics-and-monitoring"><a class="markdownIt-Anchor" href="#metrics-and-monitoring"></a> Metrics and monitoring</h1>
+<ul>
+<li>1 min interval by default</li>
+<li>Enhanced Monitoring – more detailed , minimum 1 second</li>
+<li>AWS <strong>Performance Insights for RDS</strong> : designed for RDS, with top SQL and help with identify bottlenecks</li>
+</ul>
+<h1 id="high-availability"><a class="markdownIt-Anchor" href="#high-availability"></a> High Availability</h1>
+<ul>
+<li>
+<p>take 30 sec to a few min</p>
+</li>
+<li>
+<p>Done automatically by DNS CName binding from Primary to Secondary</p>
+</li>
+<li>
+<p>Launch multiple read replica into different regions</p>
+</li>
+<li>
+<p>Aurora is different with traditional DB</p>
+<ul>
+<li>have concept similiar like shards</li>
+<li><strong>Read Replica Endpoint</strong>: single point to the back end read replica clusters</li>
+</ul>
+</li>
+</ul>
+<h1 id="scaling-rdb"><a class="markdownIt-Anchor" href="#scaling-rdb"></a> Scaling RDB</h1>
+<ul>
+<li>Scale your Master Database
+<ul>
+<li>by change the instance running the instance, optional “Apply immediately” otherwise wait for maintainance window</li>
+<li>around 6 min to get it done</li>
+<li>for database with standby in multiAZ , it will upgrade standby first, flag standby as master and master as standby; update master (around 20min)</li>
+<li><strong>automatic scale</strong>: depending on usage, schedule scale up and down</li>
+</ul>
+</li>
+</ul>
+<p>Option1, aws CLI + CRON</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">aws rds modify-db-instance --db-instance-identifier sg-cli-test --db-instance-class db.m4.large --apply-immediately</span><br><span class="line"><span class="meta">#</span><span class="bash"> Scale down at 8PM Friday</span></span><br><span class="line">0 20 * * 5 ~/scale_down_rds.sh</span><br><span class="line"><span class="meta">#</span><span class="bash"> Scale up at 4AM on Monday</span></span><br><span class="line">0 4 * * 1 ~/scale_up_rds.sh</span><br></pre></td></tr></table></figure>
+<p>Option2, using aws lambda (Python + boto3 lib)</p>
+<p>Option3, Metrics + SNS/SQS + Lambda -&gt; scale up / down</p>
+<ul>
+<li>scale number of replicas</li>
+<li>Storage Scaling</li>
+<li>Scale the IOPS provisioned</li>
+</ul>
+<h1 id="backup-snapshots"><a class="markdownIt-Anchor" href="#backup-snapshots"></a> Backup &amp; Snapshots</h1>
+<h2 id="backup"><a class="markdownIt-Anchor" href="#backup"></a> Backup</h2>
+<p>Backup is automatic scheduled and configurable</p>
+<ul>
+<li>Aurora
+<ul>
+<li>Continous , no performance impact</li>
+</ul>
+</li>
+<li>Other RDB
+<ul>
+<li>Default retention 1 day , configurable max = 35 days</li>
+<li>Default daily, can select the backup window</li>
+<li>for Multi-AZ , will use standby</li>
+<li>Scheduled the backup at 7PM , then AWS try to get a full copy of data starting from 7PM + every 5 min extra log until the copy is fully finished at 7:30PM. 7:30PM will be the “Latest Restorable Time” and we can go back to any time from 7PM to 7:30PM when we restore a database from this backup.</li>
+</ul>
+</li>
+</ul>
+<h2 id="snapshot"><a class="markdownIt-Anchor" href="#snapshot"></a> Snapshot</h2>
+<p>Snapshot is manually triggered compared to backup.</p>
+<h2 id="migration"><a class="markdownIt-Anchor" href="#migration"></a> Migration</h2>
+<p>MySQL Dump --&gt; S3 (multi part upload; snowball )–&gt; restore Aurora from S3</p>
+<p><strong>AWS Database Migration Service</strong>:<br>
+database heterogeneous migration</p>
+<h1 id="037mp4-aws-rds-hands-on"><a class="markdownIt-Anchor" href="#037mp4-aws-rds-hands-on"></a> 037.mp4 – AWS RDS Hands On</h1>
+<ul>
+<li>Create the mysql service — (PROD must use multi-AZ , but dev can be single instance)</li>
+<li>Change to not use “Generic SSD” which not suitable for DB because of high IOPS</li>
+<li>Enable Multi-AZ</li>
+<li>Publically accesable – disable; control security using VPC</li>
+</ul>
+<p>RDS Security groups<br>
+<a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html</a></p>
+<p>DB Parameter group<br>
+<a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithParamGroups.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithParamGroups.html</a><br>
+数据库的参数组。</p>
+<p>DB Option Group ; lifecycle for the option group config (e.g a restored db )<br>
+<a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithOptionGroups.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithOptionGroups.html</a><br>
+数据库的feature option组。</p>
+<p>comments:<br>
+Option groups allows the use of available features within a database. So if you spun up a SQL RDS instance, you could configure TDE, Native SQL backup/restore, or mirroring. Parameter groups is how the database is configured. Min/max settings, etc.</p>
+<h1 id="知识点"><a class="markdownIt-Anchor" href="#知识点"></a> 知识点</h1>
+<ul>
+<li>
+<p>关于RDS take snapshot时候的I/O suspension</p>
+<ul>
+<li>如果是single AZ，数据库肯定有I/O suspension</li>
+<li>如果是multi AZ，而且数据库设置了backup， 那么snapshot会在backup数据库上进行，这时候就不会有io suspension</li>
+</ul>
+</li>
+<li>
+<p>MySQL engine 的选择</p>
+</li>
+<li>
+<p>InnoDB storage engine ：  Point-In-Time restore and snapshot restore require a recoverable storage engine and are supported for the InnoDB storage engine only.</p>
+</li>
+<li>
+<p>MyISAM storage engine does not support reliable recovery and can result in lost or corrupt data when MySQL is restarted after a recovery, preventing Point-In-Time restore or snapshot restore from working as intended. However, if you still choose to use MyISAM with Amazon RDS, snapshots can be helpful under some conditions.</p>
+</li>
+<li>
+<p>MyISAM performs better than InnoDB if you require intense, full-text search capability.</p>
+</li>
+<li>
+<p>The Federated Storage Engine is currently not supported by Amazon RDS for MySQL.</p>
+</li>
+<li>
+<p>3306是MySQL的默认端口；3389是RemoteDesktop的默认端口</p>
+</li>
+</ul>
+<h1 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h1>
+<blockquote>
+<p>035.mp4 036.mp4 – AWS RDS Services</p>
+</blockquote>
+<blockquote>
+<p>Deep Dive<br>
+<a href="https://youtu.be/pPLPzPYY5uU" target="_blank" rel="noopener">https://youtu.be/pPLPzPYY5uU</a></p>
+</blockquote>
+<p>Fee<br>
+<a href="http://calculator.s3.amazonaws.com/index.html#s=RDS" target="_blank" rel="noopener">http://calculator.s3.amazonaws.com/index.html#s=RDS</a></p>
+<p>Best practise<br>
+<a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_BestPractices.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_BestPractices.html</a></p>
+<p>Restore the RDB<br>
+<a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.html</a></p>
+<p>RDB maintainance sequence<br>
+<a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Maintenance.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Maintenance.html</a></p>
+<p>Steps to db deletion<br>
+<a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_DeleteInstance.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_DeleteInstance.html</a></p>
+<p>Monitoring types<br>
+<a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html</a></p>
+<p>Cloudwatch and CloudTrail to help monitor the db Performance<br>
+<a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/send-cloudtrail-events-to-cloudwatch-logs.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/awscloudtrail/latest/userguide/send-cloudtrail-events-to-cloudwatch-logs.html</a></p>
+<p>Automatic Backup; backup retention periods<br>
+<a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html</a></p>
+<p>PIOPS and IOPS and page size ; ratio of the requested IOPS rate to the amount of storage allocated<br>
+<a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html</a></p>
+<p>RDS reserved instances<br>
+<a href="https://aws.amazon.com/blogs/aws/reserved-instance-options-for-amazon-ec2/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/aws/reserved-instance-options-for-amazon-ec2/</a></p>
+<p>DB Subnet group<br>
+<a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html#USER_VPC.Subnets" target="_blank" rel="noopener">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html#USER_VPC.Subnets</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Reward Makes Perfect</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Rachel Rui Liu Bitcoin">
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Rachel Rui Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://racheliurui.github.io/2018/04/10/markdown/AWS/AWS2018/09_RelationalDBService/" title="AWS - Relational Database Service">https://racheliurui.github.io/2018/04/10/markdown/AWS/AWS2018/09_RelationalDBService/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AWS/" rel="tag"># AWS</a>
+          
+            <a href="/tags/AWS-RDS/" rel="tag"># AWS RDS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/10/markdown/AWS/AWS2018/08_CloudFront/" rel="next" title="AWS - CloudFront">
+                <i class="fa fa-chevron-left"></i> AWS - CloudFront
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/11/markdown/AWS/AWS2018/12_VPC/" rel="prev" title="AWS - VPC">
+                AWS - VPC <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg" alt="Rachel Rui Liu">
+          <p class="site-author-name" itemprop="name">Rachel Rui Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">178</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">193</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/racheliurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/rachel-rui-liu-a474a7a" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                    
+                      Linkedin
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#rds"><span class="nav-number">1.</span> <span class="nav-text"> RDS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#max-storage-limites"><span class="nav-number">1.1.</span> <span class="nav-text"> Max Storage limites</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#supported-relational-db-types"><span class="nav-number">1.2.</span> <span class="nav-text"> Supported Relational DB types</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#security"><span class="nav-number">2.</span> <span class="nav-text"> Security</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#metrics-and-monitoring"><span class="nav-number">3.</span> <span class="nav-text"> Metrics and monitoring</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#high-availability"><span class="nav-number">4.</span> <span class="nav-text"> High Availability</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scaling-rdb"><span class="nav-number">5.</span> <span class="nav-text"> Scaling RDB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#backup-snapshots"><span class="nav-number">6.</span> <span class="nav-text"> Backup &amp; Snapshots</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#backup"><span class="nav-number">6.1.</span> <span class="nav-text"> Backup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#snapshot"><span class="nav-number">6.2.</span> <span class="nav-text"> Snapshot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#migration"><span class="nav-number">6.3.</span> <span class="nav-text"> Migration</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#037mp4-aws-rds-hands-on"><span class="nav-number">7.</span> <span class="nav-text"> 037.mp4 – AWS RDS Hands On</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#知识点"><span class="nav-number">8.</span> <span class="nav-text"> 知识点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number">9.</span> <span class="nav-text"> References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rachel Rui Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://racheliurui-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://racheliurui.github.io/2018/04/10/markdown/AWS/AWS2018/09_RelationalDBService/';
+          this.page.identifier = '2018/04/10/markdown/AWS/AWS2018/09_RelationalDBService/';
+          this.page.title = 'AWS - Relational Database Service';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://racheliurui-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

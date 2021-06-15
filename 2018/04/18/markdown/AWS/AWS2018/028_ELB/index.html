@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="AWS,ELB,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hey Hey Hey" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Terminology SSL Offloading example : POODLE issue. 62% ELB updated within 24 hours Proxy Protocol  for TCP layer   https://www.52os.net/articles/PROXY_protocol_pass_client_ip.html  X-Forwarded-For  d">
+<meta name="keywords" content="AWS,ELB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS - ELB">
+<meta property="og:url" content="https://racheliurui.github.io/2018/04/18/markdown/AWS/AWS2018/028_ELB/index.html">
+<meta property="og:site_name" content="Hey Hey Hey">
+<meta property="og:description" content="Terminology SSL Offloading example : POODLE issue. 62% ELB updated within 24 hours Proxy Protocol  for TCP layer   https://www.52os.net/articles/PROXY_protocol_pass_client_ip.html  X-Forwarded-For  d">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/028_ELBContentBasedRouting.png?raw=true">
+<meta property="og:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/028_MultiZoneBenefit.png?raw=true">
+<meta property="og:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/028_WebApplicationFirewall.png?raw=true">
+<meta property="og:updated_time" content="2021-06-15T03:43:00.417Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AWS - ELB">
+<meta name="twitter:description" content="Terminology SSL Offloading example : POODLE issue. 62% ELB updated within 24 hours Proxy Protocol  for TCP layer   https://www.52os.net/articles/PROXY_protocol_pass_client_ip.html  X-Forwarded-For  d">
+<meta name="twitter:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/028_ELBContentBasedRouting.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://racheliurui.github.io/2018/04/18/markdown/AWS/AWS2018/028_ELB/">
+
+
+
+
+
+  <title>AWS - ELB | Hey Hey Hey</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey Hey Hey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://racheliurui.github.io/2018/04/18/markdown/AWS/AWS2018/028_ELB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rachel Rui Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey Hey Hey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AWS - ELB</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T14:29:59+00:00">
+                2018-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/18/markdown/AWS/AWS2018/028_ELB/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/18/markdown/AWS/AWS2018/028_ELB/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="terminology"><a class="markdownIt-Anchor" href="#terminology"></a> Terminology</h1>
+<p><strong>SSL Offloading</strong></p>
+<p>example : POODLE issue. 62% ELB updated within 24 hours</p>
+<p><strong>Proxy Protocol</strong></p>
+<ul>
+<li>for TCP layer</li>
+</ul>
+<blockquote>
+<p><a href="https://www.52os.net/articles/PROXY_protocol_pass_client_ip.html" target="_blank" rel="noopener">https://www.52os.net/articles/PROXY_protocol_pass_client_ip.html</a></p>
+</blockquote>
+<p><strong>X-Forwarded-For</strong></p>
+<ul>
+<li>designed for HTTP (Application Layer)</li>
+</ul>
+<blockquote>
+<p><a href="https://en.wikipedia.org/wiki/X-Forwarded-For" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/X-Forwarded-For</a></p>
+</blockquote>
+<h2 id="elb-architectures"><a class="markdownIt-Anchor" href="#elb-architectures"></a> ELB architectures</h2>
+<ul>
+<li>ELB has it’s own VPC – managed by AWS</li>
+<li>ELB load balancing normally relys on Route 53
+<ul>
+<li>Route 53 use Round robin to dispactch requests to ELB sits in different AZ</li>
+<li>Route 53 can do health check to ELBs (150 sec to shift all traffic to healthy ELBs)</li>
+<li>ELB DNS records will change over time ; Route53 shouldn’t point to ELB IP.
+<ul>
+<li>ELB record changes when scale; it won’t change when failure (automatically handles)</li>
+<li>When IP changes, it will be drained and quarantined for 7 days</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ELB as a global service will automatically support multi AZ; ELB can support cross zone load balancing (need config change)
+<ul>
+<li>solve the problem of traffic imbalance between zones</li>
+<li>EC2 charge inter-zone traffic, but traffic introduced by classic and application ELB cross zone load balancing is free (for network ELB it’s not free)</li>
+<li><a href="https://aws.amazon.com/elasticloadbalancing/faqs/#pricing" target="_blank" rel="noopener">https://aws.amazon.com/elasticloadbalancing/faqs/#pricing</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="elb-load-balancer"><a class="markdownIt-Anchor" href="#elb-load-balancer"></a> ELB load balancer</h2>
+<p>Classic ELB</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>TCP / SSL</th>
+<th>HTTP / HTTPS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>network layer</td>
+<td>layer 4</td>
+<td>layer 7</td>
+</tr>
+<tr>
+<td>connection</td>
+<td>passing through</td>
+<td>(optional: SSL Offloading) terminated &amp; pooled</td>
+</tr>
+<tr>
+<td>payload</td>
+<td>no modification</td>
+<td>header might be modified</td>
+</tr>
+<tr>
+<td>routing</td>
+<td>Proxy Protocol</td>
+<td>X-Forwarded-For header</td>
+</tr>
+<tr>
+<td>algorithm</td>
+<td>round-robin</td>
+<td>Least-Outstanding-Requests (might combines with sticky session)</td>
+</tr>
+</tbody>
+</table>
+<p>New Application ELB with a extention on</p>
+<ul>
+<li>Path based routing (content based routing)</li>
+<li>HTTP/HTTPs only</li>
+<li>container</li>
+<li>native Web Socket , HTTP/2</li>
+</ul>
+<p>Latest category:</p>
+<p>Elastic Load Balancing supports three types of load balancers. You can select the appropriate load balancer based on your application needs. If you need flexible application management and TLS termination then we recommend you to use Application Load Balancer. If extreme performance and static IP is needed for your application then we recommend you to use Network Load Balancer. If your application is built within the EC2 Classic network then you should use Classic Load Balancer.</p>
+<p>The Classic Load Balancer is ideal for simple load balancing of traffic across multiple EC2 instances, while the Application Load Balancer is ideal for applications needing advanced routing capabilities, <strong>microservices, and container-based architectures</strong>.</p>
+<h2 id="new-feature-with-application-load-balancer"><a class="markdownIt-Anchor" href="#new-feature-with-application-load-balancer"></a> New feature with Application Load Balancer</h2>
+<h3 id="content-based-routing"><a class="markdownIt-Anchor" href="#content-based-routing"></a> Content based routing</h3>
+<p><img src="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/028_ELBContentBasedRouting.png?raw=true" alt="ELB content based routing"></p>
+<ul>
+<li>very important feature for micro services.</li>
+<li>Before, if you have different services hosting by different clusters, you have to have multiple ELB running to routing the requests to each individual cluster.</li>
+</ul>
+<p>Shall we use single Application ELB for all as it can support content based routing?</p>
+<ul>
+<li>Consider the Blast Radios and Isolation</li>
+<li>SPF and configuration nightmare</li>
+</ul>
+<h3 id="support-for-container-based-architecture-and-micro-service-architecture"><a class="markdownIt-Anchor" href="#support-for-container-based-architecture-and-micro-service-architecture"></a> Support for Container based architecture and micro service architecture</h3>
+<ul>
+<li>Muti port
+<ul>
+<li>classic: one port one instance ; Application ELB: multi port one instance</li>
+</ul>
+</li>
+<li>ECS can work with ELB seamlessly update the configuration</li>
+</ul>
+<h3 id="better-api-to-interact-with-application-elb"><a class="markdownIt-Anchor" href="#better-api-to-interact-with-application-elb"></a> better API to interact with Application ELB</h3>
+<ul>
+<li>Listener: protocol &amp; port
+<ul>
+<li>one ELB can have min 1 and max 10 listeners</li>
+<li>Rounting rules are defined based on listeners</li>
+</ul>
+</li>
+<li>Target Groups : group of EC2 instances or Containers or micro services
+<ul>
+<li>Target group can associated with autoscaling group</li>
+</ul>
+</li>
+<li>Targets: EC2 instances or Containers or micro services
+<ul>
+<li>single target can be registered with multi target groups</li>
+</ul>
+</li>
+<li>Rules:
+<ul>
+<li>provide link between listeners to target groups</li>
+<li>limit from 10-100(keep changing) rules per ELB</li>
+</ul>
+</li>
+<li>Delete protection (prevent delete via api)</li>
+</ul>
+<h3 id="better-support-for-websocket-http2-real-time-streaming"><a class="markdownIt-Anchor" href="#better-support-for-websocket-http2-real-time-streaming"></a> better support for WebSocket , HTTP2, Real-time streaming</h3>
+<p>On by default:<br>
+WebSocket : like downloading something from tablet via http<br>
+HTTP2: better performance with supporting concurrent request<br>
+RealTime Streaming</p>
+<h3 id="other-improvements"><a class="markdownIt-Anchor" href="#other-improvements"></a> other improvements</h3>
+<ul>
+<li>Native support for IPV6</li>
+<li>improved Health check; it will return result when doing health check.</li>
+<li>Fail Open : to prevent the wrongly configured health check which is too deep.<br>
+<img src="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/028_MultiZoneBenefit.png?raw=true" alt="image"></li>
+<li>Running in 3 zones is cheaper if we want to garantee fail over with same capacity when 1 zone fails.</li>
+<li>Cross zone for Application ELB is <strong>always</strong> enabled.</li>
+</ul>
+<h3 id="acm-integration"><a class="markdownIt-Anchor" href="#acm-integration"></a> ACM integration</h3>
+<ul>
+<li>Fully integrate with ELB (FREE)</li>
+<li>Automatically Renew</li>
+</ul>
+<h3 id="web-application-firewall"><a class="markdownIt-Anchor" href="#web-application-firewall"></a> Web Application Firewall</h3>
+<p><img src="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/028_WebApplicationFirewall.png?raw=true" alt="image"></p>
+<h2 id="elb-health-check"><a class="markdownIt-Anchor" href="#elb-health-check"></a> ELB Health check</h2>
+<ul>
+<li>TCP health check or HTTP health check
+<ul>
+<li>TCP health bar is very low</li>
+<li>Try use HTTP with 2xx response if possible</li>
+</ul>
+</li>
+<li>Customize frequency and failure threshholds</li>
+<li>Consider the depth and accuracy of the health check
+<ul>
+<li>If the check includes the backend DB, then 1 DB failure might result in all web server being labelled as unhealthy</li>
+</ul>
+</li>
+</ul>
+<h2 id="elb-offloading"><a class="markdownIt-Anchor" href="#elb-offloading"></a> ELB offloading</h2>
+<ul>
+<li>SSL protocols supported: TLS1.0 1.1 1.3 and SSLv3</li>
+<li>“Server Order Preference”, used to negotiate the cipher. Server will use it’s own list and find the top one that client supports.
+<ul>
+<li>So server can define the most preferred Cipher at the top of server’s list.</li>
+</ul>
+</li>
+</ul>
+<h2 id="elb-key-configurations"><a class="markdownIt-Anchor" href="#elb-key-configurations"></a> ELB key configurations</h2>
+<ul>
+<li>Idle Timeout
+<ul>
+<li>Default 60 sec, allow 1 sec -&gt; 1 hour</li>
+<li>recommended config : how long the customer willing to wait till they get results (before they click retry)</li>
+<li>anything longer than expected should be designed as error.</li>
+</ul>
+</li>
+</ul>
+<h2 id="elb-metrics-integrate-with-cloudwatch"><a class="markdownIt-Anchor" href="#elb-metrics-integrate-with-cloudwatch"></a> ELB metrics, Integrate with Cloudwatch</h2>
+<ul>
+<li>ELB by default is 1 min granularity.</li>
+</ul>
+<p>Useful Metrics :</p>
+<ul>
+<li>HealthyHostCount; UnhealthyHostCount.
+<ul>
+<li>make sure the timeout is specified carefully to make sure the unhealthy status is tagged correctly</li>
+</ul>
+</li>
+<li>Latency : request sending out from ELB till response received by ELB
+<ul>
+<li>Min / Max / Average Latency provided</li>
+<li>Debugging individual request using <strong>Access Logs</strong>;</li>
+</ul>
+</li>
+<li>SurgeQueue (max length =1024) and SpillOvers
+<ul>
+<li>this is Old design ; and new idea is fail earlier</li>
+<li>SurgeQueue is used to queue in requests ; spillovers are requests being rejected when surgequeue is full (receiving HTTP: 503 Service Unavailable or HTTP: 504 Gateway Timeout errors)</li>
+</ul>
+</li>
+</ul>
+<p>Updates with Application ELB</p>
+<ul>
+<li>Metrics can collect at target group level or ELB level</li>
+<li>Application ELB removed surgequeue and recommend to use “rejectedCount” metrics</li>
+<li>“<strong>Cloudwatch Percentiles</strong>”
+<ul>
+<li>give me P99 — give me  responsetime for 99% of my customer.</li>
+</ul>
+</li>
+<li><strong>Request Tracing</strong>
+<ul>
+<li>Append header X-Amzn-Trace-ID, used for analysis the request through all ELB (might happen when services have dependencies to each other) and log to S3.</li>
+</ul>
+</li>
+</ul>
+<h2 id="elb-integrate-with-autoscaling"><a class="markdownIt-Anchor" href="#elb-integrate-with-autoscaling"></a> ELB integrate with AutoScaling</h2>
+<p>AutoScaling can scale based on Metrics collected by ELB</p>
+<blockquote>
+<p>Don’t just look at the peak time. Sometimes the AutoScaling is shrinking the cluster too much which also result in bottleneck.</p>
+</blockquote>
+<h2 id="elb-sticky-sessions"><a class="markdownIt-Anchor" href="#elb-sticky-sessions"></a> ELB sticky sessions</h2>
+<ul>
+<li>enable ELB to route a certain user always to same backend instance; if backend instance become unhealthy, then stickness can be moved to another instance</li>
+<li>Application controlled: application can decide whether to include the cookie generated from ELB back to client or not</li>
+<li>sticky session: provided but not recommended. Recommend to use Elastic Cache.</li>
+</ul>
+<h2 id="best-practise-trouble-shooting"><a class="markdownIt-Anchor" href="#best-practise-trouble-shooting"></a> Best Practise &amp; Trouble shooting</h2>
+<blockquote>
+<p>Issue: Tablet; Client or ISP cache the IP address of DNS, which result in when ELB IP changes , problem happens.</p>
+</blockquote>
+<p>To solve the problem,</p>
+<ol>
+<li>When register with Route53 use alias like <strong>*.mydomain.com</strong></li>
+<li>When application needs to refresh to connection, append GUID at beginning to force the refresh resolve. like send the request to <a href="http://55152E66-3C6A-4F6D-B1B0-D05C506F0528.mydomain.com" target="_blank" rel="noopener">55152E66-3C6A-4F6D-B1B0-D05C506F0528.mydomain.com</a></li>
+</ol>
+<blockquote>
+<p>Enalbe Access Log to trouble shooting</p>
+</blockquote>
+<p>Once enabled, every request is logged into S3 for analysis.(every 5 min or every hour)<br>
+Analysis using Splunk , EMR, Hive etc<br>
+Log is indexed using date but including ELB ip address<br>
+Log content have detailed info to dig into which url is response slowly.</p>
+<blockquote>
+<p>methodoloy when something failes</p>
+</blockquote>
+<p>Metigation ; Isolation ; Restore Redundency</p>
+<h1 id="something-to-memorize"><a class="markdownIt-Anchor" href="#something-to-memorize"></a> Something to memorize</h1>
+<p>ELB Access Log Naming Convention</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s3://my-loadbalancer-logs/my-app/AWSLogs/123456789012/elasticloadbalancing/us-west-2/2014/02/15/123456789012_elasticloadbalancing_us-west-2_my-loadbalancer_20140215T2340Z_172.160.001.192_20sg8hgm.log</span><br></pre></td></tr></table></figure>
+<h1 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h1>
+<blockquote>
+<p>Best Practise 2014</p>
+</blockquote>
+<p><a href="https://youtu.be/K-YFw9-_NPE" target="_blank" rel="noopener">https://youtu.be/K-YFw9-_NPE</a></p>
+<blockquote>
+<p>Best Practise 2016</p>
+</blockquote>
+<p><a href="https://youtu.be/qy7zNaDTYGQ" target="_blank" rel="noopener">https://youtu.be/qy7zNaDTYGQ</a></p>
+<blockquote>
+<p>081.mp4 082.mp4 - ELB Overview</p>
+</blockquote>
+<p>ELB controller service<br>
+<a href="http://jayendrapatil.com/aws-elastic-load-balancing/" target="_blank" rel="noopener">http://jayendrapatil.com/aws-elastic-load-balancing/</a></p>
+<p>ELB trouble shooting (METHOD_NOT_ALLOWED)<br>
+<a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/ts-elb-error-message.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/ts-elb-error-message.html</a></p>
+<p>Extended reading<br>
+<a href="http://jayendrapatil.com/aws-elastic-load-balancing/" target="_blank" rel="noopener">http://jayendrapatil.com/aws-elastic-load-balancing/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Reward Makes Perfect</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Rachel Rui Liu Bitcoin">
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Rachel Rui Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://racheliurui.github.io/2018/04/18/markdown/AWS/AWS2018/028_ELB/" title="AWS - ELB">https://racheliurui.github.io/2018/04/18/markdown/AWS/AWS2018/028_ELB/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AWS/" rel="tag"># AWS</a>
+          
+            <a href="/tags/ELB/" rel="tag"># ELB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/18/markdown/AWS/AWS2018/027_BackupNDisasterRecovery/" rel="next" title="AWS - Backup and Disaster Recovery">
+                <i class="fa fa-chevron-left"></i> AWS - Backup and Disaster Recovery
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/19/markdown/AWS/AWS2018/029_AutoScaling/" rel="prev" title="AWS - Auto Scaling">
+                AWS - Auto Scaling <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg" alt="Rachel Rui Liu">
+          <p class="site-author-name" itemprop="name">Rachel Rui Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">178</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">193</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/racheliurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/rachel-rui-liu-a474a7a" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                    
+                      Linkedin
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#terminology"><span class="nav-number">1.</span> <span class="nav-text"> Terminology</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#elb-architectures"><span class="nav-number">1.1.</span> <span class="nav-text"> ELB architectures</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elb-load-balancer"><span class="nav-number">1.2.</span> <span class="nav-text"> ELB load balancer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new-feature-with-application-load-balancer"><span class="nav-number">1.3.</span> <span class="nav-text"> New feature with Application Load Balancer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#content-based-routing"><span class="nav-number">1.3.1.</span> <span class="nav-text"> Content based routing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#support-for-container-based-architecture-and-micro-service-architecture"><span class="nav-number">1.3.2.</span> <span class="nav-text"> Support for Container based architecture and micro service architecture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#better-api-to-interact-with-application-elb"><span class="nav-number">1.3.3.</span> <span class="nav-text"> better API to interact with Application ELB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#better-support-for-websocket-http2-real-time-streaming"><span class="nav-number">1.3.4.</span> <span class="nav-text"> better support for WebSocket , HTTP2, Real-time streaming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#other-improvements"><span class="nav-number">1.3.5.</span> <span class="nav-text"> other improvements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#acm-integration"><span class="nav-number">1.3.6.</span> <span class="nav-text"> ACM integration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web-application-firewall"><span class="nav-number">1.3.7.</span> <span class="nav-text"> Web Application Firewall</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elb-health-check"><span class="nav-number">1.4.</span> <span class="nav-text"> ELB Health check</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elb-offloading"><span class="nav-number">1.5.</span> <span class="nav-text"> ELB offloading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elb-key-configurations"><span class="nav-number">1.6.</span> <span class="nav-text"> ELB key configurations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elb-metrics-integrate-with-cloudwatch"><span class="nav-number">1.7.</span> <span class="nav-text"> ELB metrics, Integrate with Cloudwatch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elb-integrate-with-autoscaling"><span class="nav-number">1.8.</span> <span class="nav-text"> ELB integrate with AutoScaling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elb-sticky-sessions"><span class="nav-number">1.9.</span> <span class="nav-text"> ELB sticky sessions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#best-practise-trouble-shooting"><span class="nav-number">1.10.</span> <span class="nav-text"> Best Practise &amp; Trouble shooting</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#something-to-memorize"><span class="nav-number">2.</span> <span class="nav-text"> Something to memorize</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number">3.</span> <span class="nav-text"> References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rachel Rui Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://racheliurui-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://racheliurui.github.io/2018/04/18/markdown/AWS/AWS2018/028_ELB/';
+          this.page.identifier = '2018/04/18/markdown/AWS/AWS2018/028_ELB/';
+          this.page.title = 'AWS - ELB';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://racheliurui-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

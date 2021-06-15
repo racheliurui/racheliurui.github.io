@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Machine Learning,Unsupervised Learning,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hey Hey Hey" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Unsupervised learning overview 栗子： market segment； 社交网络； 机器群集； 天文数据  K-means 算法 给一堆数据，请把它们分成K类。怎么做？ 1） 随机得到K个点。 loop直到K的值不再变化{ 2） 计算每个数据到K的点的距离，如果数据组i到K（j）的距离最小，就认为数据i属于K（j）这个组。 数据全部分类完之后，调整K个点的值，每个K">
+<meta name="keywords" content="Machine Learning,Unsupervised Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning - Week 8">
+<meta property="og:url" content="https://racheliurui.github.io/2018/01/20/markdown/Trending/MachineLearning/MachineLearning_8/index.html">
+<meta property="og:site_name" content="Hey Hey Hey">
+<meta property="og:description" content="Unsupervised learning overview 栗子： market segment； 社交网络； 机器群集； 天文数据  K-means 算法 给一堆数据，请把它们分成K类。怎么做？ 1） 随机得到K个点。 loop直到K的值不再变化{ 2） 计算每个数据到K的点的距离，如果数据组i到K（j）的距离最小，就认为数据i属于K（j）这个组。 数据全部分类完之后，调整K个点的值，每个K">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-06-15T03:43:00.429Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Machine Learning - Week 8">
+<meta name="twitter:description" content="Unsupervised learning overview 栗子： market segment； 社交网络； 机器群集； 天文数据  K-means 算法 给一堆数据，请把它们分成K类。怎么做？ 1） 随机得到K个点。 loop直到K的值不再变化{ 2） 计算每个数据到K的点的距离，如果数据组i到K（j）的距离最小，就认为数据i属于K（j）这个组。 数据全部分类完之后，调整K个点的值，每个K">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://racheliurui.github.io/2018/01/20/markdown/Trending/MachineLearning/MachineLearning_8/">
+
+
+
+
+
+  <title>Machine Learning - Week 8 | Hey Hey Hey</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey Hey Hey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://racheliurui.github.io/2018/01/20/markdown/Trending/MachineLearning/MachineLearning_8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rachel Rui Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey Hey Hey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Machine Learning - Week 8</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-20T15:05:16+00:00">
+                2018-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/20/markdown/Trending/MachineLearning/MachineLearning_8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/20/markdown/Trending/MachineLearning/MachineLearning_8/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="unsupervised-learning-overview"><a class="markdownIt-Anchor" href="#unsupervised-learning-overview"></a> Unsupervised learning overview</h1>
+<p>栗子：</p>
+<p>market segment； 社交网络； 机器群集； 天文数据</p>
+<h2 id="k-means-算法"><a class="markdownIt-Anchor" href="#k-means-算法"></a> K-means 算法</h2>
+<p>给一堆数据，请把它们分成K类。怎么做？</p>
+<p>1） 随机得到K个点。</p>
+<p>loop直到K的值不再变化{</p>
+<p>2） 计算每个数据到K的点的距离，如果数据组i到K（j）的距离最小，就认为数据i属于K（j）这个组。<br>
+数据全部分类完之后，调整K个点的值，每个K直接赋值为当前被分到该类的数据的平均值。</p>
+<p>}</p>
+<h3 id="k-means的optimization-objective"><a class="markdownIt-Anchor" href="#k-means的optimization-objective"></a> K-means的Optimization Objective</h3>
+<p>supervised ML有cost function； 这种unsupervised很难有正确答案来衡量。那么如何证明做得好不好呢？</p>
+<p>K means最终的目标是： （（每个点到自己所属的参照点的距离）的平方）的和最小。</p>
+<h3 id="如何random初始化cluster-centroid"><a class="markdownIt-Anchor" href="#如何random初始化cluster-centroid"></a> 如何random初始化Cluster Centroid</h3>
+<p>idea： run k-means 很多次，每次都random initialize centoid，得到cluster后，算cost function，比较用最小cost的</p>
+<p>这样可以避免local optism</p>
+<h3 id="如何选择cluster-number"><a class="markdownIt-Anchor" href="#如何选择cluster-number"></a> 如何选择cluster number</h3>
+<p>没有正确答案。</p>
+<ul>
+<li>Elbow Method：根据分组的不同，cost function随着cluster的数字变化（luckily会）呈现elbow的曲线（大多情况下没有这种图像）</li>
+<li>根据需要来决定分组数目。 比如，T恤尺码分组（SML or xs SML xl）</li>
+</ul>
+<h3 id="使用k-means进行图像压缩的原理"><a class="markdownIt-Anchor" href="#使用k-means进行图像压缩的原理"></a> 使用k-means进行图像压缩的原理</h3>
+<p>假设：原图是256色（每个pixel使用三组数据表示红黄蓝的梯度颜色，每组数据是8位二进制（0-256））。<br>
+目标：选择16色来代表原图（每个pixel使用三组数据，每组数据是4位二进制（0-16））。</p>
+<p>使用k-means： 将原图的每个pixel看作一组数据，使用k means尝试将其分组到16色的分组中。 这里分组的目标确定了。<br>
+原先的每个pixel是256<em>3个feature, 新的目标映射每个pixel是16</em>3个feature。所以我们要尝试将数据分组为256/16=16组。</p>
+<p>随机选择16个颜色（16*3）<br>
+计算每个pixel到这些颜色的距离，找出centroids，然后重新找k<br>
+直到k不再变化。<br>
+然后将原先像素点属于的k算出来取代原先的pixel</p>
+<p>—》pixel个数不变，颜色维度变小。原图像（256<em>3</em>pixel数目），新的图像（16<em>3</em>pixel数目），压缩了16倍。</p>
+<h1 id="motivation"><a class="markdownIt-Anchor" href="#motivation"></a> Motivation</h1>
+<h2 id="数据压缩"><a class="markdownIt-Anchor" href="#数据压缩"></a> 数据压缩</h2>
+<p>2D -》 1D （当数据都在一条线上）<br>
+3D -》 2D （当数据都在一个平面上）</p>
+<p>数据visulization依赖于数据压缩，因为一般来说显示数据都是2D或者3D</p>
+<h2 id="principal-component-analysis-pca"><a class="markdownIt-Anchor" href="#principal-component-analysis-pca"></a> Principal Component Analysis - PCA</h2>
+<ul>
+<li>Linner Regression和PCA的区别</li>
+</ul>
+<p>Linner Regression是找每个点到目标直线的沿着坐标轴的距离。PCA则是找每个点project到目标直线的距离。</p>
+<p>PCA不是Linner Regression</p>
+<h3 id="pca的算法"><a class="markdownIt-Anchor" href="#pca的算法"></a> PCA的算法</h3>
+<ul>
+<li>先处理数据： feature normalization 和 mean normalization</li>
+<li>应用PCA算法将数据从n维降低到k维：</li>
+</ul>
+<p>先算sigma值，以下是如果x是一个vector，从1到n loop所有的vector的情况。</p>
+<span>$$\begin{align*}
+Sigma=\frac{1}{m}\displaystyle\sum\limits_{i=1}^n (x ^\left(i\right))(x ^\left(i\right))^T
+\end{align*}$$</span><!-- Has MathJax -->
+<p>当X来代表所有数据的时候，</p>
+<span>$$\begin{align*}
+Sigma=\frac{1}{m}X^TX
+\end{align*}$$</span><!-- Has MathJax -->
+<p>使用SVD (singlar value decomposition)算法，带入sigma。</p>
+<span>$$\begin{align*}
+[u,s,v] = SVD (Sigma)
+\end{align*}$$</span><!-- Has MathJax -->
+<p>返回的U是一个n<em>n的matrix。取前面k列，即得到n</em>k的matrix，这个matrix叫<span>$u_{reduce}$</span><!-- Has MathJax -->.</p>
+<p>对于单个x， <span>$u_{reduce})^Tx$</span><!-- Has MathJax -->即可得到reduce的z。<br>
+对于一组X数据， 则直接进行矩阵求值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">U_reduce = U(:,1:K);</span><br><span class="line">Z = X * U_reduce;</span><br></pre></td></tr></table></figure>
+<h3 id="从压缩的数据反向得到原始数据"><a class="markdownIt-Anchor" href="#从压缩的数据反向得到原始数据"></a> 从压缩的数据反向得到原始数据</h3>
+<p>n<em>k的<span>$u_{reduce}$</span><!-- Has MathJax --> 乘以 k</em>1 的z可以得到大致的最初n*1的x vector</p>
+<span>$$\begin{align*}
+x_{approx}=u_{reduce}*z
+\end{align*}$$</span><!-- Has MathJax -->
+<h3 id="如何选择压缩维度k"><a class="markdownIt-Anchor" href="#如何选择压缩维度k"></a> 如何选择压缩维度k</h3>
+<p>“99% of variance is retained”</p>
+<p>这句话的意思是，经过压缩后，</p>
+<span>$$\begin{align*}
+\frac{  \frac{1}{m}\displaystyle\sum\limits_{i=1}^m \lVert x ^\left(i\right)-x_{approx} ^\left(i\right)\rVert ^2} {\frac{1}{m}\displaystyle\sum\limits_{i=1}^m \lVert x ^\left(i\right)\rVert ^2} \leqslant 0.01
+\end{align*}$$</span><!-- Has MathJax -->
+<p>根据这个参数指导寻找最优的k值</p>
+<ul>
+<li>Option1， k=1开始，逐渐放大k，直到上述的公式成立</li>
+<li>Option2， 使用SVD (singlar value decomposition)算法，返回值的s是一个n*n的diagonal matrix （除了左上到右下的对角线，其它部分为0）。</li>
+</ul>
+<span>$$\begin{align*}
+[u,s,v] = SVD (Sigma)
+\end{align*}$$</span><!-- Has MathJax -->
+<p>根据SVD的结果判断以下是否成立，如果不成立，则k不满足要求。</p>
+<span>$$\begin{align*}
+\frac{\sum\limits_{i=1}^k s_{ii}}{ \sum\limits_{i=1}^n s_{ii} }\geq0.99
+\end{align*}$$</span><!-- Has MathJax -->
+<ul>
+<li>PCA 算法使用时应该只用于training data set，而不是cv或者test data set。</li>
+</ul>
+<h4 id="pca的意义"><a class="markdownIt-Anchor" href="#pca的意义"></a> PCA的意义</h4>
+<ul>
+<li>压缩数据，减少存储，加速算法</li>
+<li>压缩数据，方便visualization展示数据（人类肉眼智能观察最多3D的数据）</li>
+</ul>
+<p>错误的使用场景：</p>
+<ul>
+<li>错误1: 使用PCA用来做防止overfitting，但是很容易丢失数据中的有用信息； instead还是使用regularization才是正确的做法。</li>
+<li>错误2: PCA作为默认步骤处理数据。只有正常的分析不work时候，才考虑使用PCA进行数据压缩。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Reward Makes Perfect</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Rachel Rui Liu Bitcoin">
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Rachel Rui Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://racheliurui.github.io/2018/01/20/markdown/Trending/MachineLearning/MachineLearning_8/" title="Machine Learning - Week 8">https://racheliurui.github.io/2018/01/20/markdown/Trending/MachineLearning/MachineLearning_8/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          
+            <a href="/tags/Unsupervised-Learning/" rel="tag"># Unsupervised Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/13/markdown/Trending/MachineLearning/MachineLearning_7/" rel="next" title="Machine Learning - Week 7">
+                <i class="fa fa-chevron-left"></i> Machine Learning - Week 7
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/21/markdown/Trending/MachineLearning/LaTexEditing/" rel="prev" title="LaTex Editing">
+                LaTex Editing <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg" alt="Rachel Rui Liu">
+          <p class="site-author-name" itemprop="name">Rachel Rui Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">178</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">193</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/racheliurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/rachel-rui-liu-a474a7a" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                    
+                      Linkedin
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#unsupervised-learning-overview"><span class="nav-number">1.</span> <span class="nav-text"> Unsupervised learning overview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#k-means-算法"><span class="nav-number">1.1.</span> <span class="nav-text"> K-means 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#k-means的optimization-objective"><span class="nav-number">1.1.1.</span> <span class="nav-text"> K-means的Optimization Objective</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何random初始化cluster-centroid"><span class="nav-number">1.1.2.</span> <span class="nav-text"> 如何random初始化Cluster Centroid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何选择cluster-number"><span class="nav-number">1.1.3.</span> <span class="nav-text"> 如何选择cluster number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用k-means进行图像压缩的原理"><span class="nav-number">1.1.4.</span> <span class="nav-text"> 使用k-means进行图像压缩的原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation"><span class="nav-number">2.</span> <span class="nav-text"> Motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据压缩"><span class="nav-number">2.1.</span> <span class="nav-text"> 数据压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#principal-component-analysis-pca"><span class="nav-number">2.2.</span> <span class="nav-text"> Principal Component Analysis - PCA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pca的算法"><span class="nav-number">2.2.1.</span> <span class="nav-text"> PCA的算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从压缩的数据反向得到原始数据"><span class="nav-number">2.2.2.</span> <span class="nav-text"> 从压缩的数据反向得到原始数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何选择压缩维度k"><span class="nav-number">2.2.3.</span> <span class="nav-text"> 如何选择压缩维度k</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pca的意义"><span class="nav-number">2.2.3.1.</span> <span class="nav-text"> PCA的意义</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rachel Rui Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://racheliurui-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://racheliurui.github.io/2018/01/20/markdown/Trending/MachineLearning/MachineLearning_8/';
+          this.page.identifier = '2018/01/20/markdown/Trending/MachineLearning/MachineLearning_8/';
+          this.page.title = 'Machine Learning - Week 8';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://racheliurui-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="AWS,EC2,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hey Hey Hey" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Login EC2  for ubuntu it’s ubuntu@hostname instead of ec2-user@hostname   016.mp4 Elastic Compute Cloud Region: same region same price, same latency , same regulation Available Zone: same datacentor">
+<meta name="keywords" content="AWS,EC2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS - EC2">
+<meta property="og:url" content="https://racheliurui.github.io/2018/02/28/markdown/AWS/AWS2018/04_EC2/index.html">
+<meta property="og:site_name" content="Hey Hey Hey">
+<meta property="og:description" content="Login EC2  for ubuntu it’s ubuntu@hostname instead of ec2-user@hostname   016.mp4 Elastic Compute Cloud Region: same region same price, same latency , same regulation Available Zone: same datacentor">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/04_EC2_History.png?raw=true">
+<meta property="og:updated_time" content="2021-06-15T03:43:00.417Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AWS - EC2">
+<meta name="twitter:description" content="Login EC2  for ubuntu it’s ubuntu@hostname instead of ec2-user@hostname   016.mp4 Elastic Compute Cloud Region: same region same price, same latency , same regulation Available Zone: same datacentor">
+<meta name="twitter:image" content="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/04_EC2_History.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://racheliurui.github.io/2018/02/28/markdown/AWS/AWS2018/04_EC2/">
+
+
+
+
+
+  <title>AWS - EC2 | Hey Hey Hey</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey Hey Hey</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://racheliurui.github.io/2018/02/28/markdown/AWS/AWS2018/04_EC2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rachel Rui Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey Hey Hey">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AWS - EC2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-28T10:57:23+00:00">
+                2018-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/28/markdown/AWS/AWS2018/04_EC2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/28/markdown/AWS/AWS2018/04_EC2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="login-ec2"><a class="markdownIt-Anchor" href="#login-ec2"></a> Login EC2</h1>
+<ul>
+<li>for ubuntu it’s ubuntu@hostname instead of ec2-user@hostname</li>
+</ul>
+<h1 id="016mp4-elastic-compute-cloud"><a class="markdownIt-Anchor" href="#016mp4-elastic-compute-cloud"></a> 016.mp4 Elastic Compute Cloud</h1>
+<p>Region: same region same price, same latency , same regulation<br>
+Available Zone: same datacentor<br>
+Edge Location: Cloud Front</p>
+<p>purchase mode,</p>
+<ol>
+<li>on-demand instances</li>
+<li>reserved instances</li>
+<li>spot instances (错峰用机)</li>
+</ol>
+<p>Q: How do I select the right instance type?</p>
+<p>Amazon EC2 instances are grouped into 5 families: General Purpose, Compute Optimized, Memory Optimized, Storage Optimized and Accelerated Computing instances.</p>
+<ul>
+<li>General Purpose Instances have memory to CPU ratios suitable for most general purpose applications and come with fixed performance (M5, M4) or burstable performance (T2);</li>
+<li>Compute Optimized instances (C5, C4) have proportionally more CPU resources than memory (RAM) and are well suited for scale out compute-intensive applications and High Performance Computing (HPC) workloads;</li>
+<li>Memory Optimized Instances (X1e, X1, R4) offer larger memory sizes for memory-intensive applications, including database and memory caching applications;</li>
+<li>Accelerating Computing instances (P3, P2, G3, F1) take advantage of the parallel processing capabilities of NVIDIA Tesla GPUs for high performance computing and machine/deep learning; GPU Graphics instances (G3) offer high-performance 3D graphics capabilities for applications using OpenGL and DirectX; F1 instances deliver Xilinx FPGA-based reconfigurable computing;</li>
+<li>Storage Optimized Instances (H1, I3, D2) that provide very high, low latency, I/O capacity using SSD-based local instance storage for I/O-intensive applications, with D2 or H1, the dense-storage and HDD-storage instances, provide local high storage density and sequential I/O performance for data warehousing, Hadoop and other data-intensive applications.</li>
+</ul>
+<h1 id="019-hands-on-connect-to-ec2-widnows-instance"><a class="markdownIt-Anchor" href="#019-hands-on-connect-to-ec2-widnows-instance"></a> 019 hands-on connect to EC2 widnows instance</h1>
+<p>Difference with creating Linux instance,</p>
+<ul>
+<li><strong>RDP (3389)</strong> need to be specified at security group (inbound)</li>
+<li>Windows Administrator password is dynamically randomly generated and as a PEM just like the linux instance (download)</li>
+<li>need to extract online and get administrator user and password</li>
+</ul>
+<h2 id="ec2config"><a class="markdownIt-Anchor" href="#ec2config"></a> EC2Config</h2>
+<p>About the EC2Config service (New name EC2Launch)<br>
+<a href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/UsingConfig_WinAMI.html" target="_blank" rel="noopener">http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/UsingConfig_WinAMI.html</a></p>
+<ul>
+<li>built in function executed to enable the box to work with aws cloud. (for example the get metadata link)</li>
+<li>can be used to initialize the windows box</li>
+<li>can be used to trigger some management command for the box (like mount the EBS, etc)</li>
+<li>Note. EC2Launch replaces EC2Config on Windows Server 2016 AMIs.</li>
+</ul>
+<h1 id="020-hands-on-connect-to-ec2-via-macos-client"><a class="markdownIt-Anchor" href="#020-hands-on-connect-to-ec2-via-macos-client"></a> 020 hands-on connect to EC2 via MacOS client</h1>
+<p>For linux</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 400 xxx.pem</span><br><span class="line">ssh -i "/path/to/pem/xxx.pem" remotehostname</span><br></pre></td></tr></table></figure>
+<p>For Windows<br>
+download CORD RDP client</p>
+<h1 id="021-create-a-custom-ami"><a class="markdownIt-Anchor" href="#021-create-a-custom-ami"></a> 021 create a custom AMI</h1>
+<p>iptable rerounting</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080</span><br></pre></td></tr></table></figure>
+<p>After everything is setup<br>
+select the instance -&gt; action -&gt; create image</p>
+<p>AMI --&gt; Images<br>
+Select the image being created we can<br>
+put it as Public<br>
+copy it to other region and create a instance based on this customized instance<br>
+AMI image bill？？？（public or not）</p>
+<h1 id="022-ebs-elastic-block-storage-for-ec2"><a class="markdownIt-Anchor" href="#022-ebs-elastic-block-storage-for-ec2"></a> 022 EBS (Elastic Block Storage) for EC2</h1>
+<p>EBS(Elastic Block Storage)</p>
+<ul>
+<li>attached to an EC2 instance</li>
+<li>persist independently from the life of the EC2 instance</li>
+<li>pay only for what you use</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">lsblk</span><br><span class="line">sudo file -s /dev/xvdb</span><br><span class="line">sudo mkfs -t ext4 /dev/xvdb</span><br><span class="line">sudo file -s /dev/xvdb</span><br><span class="line">sudo mkdir /data</span><br><span class="line">sudo mount /dev/xvdb /data</span><br><span class="line">sudo nano /etc/fstab</span><br><span class="line">sudo mount -a</span><br><span class="line">sudo touch /data/test.txt</span><br></pre></td></tr></table></figure>
+<ul>
+<li>create a snapshot for the EBS</li>
+<li>Create a new EBS volume based on the snapshot just created</li>
+<li>Create another EC2 instance, selecting the snapshot just created when adding extra EBS to the instance</li>
+</ul>
+<p>Instance Storage<br>
+Instance Storage:<br>
+<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html</a><br>
+Not available for low end EC2<br>
+must use block device mapping to attach them as the instance is launched.</p>
+<h2 id="ebs-snapshots"><a class="markdownIt-Anchor" href="#ebs-snapshots"></a> EBS snapshots</h2>
+<p>point-in-time snapshot<br>
+<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSSnapshots.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSSnapshots.html</a></p>
+<ul>
+<li>Asyncronize creation, but status is pending until fully finished</li>
+<li>When trigger the snapshot command, EBS needs to be unmounted (see below example for /dev/sdh); or stop the instance if EBS used as root device; or user guarantee no file write to the EBS. But once the command is triggered, the volume can be mounted back when snapshot status is “Pending”.</li>
+<li>We can have multiple pending snapshots pointing to different time. But total number of pending snapshot will have a limit.</li>
+<li>EBS snapshots are only available through the Amazon EC2 APIs, not S3 APIs.也就是说虽然snapshot是存在S3的，但并不代表可以使用S3 API访问snapshot的内容。仍旧需要通过EC2来访问这些snapshot</li>
+<li>每个snapshot都有unique id，可以通过snapshot id来恢复volume</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">umount -d /dev/sdh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>command used to create EBS snapshot. (Different in aws cli and aws tools for windows Powershell)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 create-snapshot --volume-id vol-1234567890abcdef0 --description &quot;This is my root volume snapshot.&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS C:\&gt; <span class="built_in">New-EC2Snapshot</span> <span class="literal">-VolumeId</span> vol<span class="literal">-12345678</span> <span class="literal">-Description</span> <span class="string">"This is a test"</span></span><br></pre></td></tr></table></figure>
+<h2 id="如何使用tag管理ec2的权限"><a class="markdownIt-Anchor" href="#如何使用tag管理ec2的权限"></a> 如何使用tag管理ec2的权限</h2>
+<ul>
+<li>ec2创建一个叫username的tag，值设为有权限访问该ec2的用户名</li>
+<li>apply policy给用户</li>
+<li>当判断用户权限的时候，使用用户id和ec2的tag的“username”的value比较，如何等于则赋权</li>
+</ul>
+<p>例子如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      <span class="attr">"Version"</span> : <span class="string">"2012-10-17"</span>,</span><br><span class="line">           <span class="attr">"Statement"</span> :</span><br><span class="line">      [</span><br><span class="line">           &#123;</span><br><span class="line">                <span class="attr">"Effect"</span> : <span class="string">"Allow"</span>,</span><br><span class="line">                <span class="attr">"Action"</span> : <span class="string">"ec2:*"</span>,</span><br><span class="line">                <span class="attr">"Resource"</span> : <span class="string">"*"</span>,</span><br><span class="line">                <span class="attr">"Condition"</span> : &#123;</span><br><span class="line">                     <span class="attr">"StringEquals"</span> : &#123;</span><br><span class="line">                          <span class="attr">"ec2:ResourceTag/UserName"</span> : <span class="string">"$&#123;aws:username&#125;"</span></span><br><span class="line">                     &#125;</span><br><span class="line">                &#125;</span><br><span class="line">           &#125;</span><br><span class="line">      ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="placement-groups"><a class="markdownIt-Anchor" href="#placement-groups"></a> Placement groups</h2>
+<p>一种配置，创建了之后让aws知道启动EC2的时候如何分配资源</p>
+<ul>
+<li>cluster placement group： 一旦创建，加入同group的ec2 VM会被分配到同一个AZ，并优化之间的网络环境。</li>
+<li>Spread placement group： 一旦创建，加入同group的ec2 VM会被分配到不同的硬件上，减少硬件失败造成的单点故障。</li>
+<li>EC2运行的时候无法换placement group，停下来后可以换placegroup的配置；placement group在有EC2组员的时候不能删除。</li>
+<li>不支持tag: can’t create tag for the placement group</li>
+</ul>
+<p><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html</a></p>
+<h1 id="related-reading"><a class="markdownIt-Anchor" href="#related-reading"></a> Related Reading</h1>
+<h2 id="ssd-backed-ebs-and-hdd-backed-ebs"><a class="markdownIt-Anchor" href="#ssd-backed-ebs-and-hdd-backed-ebs"></a> SSD-backed EBS and HDD-backed EBS</h2>
+<p><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html</a></p>
+<ul>
+<li>
+<p>SSD-backed volumes optimized for transactional workloads involving frequent read/write operations with small I/O size, where the dominant performance attribute is IOPS</p>
+<ul>
+<li>GP2 (General Purpose): 默认通用类型的，IOPS可以在100-1w之间伸缩 ； 最大吞吐量160Mib/s</li>
+<li>Provisioned IOPS SSD (io1)：最大能到32000； 最大吞吐量500Mib/s</li>
+<li>适合： transactional, IOPS-intensive database workloads, boot volumes, and workloads that require high IOPS.</li>
+</ul>
+</li>
+<li>
+<p>HDD-backed volumes optimized for large streaming workloads where throughput (measured in MiB/s) is a better performance measure than IOPS</p>
+<ul>
+<li>Throughput Optimized HDD (st1)：IOPS最大500；最大吞吐量最大500
+<ul>
+<li>适合：  MapReduce, Kafka, log processing, data warehouse, and ETL workloads.</li>
+</ul>
+</li>
+<li>Cold HDD (sc1)： IOPS最大250；最大吞吐量250
+<ul>
+<li>适合： ideal for less frequently accessed workloads with large, cold datasets.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>IOPS (Input/Output Operations Per Second)，即每秒进行读写（I/O）操作的次数，多用于数据库等场合，衡量随机访问的性能。</p>
+</li>
+<li>
+<p>IOPS的limitation是按照volumn来的，就是一块格式化好的存储mount上来，根据类型不同具备不同的IOPS上限。可以通过mount多块硬盘提高总体的IOPS，对于一台虚拟机来说，不管是什么volumn，最终的IOPS上限是一样的。只是HDD的硬盘要达到上限可能需要mount更多的volumn来实现reach iops的上限。IOPS上限8w/instance</p>
+</li>
+<li>
+<p>Throughput类似，也是一台虚拟机有一个上限。不同的存储可以通过多mount来提高throughput但是无法突破单机上限。吞吐上限1750/instance</p>
+</li>
+<li>
+<p>如何检查：Linux check current IOPS， r/s每秒读取次数；w/s每秒写入次数</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iostat -x</span><br></pre></td></tr></table></figure>
+<ul>
+<li>GP2类型的SSD具备伸缩性。这种伸缩性有复杂的机制。
+<ul>
+<li>GP2 SSD size从1Gib-16Tib； size越大，baseline performance越好： 1Gib的IOPS=100，16Tib的IOPS=10000，正常情况3*volumn</li>
+<li>每块GP2 SSD的初始I/O credit都是5.4m</li>
+<li>BurstDuration=CurrentCredit/(BurstIOPS-3*VolumnInGB)</li>
+<li>Initial Credit == Max Credit == 5.4 million</li>
+<li>BurstIOPS是指这个当前的IOPS比原本assign的baseline performance部分高，但是最高不能超过3k，所以1000G以上的volumn本身baseline就高于3k，因此没有burst一说。</li>
+<li>当磁盘IOPS没有达到base performance标准的时候，就可以累计credit
+<ul>
+<li>CurrentCredit += baseIOPS*Duration;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Pre-warming = Initialization</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/zero of=/dev/xvdX bs=1M</span></span><br></pre></td></tr></table></figure>
+<p>Encryption standards</p>
+<p>industry-standard AES-256 algorithm.</p>
+<p>Get Instance’s meta data</p>
+<blockquote>
+<p><a href="http://169.254.169.254/latest/meta-data/" target="_blank" rel="noopener">http://169.254.169.254/latest/meta-data/</a></p>
+</blockquote>
+<p><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html</a><br>
+<a href="https://www.ibm.com/developerworks/cn/cloud/library/1620-openstack-metadata-service/" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/cloud/library/1620-openstack-metadata-service/</a></p>
+<p>Launch more like this feature:<br>
+哪些配置会从当前机器copy哪些不会<br>
+<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launch-more-like-this.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launch-more-like-this.html</a></p>
+<ul>
+<li>会： RAM Disk ID； EBS optimization设置； public ip address （setting）</li>
+<li>不会： 网卡数目；storage配置。</li>
+</ul>
+<h1 id="不同region的ec2之间通信收费问题"><a class="markdownIt-Anchor" href="#不同region的ec2之间通信收费问题"></a> 不同region的ec2之间通信收费问题</h1>
+<ul>
+<li>EC2的data in 和out 是分别收费的。所以ec2 A 到 ec2 B收费，如果数据方向是A-》B，那就收A region的 data out， B region的data in</li>
+</ul>
+<h1 id="ec2-local-store-的persist问题"><a class="markdownIt-Anchor" href="#ec2-local-store-的persist问题"></a> EC2 local store 的persist问题</h1>
+<p>ec2实例自带的storage, ec2只有running时候才bill，其它状态都不bill（EBS有单独的收费）</p>
+<p>The data in an instance store persists only during the lifetime of its associated instance. If an instance reboots (intentionally or unintentionally), data in the instance store persists. However, data in the instance store is lost under the following circumstances:</p>
+<ul>
+<li>
+<p>The underlying disk drive fails</p>
+</li>
+<li>
+<p>The instance stops</p>
+</li>
+<li>
+<p>The instance terminates</p>
+</li>
+</ul>
+<p>Therefore, do not rely on instance store for valuable, long-term data. Instead, use more durable data storage, such as Amazon S3, Amazon EBS, or Amazon EFS.</p>
+<ul>
+<li>EC2 Compute Unit<br>
+Q: What is an “EC2 Compute Unit” and why did you introduce it?</li>
+</ul>
+<p>Transitioning to a utility computing model fundamentally changes how developers have been trained to think about CPU resources. Instead of purchasing or leasing a particular processor to use for several months or years, you are renting capacity by the hour. Because Amazon EC2 is built on commodity hardware, over time there may be several different types of physical hardware underlying EC2 instances. Our goal is to provide a consistent amount of CPU capacity no matter what the actual underlying hardware.</p>
+<ul>
+<li>
+<p>Elastic IP address 不用也收费</p>
+<ul>
+<li>Elastic IP address 是静态ip；pubic ip address是动态的，每次instance重启都会变</li>
+</ul>
+</li>
+<li>
+<p>reverse DNS<br>
+Reverse DNS: From IP to Domain<br>
+A special PTR-record type is used to store reverse DNS entries. The name of the PTR-record is the IP address with the segments reversed + “.in-addr.arpa”.<br>
+For example the reverse DNS entry for IP 1.2.3.4 would be stored as a PTR-record for “4.3.2.1.in-addr.arpa”.<br>
+可以单独申请。</p>
+</li>
+<li>
+<p>Nitro Hypervisor</p>
+</li>
+<li>
+<p>未来的新虚拟技术，新的aws虚拟机都用这个技术搭建。一个虚拟机可以加载的ebs+网卡（vpc eni）个数加起来=pci device个数,max=27</p>
+</li>
+<li>
+<p>the NVMe device names used by Linux based operating systems will be different than the parameters for EBS volume attachment requests and block device mapping entries such as /dev/xvda and /dev/xvdf. NVMe devices are enumerated by the operating system as /dev/nvme0n1, /dev/nvme1n1</p>
+</li>
+<li>
+<p>Enhanced network</p>
+<ul>
+<li>必须启用HVM虚拟机</li>
+<li>需要特定的driver，某些aws的机型内置了，如果没有需要手工安装配置。</li>
+<li>必须启动在vpc中</li>
+</ul>
+</li>
+<li>
+<p>CloudWatch</p>
+<ul>
+<li>
+<p>一旦启用，默认每分钟收取metrics；侦听信息默认保存两周（即使侦听对象terminate或者删除）；提供命令行mon-get-stats来保存侦听信息到s3或者“Amazon SimpleDB”</p>
+<ul>
+<li>about SimpleDB Vs DynamoDB ： 简而言之，DynamoDB很可能是用来替代simpledb的</li>
+</ul>
+<blockquote>
+<p><a href="https://stackoverflow.com/questions/8961333/amazon-simpledb-vs-amazon-dynamodb" target="_blank" rel="noopener">https://stackoverflow.com/questions/8961333/amazon-simpledb-vs-amazon-dynamodb</a></p>
+</blockquote>
+</li>
+<li>
+<p>收费无关instance类型</p>
+</li>
+<li>
+<p>gragh按照五分钟间隔显示曲线的时候，曲线点是按照五分钟内平均值拟合出来的，所以可能会跟1分钟间隔显示的曲线不同。</p>
+</li>
+</ul>
+<h1 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h1>
+<blockquote>
+<p><a href="https://youtu.be/agQMFIWr2h4" target="_blank" rel="noopener">https://youtu.be/agQMFIWr2h4</a></p>
+</blockquote>
+<p>Deep Dive EC2 Performance</p>
+<p><img src="https://github.com/racheliurui/markdown/blob/master/AWS/AWS2018/images/04_EC2_History.png?raw=true" alt="EC2 History"></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Reward Makes Perfect</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Rachel Rui Liu Bitcoin">
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Rachel Rui Liu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://racheliurui.github.io/2018/02/28/markdown/AWS/AWS2018/04_EC2/" title="AWS - EC2">https://racheliurui.github.io/2018/02/28/markdown/AWS/AWS2018/04_EC2/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AWS/" rel="tag"># AWS</a>
+          
+            <a href="/tags/EC2/" rel="tag"># EC2</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/07/markdown/Trending/InfoQ/" rel="next" title="InfoQ Readings">
+                <i class="fa fa-chevron-left"></i> InfoQ Readings
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/14/markdown/AWS/AWS2018/AWS_ImmersionDay/" rel="prev" title="AWS - Immersion Day">
+                AWS - Immersion Day <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/racheliurui/markdown/master/images/avatar.jpg" alt="Rachel Rui Liu">
+          <p class="site-author-name" itemprop="name">Rachel Rui Liu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">178</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">193</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/racheliurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/rachel-rui-liu-a474a7a" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                    
+                      Linkedin
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#login-ec2"><span class="nav-number">1.</span> <span class="nav-text"> Login EC2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#016mp4-elastic-compute-cloud"><span class="nav-number">2.</span> <span class="nav-text"> 016.mp4 Elastic Compute Cloud</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#019-hands-on-connect-to-ec2-widnows-instance"><span class="nav-number">3.</span> <span class="nav-text"> 019 hands-on connect to EC2 widnows instance</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ec2config"><span class="nav-number">3.1.</span> <span class="nav-text"> EC2Config</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#020-hands-on-connect-to-ec2-via-macos-client"><span class="nav-number">4.</span> <span class="nav-text"> 020 hands-on connect to EC2 via MacOS client</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#021-create-a-custom-ami"><span class="nav-number">5.</span> <span class="nav-text"> 021 create a custom AMI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#022-ebs-elastic-block-storage-for-ec2"><span class="nav-number">6.</span> <span class="nav-text"> 022 EBS (Elastic Block Storage) for EC2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ebs-snapshots"><span class="nav-number">6.1.</span> <span class="nav-text"> EBS snapshots</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用tag管理ec2的权限"><span class="nav-number">6.2.</span> <span class="nav-text"> 如何使用tag管理ec2的权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#placement-groups"><span class="nav-number">6.3.</span> <span class="nav-text"> Placement groups</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#related-reading"><span class="nav-number">7.</span> <span class="nav-text"> Related Reading</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ssd-backed-ebs-and-hdd-backed-ebs"><span class="nav-number">7.1.</span> <span class="nav-text"> SSD-backed EBS and HDD-backed EBS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不同region的ec2之间通信收费问题"><span class="nav-number">8.</span> <span class="nav-text"> 不同region的ec2之间通信收费问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ec2-local-store-的persist问题"><span class="nav-number">9.</span> <span class="nav-text"> EC2 local store 的persist问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number">10.</span> <span class="nav-text"> References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rachel Rui Liu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://racheliurui-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://racheliurui.github.io/2018/02/28/markdown/AWS/AWS2018/04_EC2/';
+          this.page.identifier = '2018/02/28/markdown/AWS/AWS2018/04_EC2/';
+          this.page.title = 'AWS - EC2';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://racheliurui-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
